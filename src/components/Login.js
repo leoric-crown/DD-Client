@@ -113,6 +113,8 @@ class Login extends React.Component {
                       callback={this.handleFBLogin}
                       icon="fa-facebook"
                       size="small"
+                      cssClass="my-facebook-button-class"
+                      textButton=" Continue with Facebook"
                     />
               </MDBRow>
               </MDBCardBody>
