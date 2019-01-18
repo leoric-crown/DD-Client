@@ -4,6 +4,8 @@ import logo from '../logo.svg'
 import * as API from '../utils/api'
 import FacebookLogin from 'react-facebook-login';
 import config from '../config.json';
+import { setAuthedUser } from '../actions/authedUser'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
   state = {
@@ -24,20 +26,18 @@ class Login extends React.Component {
     })
   }
 
-  handleClick = () => {
-    console.log("Wooo")
-  }
-
   handleLogin = () => {
     API.login(this.state)
     .then((res) => {
-      if(res.status === 200) {
+      console.log(res)
+      if(res.status.code === 200) {
         // TODO: save token in localstorage to make future requests to API
+        this.props.dispatch(setAuthedUser(res.email,"https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"))
         this.props.history.push({
           pathname: '/dashboard',
-
-        })
+        });
       } else {
+        console.log(res)
         this.setState({
           authError: true
         })
@@ -48,8 +48,18 @@ class Login extends React.Component {
   }
 
   handleFBLogin = (res) => {
-    console.log(res);
-    // TODO: send access Token returned by fb to express endpoint
+    const profilePic = res.picture.data.url
+    API.fbLogin(res.accessToken)
+     .then((res) => {
+       if(res.status.code === 200) {
+         console.log("Login with Fb successful")
+         this.props.dispatch(setAuthedUser(res.email, profilePic))
+         this.props.history.push({
+           pathname: '/dashboard',
+         })
+       }
+     }
+   ).catch( err => console.warn(err))
   }
 
   render() {
@@ -135,4 +145,11 @@ class Login extends React.Component {
   }
 };
 
-export default Login;
+function mapStateToProps({ User }) {
+  return {
+    User
+  }
+
+}
+
+export default connect(mapStateToProps)(Login)

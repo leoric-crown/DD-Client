@@ -23,3 +23,12 @@ export const signup = (payload) =>
   .then(res => res.json())
   .then(data => data)
   .catch(e => console.log(e))
+
+export const fbLogin = (accessToken) =>
+  fetch(`${api}/users/auth/facebook`, {
+    method:'POST',
+    headers: {
+      ...headers,
+      'Authorization':`Bearer ${accessToken}`
+    },
+  }).then(res => res.json())
