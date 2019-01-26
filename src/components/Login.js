@@ -5,6 +5,7 @@ import * as API from '../utils/api'
 import FacebookLogin from 'react-facebook-login';
 import config from '../config.json';
 import { setAuthedUser } from '../actions/authedUser'
+import { handleInitialData } from '../actions/shared'
 import { connect } from 'react-redux'
 
 class Login extends React.Component {
@@ -55,6 +56,7 @@ class Login extends React.Component {
          console.log("Login with Fb successful")
          localStorage.setItem('DNDTOKEN', res.jwt);
          this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
+         this.props.dispatch(handleInitialData(res.userId, res.jwt))
          this.props.history.push({
            pathname: '/dashboard/characters',
          })

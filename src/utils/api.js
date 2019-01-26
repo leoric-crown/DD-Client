@@ -42,3 +42,25 @@ export const createCharacter = (token, payload) =>
     },
     body: JSON.stringify(payload)
   }).then(res => res.json())
+
+// export const getInitialData = (userId, jwt) => {
+//     console.log("In handle",userId)
+//     // We will keep adding as we develop more features
+//     // For now we only pull user character upon login
+//     return Promise.all([
+//       _getCharacters(userId, jwt)
+//     ]).then(([characters]) => (
+//       console.log(characters)
+//     ))
+//   }
+
+ export const getInitialData = (userId, token) =>
+   fetch(`${api}/characters/${userId}`, {
+     method:'GET',
+     headers: {
+       ...headers,
+       'Authorization':`Bearer ${token}`
+     },
+   })
+   .then(res => res.json())
+   .then(res => res.characters)
