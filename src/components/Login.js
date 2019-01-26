@@ -34,7 +34,7 @@ class Login extends React.Component {
         // TODO: save token in localstorage to make future requests to API
         this.props.dispatch(setAuthedUser(res.email,"https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"))
         this.props.history.push({
-          pathname: '/dashboard',
+          pathname: '/dashboard/characters',
         });
       } else {
         console.log(res)
@@ -53,9 +53,10 @@ class Login extends React.Component {
      .then((res) => {
        if(res.status.code === 200) {
          console.log("Login with Fb successful")
-         this.props.dispatch(setAuthedUser(res.email, profilePic))
+         localStorage.setItem('DNDTOKEN', res.jwt);
+         this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
          this.props.history.push({
-           pathname: '/dashboard',
+           pathname: '/dashboard/characters',
          })
        }
      }

@@ -10,7 +10,9 @@ export default function User (state = defaultState, action) {
       return {
         authenticated:true,
         email: action.authedUser,
-        photoURL: action.photoURL
+        photoURL: action.photoURL,
+        isDM: action.isDM,
+        userId: action.userId
       }
     case LOGOUT_USER:
       return {

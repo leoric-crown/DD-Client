@@ -1,4 +1,4 @@
-.App {
+body {
   text-align: center;
 }
 
@@ -59,4 +59,23 @@ div.card-body.mx-4 > div {
     background-color: #4c69ba;
     border: calc(.06887vw + .67769px) solid #4c69ba;
     padding: calc(-0.65565vw + 13.38843px) calc(.34435vw + 18.38843px);
+}
+
+.characters-Container {
+  display: flex;
+  justify-content: center;
+}
+
+.subtitle {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.my-characters {
+  display:flex;
+  justify-content: flex-start !important;
+}
+
+.create-character {
+  box-shadow: none !important;
 }

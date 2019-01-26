@@ -32,3 +32,13 @@ export const fbLogin = (accessToken) =>
       'Authorization':`Bearer ${accessToken}`
     },
   }).then(res => res.json())
+
+export const createCharacter = (token, payload) =>
+  fetch(`${api}/characters`, {
+    method:'POST',
+    headers: {
+      ...headers,
+      'Authorization':`Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
