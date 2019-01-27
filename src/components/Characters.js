@@ -6,8 +6,22 @@ import { connect } from 'react-redux'
 
 class Characters extends React.Component {
   state = {
-    activeButton:"My Characters"
+    activeButtonMyCharacters:true,
+    lastClicked:"Characters"
   }
+
+  toggleButtonNavigation = (lastClicked) => {
+    this.setState((state, props) => {
+      if (state.lastClicked !== lastClicked ) {
+        return {
+          activeButtonMyCharacters: !state.activeButtonMyCharacters,
+          lastClicked
+        }
+      } else {
+        return
+      }
+  });
+}
 
   componentDidMount() {
     if (!this.props.User.authenticated) {
@@ -22,12 +36,12 @@ class Characters extends React.Component {
         <div className="characters-Container">
         <MDBRow>
           <MDBCol md='12' className="mb-4">
-          <MDBBtn onClick={() => this.setState({activeButton: "My Characters"})} color="black">
+          <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
           <MDBIcon  icon="magic" size="lg"/>
             &nbsp;
             My Characters
             </MDBBtn>
-          <MDBBtn onClick={() => this.setState({activeButton: "Create Character"})}  color="black">
+          <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")}  color="black">
           <MDBIcon icon="plus" size="lg"/>
             &nbsp;
             Create Character
@@ -36,7 +50,7 @@ class Characters extends React.Component {
         </MDBRow>
         <MDBIcon color="black" icon="hat-wizard" />
         </div>
-        {this.state.activeButton === 'My Characters'
+        {this.state.activeButtonMyCharacters
           ?
             <div className='my-characters'>
               {
@@ -54,7 +68,9 @@ class Characters extends React.Component {
             </div>
           :
             <div className="my-characters">
-              <CreateCharacter />
+              <CreateCharacter
+                toggleButtonNavigation={this.toggleButtonNavigation}
+              />
             </div>
         }
       </MDBContainer>

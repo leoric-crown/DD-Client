@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
-import * as API from '../utils/api'
 import { connect } from 'react-redux'
+import { createCharacter } from '../actions/characters'
 
 class CreateCharacter extends Component {
   state = {
@@ -48,8 +48,7 @@ class CreateCharacter extends Component {
     }
   }
 
-  handleSubmit = () => {
-    console.log(this.props.User.userId)
+  handleSubmit = (toggleCharacterNavigation) => {
     const payload = {
     name: this.state.name,
     level: this.state.level,
@@ -61,10 +60,12 @@ class CreateCharacter extends Component {
     picUrl: this.state.url
     }
 
-    API.createCharacter(localStorage.getItem('DNDTOKEN'), payload)
-     .then((res) => console.log(res))
+   this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
+   toggleCharacterNavigation("Submit_Character")
+
   }
   render() {
+    const { toggleButtonNavigation } = this.props
     return(
       <MDBContainer className=''>
         <MDBRow className="d-flex justify-content-center">
@@ -114,13 +115,12 @@ class CreateCharacter extends Component {
                         rounded
                         color="black"
                         className="btn-block z-depth-1a"
-                        onClick={() => this.handleSubmit()}
+                        onClick={() => this.handleSubmit(toggleButtonNavigation)}
                       >
                         Create
                       </MDBBtn>
                   </div>
                 </MDBCardBody>
-                {JSON.stringify(this.state)}
             </MDBCard>
           </MDBCol>
         </MDBRow>
