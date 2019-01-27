@@ -1,8 +1,7 @@
 import React from 'react';
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler,MDBCollapse, MDBNavItem, MDBNavLink, MDBMask, MDBView, Dropdown, DropdownToggle, DropdownMenu,  DropdownItem, NavItem, NavLink } from 'mdbreact'
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler,MDBCollapse, MDBNavItem, MDBNavLink, Dropdown, DropdownToggle, DropdownMenu,  DropdownItem, NavItem, NavLink } from 'mdbreact'
 import { connect } from 'react-redux'
 import { logoutUser } from '../actions/authedUser'
-import Characters from './Characters'
 
 class Navbars extends React.Component {
   constructor(props) {

@@ -73,9 +73,29 @@ div.card-body.mx-4 > div {
 
 .my-characters {
   display:flex;
-  justify-content: flex-start !important;
+
 }
 
 .create-character {
   box-shadow: none !important;
+}
+
+.character-pic {
+  width:150px;
+  height: 150px;
+}
+
+.character-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+.character-specs {
+  align-self: center;
 }
