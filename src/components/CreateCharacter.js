@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
 import { createCharacter } from '../actions/characters'
+import validator from 'validator';
 
 class CreateCharacter extends Component {
   state = {
@@ -49,6 +50,12 @@ class CreateCharacter extends Component {
   }
 
   handleSubmit = (toggleCharacterNavigation) => {
+    let picUrl = ""
+    if (!validator.isURL(this.state.url)) {
+      picUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Smaug_par_David_Demaret.jpg/290px-Smaug_par_David_Demaret.jpg"
+    } else {
+      picUrl = this.state.url
+    }
     const payload = {
     name: this.state.name,
     level: this.state.level,
@@ -57,7 +64,7 @@ class CreateCharacter extends Component {
     hitpoints: this.state.hp,
     maxhitpoints: this.state.hp,
     user: this.props.User.userId,
-    picUrl: this.state.url
+    picUrl: picUrl
     }
 
    this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
