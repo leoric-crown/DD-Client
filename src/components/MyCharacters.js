@@ -7,12 +7,16 @@ const style={
 }
 
 class MyCharacters extends Component {
-
+  // Hack in case we only have one or two Characters
+  // In the grid
   getStyling = () => {
     if(this.props.length === 1) {
       return {
-        "marginRight":"25%",
-        "marginLeft":"25%",
+        "width":"31.250em",
+      }
+    } else if(this.props.length === 2) {
+      return {
+        "width":"21.875em",
       }
     } else {
       return style
@@ -29,7 +33,7 @@ class MyCharacters extends Component {
                 </h3>
               </div>
               <div className="text-center mb-3">
-                <img className="character-pic rounded-circle z-depth-0" alt='DnD Turn Tracker Logo' src={this.props.character.picUrl}/>
+                <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={this.props.character.picUrl}/>
               </div>
               <div className="character-specs mb-3">
                 <h5>Level: {this.props.character.level}</h5>
