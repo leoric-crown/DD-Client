@@ -1,25 +1,24 @@
 import React, {Component} from 'react'
 import { MDBContainer, MDBCard, MDBCardBody, MDBBtn } from 'mdbreact';
 
-const style={
-  "marginRight":"0%",
-  "marginLeft":"0%",
-}
+const ONE_ITEM = 1
+const TWO_ITEMS = 2
+
 
 class MyCharacters extends Component {
   // Hack in case we only have one or two Characters
   // In the grid
   getStyling = () => {
-    if(this.props.length === 1) {
+    if(this.props.length === ONE_ITEM) {
       return {
         "width":"31.250em",
       }
-    } else if(this.props.length === 2) {
+    } else if(this.props.length === TWO_ITEMS) {
       return {
         "width":"21.875em",
       }
     } else {
-      return style
+      return
     }
   }
   render() {
