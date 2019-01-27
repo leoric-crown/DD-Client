@@ -57,11 +57,13 @@ class Characters extends React.Component {
                 this.props.Characters.length > 0
                 ?
                 this.props.Characters.map((character) => (
-                  <MyCharacters
-                    character={character}
-                    length={this.props.Characters.length}
-                    key={character._id}
-                  />
+                  <div className="individual-character">
+                    <MyCharacters
+                      character={character}
+                      length={this.props.Characters.length}
+                      key={character._id}
+                    />
+                </div>
                 ))
                 : <h3>No Characters just yet...</h3>
               }

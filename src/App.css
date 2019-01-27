@@ -72,9 +72,19 @@ div.card-body.mx-4 > div {
 }
 
 .my-characters {
-  display:flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 
-}
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .individual-character {
+      padding: 10px 15px;
+      text-align: left;
+  }
 
 .create-character {
   box-shadow: none !important;
