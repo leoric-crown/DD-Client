@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
-import { MDBContainer, MDBCard, MDBCardBody, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBCard, MDBCardBody, MDBBtn, MDBIcon } from 'mdbreact';
+import "font-awesome/css/font-awesome.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
 
 const ONE_ITEM = 1
 const TWO_ITEMS = 2
@@ -28,24 +31,24 @@ class MyCharacters extends Component {
             <MDBCardBody>
               <div>
                 <h3 className="black-text mb-5">
-                  <strong>{this.props.character.name}</strong>
+                  <strong className="character-name">{this.props.character.name}</strong>
                 </h3>
               </div>
               <div className="text-center mb-3">
                 <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={this.props.character.picUrl}/>
               </div>
               <div className="character-specs mb-3">
-                <h5>Level: {this.props.character.level}</h5>
-                <h5>Armor Class: {this.props.character.armorclass}</h5>
-                <h5>Hitpoints: {this.props.character.hitpoints}</h5>
-                <h5>Max Hit Points: {this.props.character.maxhitpoints}</h5>
+                <h5><MDBIcon icon="user"  size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {this.props.character.level}</h5>
+                <h5><MDBIcon icon="shield"  size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {this.props.character.armorclass}</h5>
+                <h5><MDBIcon icon="heartbeat"  size="lg" className="red-text pr-3" /><strong className="character-stats">Hitpoints:</strong> {this.props.character.hitpoints}</h5>
+                <h5><MDBIcon icon="heart"  size="lg" className="red-text pr-3" /><strong className="character-stats">Max Hit Points:</strong> {this.props.character.maxhitpoints}</h5>
               </div>
               <div className="text-center mb-3">
                 <MDBBtn
                   type="button"
                   rounded
                   color="black"
-                  className="btn-block z-depth-1a black"
+                  className="btn-block z-depth-1a black character-stats"
                   onClick={() => console.log("Clicked")}
                 >
                   Edit
