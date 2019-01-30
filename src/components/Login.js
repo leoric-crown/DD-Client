@@ -33,7 +33,10 @@ class Login extends React.Component {
       console.log(res)
       if(res.status.code === 200) {
         // TODO: save token in localstorage to make future requests to API
-        this.props.dispatch(setAuthedUser(res.email,"https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"))
+        console.log("Login successful")
+        localStorage.setItem('DNDTOKEN', res.jwt);
+        this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+        this.props.dispatch(handleInitialData(res.userId, res.jwt))
         this.props.history.push({
           pathname: '/dashboard/characters',
         });

@@ -52,19 +52,23 @@ class Characters extends React.Component {
         </div>
         {this.state.activeButtonMyCharacters
           ?
-            <div className='my-characters'>
+            <div>
               {
                 this.props.Characters.length > 0
                 ?
-                this.props.Characters.map((character) => (
-                  <div className="individual-character">
-                    <MyCharacters
-                      character={character}
-                      length={this.props.Characters.length}
-                      key={character._id}
-                    />
-                </div>
-                ))
+                <ol className='my-characters'>
+                  {this.props.Characters.map((character) => (
+                    <li key={character._id}>
+                    <div className="individual-character">
+                      <MyCharacters
+                        character={character}
+                        length={this.props.Characters.length}
+                      />
+                  </div>
+                  </li>
+                ))}
+              </ol>
+
                 : <h3>No Characters just yet...</h3>
               }
             </div>
