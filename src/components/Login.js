@@ -51,6 +51,16 @@ class Login extends React.Component {
     })
   }
 
+  handleKeyDown = (event) => {
+    switch (event.key) {
+      case 'Enter':
+        this.handleLogin()
+        break
+      default:
+        break
+    }
+  }
+
   handleFBLogin = (res) => {
     const profilePic = res.picture.data.url
     API.fbLogin(res.accessToken)
@@ -102,6 +112,7 @@ class Login extends React.Component {
                   type="password"
                   validate
                   containerClass="mb-0"
+                  onKeyDown = {(e) => this.handleKeyDown(e)}
                   getValue={(e) => this.handleChangePassword(e)}
                 />
                 <p className="font-small blue-text d-flex justify-content-end pb-3">
