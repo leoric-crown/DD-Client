@@ -71,7 +71,7 @@ class CreateCharacter extends Component {
     hitpoints: this.state.hp,
     maxhitpoints: this.state.hp,
     user: this.props.User.userId,
-    characterPic: this.state.characterPic ? this.state.characterPic : null
+    characterPic: this.state.characterPic ? this.state.characterPic : characterPic
     }
     console.log(payload)
 
