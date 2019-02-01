@@ -46,7 +46,6 @@ class CreateCharacter extends Component {
         })
         break
       case 'file':
-        console.log(value)
         this.setState({
           characterPic: value
         })
