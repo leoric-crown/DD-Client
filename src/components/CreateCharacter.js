@@ -57,11 +57,11 @@ class CreateCharacter extends Component {
   }
 
   handleSubmit = (toggleCharacterNavigation) => {
-    let characterPic = ""
+    let picUrl = ""
     if (!validator.isURL(this.state.url)) {
-      characterPic = null
+      picUrl = null
     } else {
-      characterPic = this.state.url
+      picUrl = this.state.url
     }
     const payload = {
     name: this.state.name,
@@ -71,7 +71,7 @@ class CreateCharacter extends Component {
     hitpoints: this.state.hp,
     maxhitpoints: this.state.hp,
     user: this.props.User.userId,
-    characterPic: this.state.characterPic ? this.state.characterPic : characterPic
+    characterPic: this.state.characterPic ? this.state.characterPic : picUrl
     }
     console.log(payload)
 
