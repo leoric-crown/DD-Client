@@ -1,4 +1,3 @@
-
 const api = "http://localhost:5000"
 
 const headers = {
@@ -32,16 +31,20 @@ export const fbLogin = (accessToken) =>
       'Authorization':`Bearer ${accessToken}`
     },
   }).then(res => res.json())
-
-export const createCharacter = (token, payload) =>
-  fetch(`${api}/characters`, {
+  
+export const createCharacter = (token, payload) => {
+  let data = new FormData()
+  Object.entries(payload).forEach(keyValue => {
+    data.append(keyValue[0],keyValue[1])
+  })
+  return fetch(`${api}/characters`, {
     method:'POST',
     headers: {
-      ...headers,
       'Authorization':`Bearer ${token}`
     },
-    body: JSON.stringify(payload)
+    body: data
   }).then(res => res.json())
+}
 
 // export const getInitialData = (userId, jwt) => {
 //     console.log("In handle",userId)

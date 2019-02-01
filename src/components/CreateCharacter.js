@@ -10,7 +10,8 @@ class CreateCharacter extends Component {
     level:'',
     ac:'',
     hp:'',
-    url:''
+    url:'',
+    characterPic: null
   }
 
   componentDidMount() {
@@ -39,22 +40,28 @@ class CreateCharacter extends Component {
           hp: value
         })
         break
-        case 'url':
-          this.setState({
-            url: value
-          })
-          break
+      case 'url':
+        this.setState({
+          url: value
+        })
+        break
+      case 'file':
+        console.log(value)
+        this.setState({
+          characterPic: value
+        })
+        break
       default:
        return;
     }
   }
 
   handleSubmit = (toggleCharacterNavigation) => {
-    let picUrl = ""
+    let characterPic = ""
     if (!validator.isURL(this.state.url)) {
-      picUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Smaug_par_David_Demaret.jpg/290px-Smaug_par_David_Demaret.jpg"
+      characterPic = null
     } else {
-      picUrl = this.state.url
+      characterPic = this.state.url
     }
     const payload = {
     name: this.state.name,
@@ -64,14 +71,16 @@ class CreateCharacter extends Component {
     hitpoints: this.state.hp,
     maxhitpoints: this.state.hp,
     user: this.props.User.userId,
-    picUrl: picUrl
+    characterPic: this.state.characterPic ? this.state.characterPic : this.state.url
     }
+    console.log(payload)
 
    this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
    toggleCharacterNavigation("Submit_Character")
 
   }
   render() {
+    console.log(this.state)
     const { toggleButtonNavigation } = this.props
     return(
       <MDBContainer className=''>
@@ -114,6 +123,11 @@ class CreateCharacter extends Component {
                     label="Photo URL"
                     containerClass="mb-0"
                     getValue={(e) => this.handleChange("url",e)}
+                  />
+                  <MDBInput
+                    type="file"
+                    containerClass="mb-0"
+                    onChange={(e) => this.handleChange("file",e.target.files[0])}
                   />
                   <br />
                   <div className="text-center">
