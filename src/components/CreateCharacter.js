@@ -10,7 +10,8 @@ class CreateCharacter extends Component {
     level:'',
     ac:'',
     hp:'',
-    url:''
+    url:'',
+    characterPic: null
   }
 
   componentDidMount() {
@@ -39,11 +40,16 @@ class CreateCharacter extends Component {
           hp: value
         })
         break
-        case 'url':
-          this.setState({
-            url: value
-          })
-          break
+      case 'url':
+        this.setState({
+          url: value
+        })
+        break
+      case 'file':
+        this.setState({
+          characterPic: value
+        })
+        break
       default:
        return;
     }
@@ -52,7 +58,7 @@ class CreateCharacter extends Component {
   handleSubmit = (toggleCharacterNavigation) => {
     let picUrl = ""
     if (!validator.isURL(this.state.url)) {
-      picUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Smaug_par_David_Demaret.jpg/290px-Smaug_par_David_Demaret.jpg"
+      picUrl = null
     } else {
       picUrl = this.state.url
     }
@@ -64,14 +70,16 @@ class CreateCharacter extends Component {
     hitpoints: this.state.hp,
     maxhitpoints: this.state.hp,
     user: this.props.User.userId,
-    picUrl: picUrl
+    characterPic: this.state.characterPic ? this.state.characterPic : picUrl
     }
+    console.log(payload)
 
    this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
    toggleCharacterNavigation("Submit_Character")
 
   }
   render() {
+    console.log(this.state)
     const { toggleButtonNavigation } = this.props
     return(
       <MDBContainer className=''>
@@ -114,6 +122,11 @@ class CreateCharacter extends Component {
                     label="Photo URL"
                     containerClass="mb-0"
                     getValue={(e) => this.handleChange("url",e)}
+                  />
+                  <MDBInput
+                    type="file"
+                    containerClass="mb-0"
+                    onChange={(e) => this.handleChange("file",e.target.files[0])}
                   />
                   <br />
                   <div className="text-center">
