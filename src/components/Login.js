@@ -98,7 +98,8 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        {this.props.User.authenticated && (
+        {(this.props.User.authenticated || !localStorage.getItem('DNDTOKEN'))
+          && (
           <MDBContainer className='centered'>
             <MDBRow className="d-flex justify-content-center">
               <MDBCol md="6">
