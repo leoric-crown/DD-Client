@@ -65,4 +65,9 @@ export const createCharacter = (token, payload) => {
      headers: {
        'Authorization':`Bearer ${token}`
      },
-   }).then(res => res.json())
+   }).then(res => {
+     if (res.status === 401){
+       throw new Error("Token Invalid")
+     }
+     return res.json()
+   })

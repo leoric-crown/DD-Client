@@ -13,8 +13,7 @@ class Login extends React.Component {
   state = {
     email:'',
     password:'',
-    authError: false,
-    ready: false
+    authError: false
   }
 
   componentWillMount () {
@@ -28,12 +27,13 @@ class Login extends React.Component {
            this.props.history.push({
              pathname: '/dashboard/characters'
            })
+         } else {
+           localStorage.removeItem('DNDTOKEN')
+           this.props.history.push({
+             pathname: '/'
+           })
          }
        })
-    } else {
-      this.setState({
-        ready: true
-      })
     }
 
   }
@@ -54,8 +54,6 @@ class Login extends React.Component {
     API.login(this.state)
     .then((res) => {
       if(res.status.code === 200) {
-        // TODO: save token in localstorage to make future requests to API
-        console.log("Login successful")
         localStorage.setItem('DNDTOKEN', res.jwt);
         this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
         this.props.dispatch(handleInitialData(res.userId, res.jwt))
@@ -63,13 +61,10 @@ class Login extends React.Component {
           pathname: '/dashboard/characters',
         });
       } else {
-        console.log(res)
         this.setState({
           authError: true
         })
       }
-    }).catch((e) => {
-      console.log(e)
     })
   }
 
@@ -103,7 +98,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        {this.state.ready && (
+        {this.props.User.authenticated && (
           <MDBContainer className='centered'>
             <MDBRow className="d-flex justify-content-center">
               <MDBCol md="6">

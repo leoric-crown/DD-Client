@@ -1,6 +1,6 @@
 import { RECEIVE_CHARACTERS, CREATE_CHARACTERS } from '../actions/characters'
 
-const defaultState = []
+const defaultState = null
 
 export default function Characters (state = defaultState, action) {
   switch (action.type) {

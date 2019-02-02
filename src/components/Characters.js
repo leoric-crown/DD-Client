@@ -9,9 +9,8 @@ import { handleInitialData } from '../actions/shared'
 
 class Characters extends React.Component {
   state = {
-    activeButtonMyCharacters:true,
-    lastClicked:"Characters",
-    ready: false
+    activeButtonMyCharacters: true,
+    lastClicked: "Characters"
   }
 
   toggleButtonNavigation = (lastClicked) => {
@@ -27,13 +26,13 @@ class Characters extends React.Component {
     });
   }
 
-  sendMeHome = () => {
+  sendToLogin = () => {
     this.props.history.push({
       pathname: '/'
     })
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.User.authenticated) {
         const token = localStorage.getItem('DNDTOKEN')
         if (token)  {
@@ -42,27 +41,21 @@ class Characters extends React.Component {
              if (authedUser) {
                this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
                this.props.dispatch(handleInitialData(authedUser._id, token))
-               this.setState({
-                 ready:true
-               })
              } else {
-               this.sendMeHome();
+               this.sendToLogin();
              }
            })
         } else {
-        this.sendMeHome();
+        this.sendToLogin();
       }
-    } else {
-      this.setState({
-        ready:true
-      })
     }
   }
 
   render() {
     return (
       <div>
-        {this.state.ready && (
+        {this.props.User.authenticated &&
+         this.props.Characters && (
         <MDBContainer style={styles} className="">
           <div className="characters-Container">
           <MDBRow>

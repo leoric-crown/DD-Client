@@ -9,6 +9,8 @@ export const verifyToken = (token) => {
        } else {
          reject()
        }
+    }).catch((err) => {
+      resolve(false)
     })
   })
 }
