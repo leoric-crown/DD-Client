@@ -20,6 +20,7 @@ class Navbars extends React.Component {
   }
 
   handleLogout = () => {
+    localStorage.removeItem('DNDTOKEN')
     this.props.dispatch(logoutUser())
   }
 
@@ -54,7 +55,7 @@ class Navbars extends React.Component {
                      </DropdownToggle>
                      <DropdownMenu className="dropdown-default" right>
                        <DropdownItem href="#!">My account</DropdownItem>
-                       <DropdownItem href='/' onClick={this.handleLogout}>
+                       <DropdownItem href="/" onClick={this.handleLogout}>
                            Logout
                        </DropdownItem>
                      </DropdownMenu>

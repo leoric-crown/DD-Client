@@ -49,7 +49,7 @@ export const createCharacter = (token, payload) => {
 }
 
  export const getInitialData = (userId, token) =>
-   fetch(`${api}/characters/${userId}`, {
+   fetch(`${api}/characters/user`, {
      method:'GET',
      headers: {
        ...headers,

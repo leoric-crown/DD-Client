@@ -82,6 +82,7 @@ class Login extends React.Component {
     const profilePic = res.picture.data.url
     API.fbLogin(res.accessToken)
      .then((res) => {
+       console.log(res)
        if(res.status.code === 200) {
          console.log("Login with Fb successful")
          localStorage.setItem('DNDTOKEN', res.jwt);
