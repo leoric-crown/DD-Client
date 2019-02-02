@@ -1,4 +1,6 @@
-const api = "http://localhost:5000"
+import config from '../config.json';
+
+const api = config.API
 
 const headers = {
   'Accept': 'application/json',
@@ -31,7 +33,7 @@ export const fbLogin = (accessToken) =>
       'Authorization':`Bearer ${accessToken}`
     },
   }).then(res => res.json())
-  
+
 export const createCharacter = (token, payload) => {
   let data = new FormData()
   Object.entries(payload).forEach(keyValue => {

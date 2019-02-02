@@ -30,7 +30,6 @@ class Login extends React.Component {
   handleLogin = () => {
     API.login(this.state)
     .then((res) => {
-      console.log(res)
       if(res.status.code === 200) {
         // TODO: save token in localstorage to make future requests to API
         console.log("Login successful")

@@ -3,6 +3,7 @@ import { MDBContainer, MDBCard, MDBCardBody, MDBBtn, MDBIcon } from 'mdbreact';
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import config from '../config.json';
 
 const ONE_ITEM = 1
 const TWO_ITEMS = 2
@@ -35,7 +36,7 @@ class MyCharacters extends Component {
                 </h3>
               </div>
               <div className="text-center mb-3">
-                <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={this.props.character.picUrl}/>
+                <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${this.props.character.picUrl}`}/>
               </div>
               <div className="character-specs mb-3">
                 <h5><MDBIcon icon="user"  size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {this.props.character.level}</h5>
