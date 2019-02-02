@@ -2,6 +2,10 @@ import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBAlert, MDBIcon } from 'mdbreact';
 import * as API from '../utils/api'
 import * as EmailValidator from 'email-validator'
+import { connect } from 'react-redux'
+import { handleInitialData } from '../actions/shared'
+import { setAuthedUser } from '../actions/authedUser'
+
 
 class Signup extends React.Component {
   state = {
@@ -90,9 +94,18 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
            })
          }
-     }).catch((e) => {
+         this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+         this.props.dispatch(handleInitialData(res.userId, res.jwt))
+         this.props.history.push({
+           pathname: '/dashboard/characters',
+         });
+     })
+     .catch((e) => {
        console.log("Error:",e)
      })
+
+
+
   }
 
   render() {
@@ -186,4 +199,11 @@ class Signup extends React.Component {
   }
 };
 
-export default Signup;
+function mapStateToProps({ User }) {
+  return {
+    User
+  }
+
+}
+
+export default connect(mapStateToProps)(Signup)
