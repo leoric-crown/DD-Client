@@ -13,27 +13,40 @@ class Login extends React.Component {
   state = {
     email:'',
     password:'',
-    authError: false
+    authError: false,
+    flashMessage: false,
+    message:"",
+  }
+
+  componentDidMount () {
+    console.log(this.props.location.state)
+    if(this.props.location.state) {
+      this.setState({
+        flashMessage: true,
+        message: this.props.location.state.message
+      })
+      
+    }
   }
 
   componentWillMount () {
     const token = localStorage.getItem('DNDTOKEN')
     if (token)  {
       verifyToken(token)
-       .then((authedUser) => {
-         if (authedUser) {
-           this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
-           this.props.dispatch(handleInitialData(authedUser._id, token))
-           this.props.history.push({
-             pathname: '/dashboard/characters'
-           })
-         } else {
-           localStorage.removeItem('DNDTOKEN')
-           this.props.history.push({
-             pathname: '/'
-           })
-         }
-       })
+      .then((authedUser) => {
+        if (authedUser) {
+          this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
+          this.props.dispatch(handleInitialData(authedUser._id, token))
+          this.props.history.push({
+            pathname: '/dashboard/characters'
+          })
+        } else {
+          localStorage.removeItem('DNDTOKEN')
+          this.props.history.push({
+            pathname: '/'
+          })
+        }
+      })
     }
 
   }
@@ -81,27 +94,37 @@ class Login extends React.Component {
   handleFBLogin = (res) => {
     const profilePic = res.picture.data.url
     API.fbLogin(res.accessToken)
-     .then((res) => {
-       console.log(res)
-       if(res.status.code === 200) {
-         console.log("Login with Fb successful")
-         localStorage.setItem('DNDTOKEN', res.jwt);
-         this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
-         this.props.dispatch(handleInitialData(res.userId, res.jwt))
-         this.props.history.push({
-           pathname: '/dashboard/characters',
-         })
-       }
-     }
-   ).catch( err => console.warn(err))
+    .then((res) => {
+      console.log(res)
+      if(res.status.code === 200) {
+        console.log("Login with Fb successful")
+        localStorage.setItem('DNDTOKEN', res.jwt);
+        this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
+        this.props.dispatch(handleInitialData(res.userId, res.jwt))
+        this.props.history.push({
+          pathname: '/dashboard/characters',
+        })
+      }
+    }).catch( err => console.warn(err))
   }
 
   render() {
     return (
       <div>
+        <div>
+          { this.state.flashMessage && (
+            <MDBAlert color="danger" >
+            <h4 className="alert-heading flash-message"><strong>{this.state.message}</strong></h4>
+          </MDBAlert>
+          )}
+        </div>
         {(this.props.User.authenticated || !localStorage.getItem('DNDTOKEN'))
           && (
           <MDBContainer className='centered'>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <MDBRow className="d-flex justify-content-center">
               <MDBCol md="6">
                 <MDBCard>

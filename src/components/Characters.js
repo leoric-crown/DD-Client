@@ -26,10 +26,18 @@ class Characters extends React.Component {
     });
   }
 
-  sendToLogin = () => {
+  sendToLogin = (invalidToken) => {
+    invalidToken 
+    ?
     this.props.history.push({
-      pathname: '/'
+      pathname: '/',
+      state: { message: "Session expired"}
     })
+    :
+    this.props.history.push({
+      pathname: '/',
+      state: { message: "Please login to continue"}
+    }) 
   }
 
   componentWillMount() {
@@ -37,16 +45,16 @@ class Characters extends React.Component {
         const token = localStorage.getItem('DNDTOKEN')
         if (token)  {
           verifyToken(token)
-           .then((authedUser) => {
-             if (authedUser) {
-               this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
-               this.props.dispatch(handleInitialData(authedUser._id, token))
-             } else {
-               this.sendToLogin();
-             }
-           })
+          .then((authedUser) => {
+            if (authedUser) {
+              this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
+              this.props.dispatch(handleInitialData(authedUser._id, token))
+            } else {
+              this.sendToLogin(true);
+            }
+          })
         } else {
-        this.sendToLogin();
+        this.sendToLogin(false);
       }
     }
   }
@@ -55,7 +63,7 @@ class Characters extends React.Component {
     return (
       <div>
         {this.props.User.authenticated &&
-         this.props.Characters && (
+        this.props.Characters && (
         <MDBContainer style={styles} className="">
           <div className="characters-Container">
           <MDBRow>
@@ -83,15 +91,15 @@ class Characters extends React.Component {
                   <ol className='my-characters'>
                     {this.props.Characters.map((character) => (
                       <li key={character._id}>
-                      <div className="individual-character">
-                        <MyCharacters
-                          character={character}
-                          length={this.props.Characters.length}
-                        />
-                    </div>
-                    </li>
-                  ))}
-                </ol>
+                        <div className="individual-character">
+                          <MyCharacters
+                            character={character}
+                            length={this.props.Characters.length}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
 
                   : <h3>No Characters just yet...</h3>
                 }

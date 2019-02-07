@@ -2,6 +2,7 @@ import React from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler,MDBCollapse, MDBNavItem, MDBNavLink, Dropdown, DropdownToggle, DropdownMenu,  DropdownItem, NavItem, NavLink } from 'mdbreact'
 import { connect } from 'react-redux'
 import { logoutUser } from '../actions/authedUser'
+import { withRouter } from 'react-router-dom'
 
 class Navbars extends React.Component {
   constructor(props) {
@@ -22,6 +23,15 @@ class Navbars extends React.Component {
   handleLogout = () => {
     localStorage.removeItem('DNDTOKEN')
     this.props.dispatch(logoutUser())
+    this.props.history.push({
+      pathname: '/'
+    })
+    this.props.history.push({
+      pathname: '/',
+      state: { message: "You have logged out"}
+    })
+
+    
   }
 
   render() {
@@ -38,29 +48,29 @@ class Navbars extends React.Component {
                   <MDBCollapse isOpen={this.state.collapse} navbar>
                     <MDBNavbarNav right>
                       <MDBNavItem active>
-                        <MDBNavLink to="#">Characters</MDBNavLink>
+                        <MDBNavLink to="/dashboard/characters">Characters</MDBNavLink>
                       </MDBNavItem>
                       <MDBNavItem>
-                        <MDBNavLink to="#">Encounters</MDBNavLink>
+                        <MDBNavLink to="/dashboard/encounters">Encounters</MDBNavLink>
                       </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                     <NavItem>
-                   <NavLink className="" to="#">Welcome {this.props.User.email}</NavLink>
-                 </NavItem>
-                 <NavItem>
-                   <Dropdown>
-                     <DropdownToggle className="dopdown-toggle" nav>
-                       <img src={this.props.User.photoURL} className="rounded-circle z-depth-0" style={{height: "35px", padding: 0}} alt="" />
-                     </DropdownToggle>
-                     <DropdownMenu className="dropdown-default" right>
-                       <DropdownItem href="#!">My account</DropdownItem>
-                       <DropdownItem href="/" onClick={this.handleLogout}>
-                           Logout
-                       </DropdownItem>
-                     </DropdownMenu>
-                   </Dropdown>
-                 </NavItem>
+                  <NavLink className="" to="#">Welcome {this.props.User.email}</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <Dropdown>
+                      <DropdownToggle className="dopdown-toggle" nav>
+                        <img src={this.props.User.photoURL} className="rounded-circle z-depth-0" style={{height: "35px", padding: 0}} alt="" />
+                      </DropdownToggle>
+                      <DropdownMenu className="dropdown-default" right>
+                        <DropdownItem>My account</DropdownItem>
+                        <DropdownItem onClick={this.handleLogout}>
+                            Logout
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                  </NavItem>
                     </MDBNavbarNav>
                   </MDBCollapse>
                 </MDBNavbar>
@@ -81,4 +91,4 @@ function mapStateToProps({ User }) {
 
 }
 
-export default connect(mapStateToProps)(Navbars)
+export default withRouter(connect(mapStateToProps)(Navbars))
