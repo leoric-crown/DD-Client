@@ -4,7 +4,7 @@ import CreateCharacter from './CreateCharacter'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { verifyToken } from '../utils/misc'
-import { setAuthedUser } from '../actions/authedUser'
+import { setAuthedUser, logoutUser } from '../actions/authedUser'
 import { handleInitialData } from '../actions/shared'
 
 class Characters extends React.Component {
@@ -26,20 +26,6 @@ class Characters extends React.Component {
     });
   }
 
-  sendToLogin = (invalidToken) => {
-    invalidToken 
-    ?
-    this.props.history.push({
-      pathname: '/',
-      state: { message: "Session expired"}
-    })
-    :
-    this.props.history.push({
-      pathname: '/',
-      state: { message: "Please login to continue"}
-    }) 
-  }
-
   componentWillMount() {
     if (!this.props.User.authenticated) {
         const token = localStorage.getItem('DNDTOKEN')
@@ -50,11 +36,16 @@ class Characters extends React.Component {
               this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
               this.props.dispatch(handleInitialData(authedUser._id, token))
             } else {
-              this.sendToLogin(true);
+              this.props.dispatch(logoutUser('Session expired'))
+              this.props.history.push({
+                pathname: '/'
+              })
             }
           })
         } else {
-        this.sendToLogin(false);
+        this.props.history.push({
+          pathname: '/'
+        })
       }
     }
   }

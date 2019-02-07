@@ -15,17 +15,15 @@ class Login extends React.Component {
     password:'',
     authError: false,
     flashMessage: false,
-    message:"",
+    message:'',
   }
 
   componentDidMount () {
-    console.log(this.props.location.state)
-    if(this.props.location.state) {
+    if(this.props.User.message) {
       this.setState({
         flashMessage: true,
-        message: this.props.location.state.message
+        message: this.props.User.message
       })
-      
     }
   }
 
@@ -209,6 +207,7 @@ class Login extends React.Component {
 };
 
 function mapStateToProps({ User }) {
+  console.log('mapStateToProps', User)
   return {
     User
   }
