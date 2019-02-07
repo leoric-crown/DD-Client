@@ -7,7 +7,7 @@ import config from '../config.json';
 import { setAuthedUser } from '../actions/authedUser'
 import { handleInitialData } from '../actions/shared'
 import { connect } from 'react-redux'
-import { verifyToken } from '../utils/misc'
+import { checkToken } from '../utils/misc'
 
 class Login extends React.Component {
   state = {
@@ -18,7 +18,7 @@ class Login extends React.Component {
     message:'',
   }
 
-  componentDidMount () {
+  setMessage = () => {
     if(this.props.User.message) {
       this.setState({
         flashMessage: true,
@@ -26,27 +26,18 @@ class Login extends React.Component {
       })
     }
   }
-
+  
   componentWillMount () {
     const token = localStorage.getItem('DNDTOKEN')
-    if (token)  {
-      verifyToken(token)
-      .then((authedUser) => {
-        if (authedUser) {
-          this.props.dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
-          this.props.dispatch(handleInitialData(authedUser._id, token))
-          this.props.history.push({
-            pathname: '/dashboard/characters'
-          })
-        } else {
-          localStorage.removeItem('DNDTOKEN')
-          this.props.history.push({
-            pathname: '/'
-          })
-        }
-      })
-    }
+    if (token) checkToken(token, this.props.dispatch, this.props.history)
+  }
 
+  componentWillReceiveProps() {
+    this.setMessage()
+  }
+
+  componentDidMount() {
+    this.setMessage()
   }
 
   handleChangeEmail = (email) => {
@@ -116,7 +107,7 @@ class Login extends React.Component {
           </MDBAlert>
           )}
         </div>
-        {(this.props.User.authenticated || !localStorage.getItem('DNDTOKEN'))
+        {(!this.props.User.authenticated || !localStorage.getItem('DNDTOKEN'))
           && (
           <MDBContainer className='centered'>
             <br/>
@@ -207,7 +198,6 @@ class Login extends React.Component {
 };
 
 function mapStateToProps({ User }) {
-  console.log('mapStateToProps', User)
   return {
     User
   }

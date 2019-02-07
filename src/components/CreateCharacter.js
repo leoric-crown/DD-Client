@@ -72,14 +72,12 @@ class CreateCharacter extends Component {
     user: this.props.User.userId,
     characterPic: this.state.characterPic ? this.state.characterPic : picUrl
     }
-    console.log(payload)
 
    this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
    toggleCharacterNavigation("Submit_Character")
 
   }
   render() {
-    console.log(this.state)
     const { toggleButtonNavigation } = this.props
     return(
       <MDBContainer className=''>
