@@ -11,8 +11,9 @@ export function setAuthedUser (authedUser, photoURL, isDM, userId) {
   }
 }
 
-export function logoutUser () {
+export function logoutUser (message) {
   return {
-    type: LOGOUT_USER
+    type: LOGOUT_USER,
+    message
   }
 }

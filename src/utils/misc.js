@@ -1,6 +1,8 @@
 import * as API from './api'
+import { setAuthedUser, logoutUser } from '../actions/authedUser'
+import { handleInitialData } from '../actions/shared'
 
-export const verifyToken = (token) => {
+const verifyToken = (token) => {
   return new Promise((resolve, reject) => {
     API.verifyToken(localStorage.getItem('DNDTOKEN'))
      .then((res) =>  {
@@ -13,4 +15,23 @@ export const verifyToken = (token) => {
       resolve(false)
     })
   })
+}
+
+export const checkToken = (token, dispatch, history) => {
+  verifyToken(token)
+      .then((authedUser) => {
+        if (authedUser) {
+          dispatch(setAuthedUser(authedUser.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", authedUser.isDM, authedUser._id))
+          dispatch(handleInitialData(authedUser._id, token))
+          history.push({
+            pathname: '/dashboard/characters'
+          })
+        } else {
+          localStorage.removeItem('DNDTOKEN')
+          dispatch(logoutUser('Session expired'))
+          history.push({
+            pathname: '/'
+          })
+        }
+      })
 }

@@ -22,16 +22,10 @@ class Navbars extends React.Component {
 
   handleLogout = () => {
     localStorage.removeItem('DNDTOKEN')
-    this.props.dispatch(logoutUser())
+    this.props.dispatch(logoutUser('You have logged out'))
     this.props.history.push({
       pathname: '/'
-    })
-    this.props.history.push({
-      pathname: '/',
-      state: { message: "You have logged out"}
-    })
-
-    
+    })    
   }
 
   render() {

@@ -16,7 +16,8 @@ export default function User (state = defaultState, action) {
       }
     case LOGOUT_USER:
       return {
-        authenticated:false
+        authenticated: false,
+        message: action.message
       }
     default :
       return state
