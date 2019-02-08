@@ -4,7 +4,6 @@ import CreateCharacter from './CreateCharacter'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
-import { logoutUser } from '../actions/authedUser';
 
 class Characters extends React.Component {
   state = {
@@ -29,7 +28,6 @@ class Characters extends React.Component {
     if (!this.props.User.authenticated) {
       const token = localStorage.getItem('DNDTOKEN')
       if (token) {
-        // checkToken(token, this.props.dispatch, this.props.history)
         checkToken.bind(this)(token)
       } else {
         this.props.history.push({
