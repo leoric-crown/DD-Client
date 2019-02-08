@@ -1,4 +1,4 @@
 {
-  "FACEBOOK_APP_ID": ""<Insert FB App Id>"
+  "FACEBOOK_APP_ID": "<Insert FB App Id>"
   "API": "http://localhost:5000"
 }
