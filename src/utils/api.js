@@ -59,18 +59,6 @@ export const createEncounter = (token, payload) => {
   }).then(res => res.json())
 }
 
-// export const getInitialData = (userId, token) => {
-//   return fetch(`${api}/characters/user`, {
-//     method: 'GET',
-//     headers: {
-//       ...headers,
-//       'Authorization': `Bearer ${token}`
-//     },
-//   })
-//     .then(res => res.json())
-//     .then(res => res.characters)
-// }
-
 const getCharacters = (token) => {
   return fetch(`${api}/characters`, {
     method: 'GET',
