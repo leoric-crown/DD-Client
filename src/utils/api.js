@@ -48,16 +48,60 @@ export const createCharacter = (token, payload) => {
   }).then(res => res.json())
 }
 
-export const getInitialData = (userId, token) =>
-  fetch(`${api}/characters/user`, {
-    method: 'GET',
+export const createEncounter = (token, payload) => {
+  return fetch(`${api}/encounters`, {
+    method: 'POST',
     headers: {
       ...headers,
       'Authorization': `Bearer ${token}`
     },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+// export const getInitialData = (userId, token) => {
+//   return fetch(`${api}/characters/user`, {
+//     method: 'GET',
+//     headers: {
+//       ...headers,
+//       'Authorization': `Bearer ${token}`
+//     },
+//   })
+//     .then(res => res.json())
+//     .then(res => res.characters)
+// }
+
+const getCharacters = (token) => {
+  return fetch(`${api}/characters`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+const getEncounters = (token) => {
+  return fetch(`${api}/encounters`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+export const getInitialData = (userId, token) => {
+  return Promise.all([
+    getCharacters(token),
+    getEncounters(token)
+  ])
+  .then(([charactersReponse, encountersResponse]) => {
+    const { characters } = charactersReponse
+    const { encounters } = encountersResponse
+    return { characters, encounters}
   })
-    .then(res => res.json())
-    .then(res => res.characters)
+}
 
 export const verifyToken = (token) =>
   fetch(`${api}/users/verifyToken`, {
