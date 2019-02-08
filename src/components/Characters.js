@@ -4,7 +4,6 @@ import CreateCharacter from './CreateCharacter'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
-import { logoutUser } from '../actions/authedUser';
 
 class Characters extends React.Component {
   state = {
