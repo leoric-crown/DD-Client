@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { MDBContainer, MDBCard, MDBCardBody, MDBBtn, MDBIcon } from 'mdbreact';
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -13,50 +13,50 @@ class MyCharacters extends Component {
   // Hack in case we only have one or two Characters
   // In the grid
   getStyling = () => {
-    if(this.props.length === ONE_ITEM) {
+    if (this.props.length === ONE_ITEM) {
       return {
-        "width":"31.250em",
+        "width": "31.250em",
       }
-    } else if(this.props.length === TWO_ITEMS) {
+    } else if (this.props.length === TWO_ITEMS) {
       return {
-        "width":"21.875em",
+        "width": "21.875em",
       }
     } else {
       return
     }
   }
   render() {
-    return(
+    return (
       <MDBContainer className="">
-          <MDBCard style={this.getStyling()}  className="character-container">
-            <MDBCardBody>
-              <div>
-                <h3 className="black-text mb-5">
-                  <strong className="character-name">{this.props.character.name}</strong>
-                </h3>
-              </div>
-              <div className="text-center mb-3">
-                <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${this.props.character.picUrl}`}/>
-              </div>
-              <div className="character-specs mb-3">
-                <h5><MDBIcon icon="user"  size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {this.props.character.level}</h5>
-                <h5><MDBIcon icon="shield"  size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {this.props.character.armorclass}</h5>
-                <h5><MDBIcon icon="heartbeat"  size="lg" className="red-text pr-3" /><strong className="character-stats">Hitpoints:</strong> {this.props.character.hitpoints}</h5>
-                <h5><MDBIcon icon="heart"  size="lg" className="red-text pr-3" /><strong className="character-stats">Max Hit Points:</strong> {this.props.character.maxhitpoints}</h5>
-              </div>
-              <div className="text-center mb-3">
-                <MDBBtn
-                  type="button"
-                  rounded
-                  color="black"
-                  className="btn-block z-depth-1a black character-stats"
-                  onClick={() => console.log("Clicked")}
-                >
-                  Edit
+        <MDBCard style={this.getStyling()} className="character-container">
+          <MDBCardBody>
+            <div>
+              <h3 className="black-text mb-5">
+                <strong className="character-name">{this.props.character.name}</strong>
+              </h3>
+            </div>
+            <div className="text-center mb-3">
+              <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${this.props.character.picUrl}`} />
+            </div>
+            <div className="character-specs mb-3">
+              <h5><MDBIcon icon="user" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {this.props.character.level}</h5>
+              <h5><MDBIcon icon="shield" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {this.props.character.armorclass}</h5>
+              <h5><MDBIcon icon="heartbeat" size="lg" className="red-text pr-3" /><strong className="character-stats">Hitpoints:</strong> {this.props.character.hitpoints}</h5>
+              <h5><MDBIcon icon="heart" size="lg" className="red-text pr-3" /><strong className="character-stats">Max Hit Points:</strong> {this.props.character.maxhitpoints}</h5>
+            </div>
+            <div className="text-center mb-3">
+              <MDBBtn
+                type="button"
+                rounded
+                color="black"
+                className="btn-block z-depth-1a black character-stats"
+                onClick={() => console.log("Clicked")}
+              >
+                Edit
                 </MDBBtn>
-              </div>
-            </MDBCardBody>
-          </MDBCard>
+            </div>
+          </MDBCardBody>
+        </MDBCard>
       </MDBContainer>
     )
   }

@@ -29,7 +29,6 @@ class Characters extends React.Component {
     if (!this.props.User.authenticated) {
       const token = localStorage.getItem('DNDTOKEN')
       if (token) {
-        // checkToken(token, this.props.dispatch, this.props.history)
         checkToken.bind(this)(token)
       } else {
         this.props.history.push({

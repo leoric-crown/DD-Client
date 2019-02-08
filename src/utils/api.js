@@ -13,7 +13,7 @@ export const login = (payload) =>
     headers,
     body: JSON.stringify(payload)
   }).then(res => res.json())
-  .catch(e => console.log(e))
+    .catch(e => console.log(e))
 
 export const signup = (payload) =>
   fetch(`${api}/users/signup`, {
@@ -21,53 +21,53 @@ export const signup = (payload) =>
     headers,
     body: JSON.stringify(payload)
   })
-  .then(res => res.json())
-  .then(data => data)
-  .catch(e => console.log(e))
+    .then(res => res.json())
+    .then(data => data)
+    .catch(e => console.log(e))
 
 export const fbLogin = (accessToken) =>
   fetch(`${api}/users/auth/facebook`, {
-    method:'POST',
+    method: 'POST',
     headers: {
       ...headers,
-      'Authorization':`Bearer ${accessToken}`
+      'Authorization': `Bearer ${accessToken}`
     },
   }).then(res => res.json())
 
 export const createCharacter = (token, payload) => {
   let data = new FormData()
   Object.entries(payload).forEach(keyValue => {
-    data.append(keyValue[0],keyValue[1])
+    data.append(keyValue[0], keyValue[1])
   })
   return fetch(`${api}/characters`, {
-    method:'POST',
+    method: 'POST',
     headers: {
-      'Authorization':`Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     },
     body: data
   }).then(res => res.json())
 }
 
- export const getInitialData = (userId, token) =>
-   fetch(`${api}/characters/user`, {
-     method:'GET',
-     headers: {
-       ...headers,
-       'Authorization':`Bearer ${token}`
-     },
-   })
-   .then(res => res.json())
-   .then(res => res.characters)
+export const getInitialData = (userId, token) =>
+  fetch(`${api}/characters/user`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+  })
+    .then(res => res.json())
+    .then(res => res.characters)
 
-   export const verifyToken = (token) =>
-   fetch(`${api}/users/verifyToken`, {
-     method:'POST',
-     headers: {
-       'Authorization':`Bearer ${token}`
-     },
-   }).then(res => {
-     if (res.status === 401){
-       throw new Error("Token Invalid")
-     }
-     return res.json()
-   })
+export const verifyToken = (token) =>
+  fetch(`${api}/users/verifyToken`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  }).then(res => {
+    if (res.status === 401) {
+      throw new Error("Token Invalid")
+    }
+    return res.json()
+  })

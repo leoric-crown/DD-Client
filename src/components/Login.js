@@ -29,7 +29,6 @@ class Login extends React.Component {
 
   componentWillMount() {
     const token = localStorage.getItem('DNDTOKEN')
-    // if (token) checkToken(token, this.props.dispatch, this.props.history)
     if (token) checkToken.bind(this)(token)
   }
 

@@ -9,15 +9,15 @@ import { setAuthedUser } from '../actions/authedUser'
 
 class Signup extends React.Component {
   state = {
-    name:'',
-    email:'',
-    password:'',
-    passwordConfirm:'',
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
     emailIsValid: true,
     passwordsMatch: true,
-    validEmail:true,
-    emailErrorMessage:'Invalid Email',
-    passwordErrorMessage:'Password do not match',
+    validEmail: true,
+    emailErrorMessage: 'Invalid Email',
+    passwordErrorMessage: 'Password do not match',
     serverError: false,
     serverErrorMessage: '',
     readyForSubmit: false
@@ -28,7 +28,7 @@ class Signup extends React.Component {
   }
 
   handleChange = (type, value) => {
-    switch(type) {
+    switch (type) {
       case 'name':
         this.setState({
           name: value
@@ -50,7 +50,7 @@ class Signup extends React.Component {
         })
         break
       default:
-       return;
+        return;
     }
 
     if (this.state.name
@@ -58,7 +58,7 @@ class Signup extends React.Component {
       && this.state.password
       && this.state.passwordConfirm
     ) {
-      this.setState ({
+      this.setState({
         readyForSubmit: true
       })
     }
@@ -67,9 +67,9 @@ class Signup extends React.Component {
 
 
   handleLogin = () => {
-    if(this.state.password !== this.state.passwordConfirm) {
+    if (this.state.password !== this.state.passwordConfirm) {
       this.setState({
-        'passwordsMatch':false
+        'passwordsMatch': false
       })
       return
     }
@@ -82,27 +82,27 @@ class Signup extends React.Component {
     }
 
     const payload = {
-    "email": this.state.email,
-    "password": this.state.password
+      "email": this.state.email,
+      "password": this.state.password
     }
 
     API.signup(payload)
-     .then((res) => {
-         if (res.error) {
-           this.setState({
+      .then((res) => {
+        if (res.error) {
+          this.setState({
             serverError: true,
             serverErrorMessage: res.message
-           })
-         }
-         this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
-         this.props.dispatch(handleInitialData(res.userId, res.jwt))
-         this.props.history.push({
-           pathname: '/dashboard/characters',
-         });
-     })
-     .catch((e) => {
-       console.log("Error:",e)
-     })
+          })
+        }
+        this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+        this.props.dispatch(handleInitialData(res.userId, res.jwt))
+        this.props.history.push({
+          pathname: '/dashboard/characters',
+        });
+      })
+      .catch((e) => {
+        console.log("Error:", e)
+      })
 
 
 
@@ -127,70 +127,70 @@ class Signup extends React.Component {
                     </strong>
                   </h3>
                 </div>
-                { this.state.serverError && (
-                  <MDBAlert  color="danger" >
+                {this.state.serverError && (
+                  <MDBAlert color="danger" >
                     <MDBIcon icon="warning" />
                     &nbsp;&nbsp;&nbsp;{this.state.serverErrorMessage}
                   </MDBAlert>
                 )}
-                  <MDBInput
-                    label="Your name"
-                    icon='user'
-                    group
-                    containerClass="mb-0"
-                    required={true}
-                    getValue={(e) => this.handleChange("name",e)}
-                  />
-                  <MDBInput
-                    label="Your email"
-                    icon="envelope"
-                    group
-                    type="email"
-                    getValue={(e) => this.handleChange("email",e)}
-                  />
-                  { !this.state.validEmail && (
-                    <MDBAlert  color="danger" >
-                      <MDBIcon icon="warning" />
-                      &nbsp;&nbsp;&nbsp;Invalid Email
+                <MDBInput
+                  label="Your name"
+                  icon='user'
+                  group
+                  containerClass="mb-0"
+                  required={true}
+                  getValue={(e) => this.handleChange("name", e)}
+                />
+                <MDBInput
+                  label="Your email"
+                  icon="envelope"
+                  group
+                  type="email"
+                  getValue={(e) => this.handleChange("email", e)}
+                />
+                {!this.state.validEmail && (
+                  <MDBAlert color="danger" >
+                    <MDBIcon icon="warning" />
+                    &nbsp;&nbsp;&nbsp;Invalid Email
 
                     </MDBAlert>
-                  )}
-                  <MDBInput
-                    label="Password"
-                    type="password"
-                    icon='lock'
-                    containerClass="mb-0"
-                    getValue={(e) => this.handleChange("password",e)}
-                  />
-                  <MDBInput
-                    label="Confirm Password"
-                    type="password"
-                    icon='check'
-                    containerClass="mb-0"
-                    getValue={(e) => this.handleChange("passwordConfirm",e)}
-                  />
-                  { !this.state.passwordsMatch && (
-                    <MDBAlert  color="danger" >
-                      <MDBIcon icon="warning" />
-                      &nbsp;&nbsp;&nbsp;{this.state.passwordErrorMessage}
-                    </MDBAlert>
-                  )}
-                  <br />
-                  <div className="text-center mb-3">
-                    { this.state.readyForSubmit && (
-                      <MDBBtn
-                        type="button"
-                        gradient="peach"
-                        rounded
-                        className="btn-block z-depth-1a"
-                        onClick={() => this.handleLogin()}
-                      >
-                        Register
+                )}
+                <MDBInput
+                  label="Password"
+                  type="password"
+                  icon='lock'
+                  containerClass="mb-0"
+                  getValue={(e) => this.handleChange("password", e)}
+                />
+                <MDBInput
+                  label="Confirm Password"
+                  type="password"
+                  icon='check'
+                  containerClass="mb-0"
+                  getValue={(e) => this.handleChange("passwordConfirm", e)}
+                />
+                {!this.state.passwordsMatch && (
+                  <MDBAlert color="danger" >
+                    <MDBIcon icon="warning" />
+                    &nbsp;&nbsp;&nbsp;{this.state.passwordErrorMessage}
+                  </MDBAlert>
+                )}
+                <br />
+                <div className="text-center mb-3">
+                  {this.state.readyForSubmit && (
+                    <MDBBtn
+                      type="button"
+                      gradient="peach"
+                      rounded
+                      className="btn-block z-depth-1a"
+                      onClick={() => this.handleLogin()}
+                    >
+                      Register
                       </MDBBtn>
-                    )}
+                  )}
 
-                  </div>
-                </MDBCardBody>
+                </div>
+              </MDBCardBody>
             </MDBCard>
           </MDBCol>
         </MDBRow>

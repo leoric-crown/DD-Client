@@ -1,14 +1,14 @@
 import { SET_AUTHED_USER, LOGOUT_USER } from '../actions/authedUser'
 
 const defaultState = {
-  authenticated:false,
+  authenticated: false,
 }
 
-export default function User (state = defaultState, action) {
+export default function User(state = defaultState, action) {
   switch (action.type) {
     case SET_AUTHED_USER:
       return {
-        authenticated:true,
+        authenticated: true,
         email: action.authedUser,
         photoURL: action.photoURL,
         isDM: action.isDM,
@@ -19,7 +19,7 @@ export default function User (state = defaultState, action) {
         authenticated: false,
         message: action.message
       }
-    default :
+    default:
       return state
   }
 
