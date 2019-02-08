@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBModalFooter, MDBAlert, MDBIcon} from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBModalFooter, MDBAlert, MDBIcon } from 'mdbreact';
 import logo from '../logo.svg'
 import * as API from '../utils/api'
 import FacebookLogin from 'react-facebook-login';
@@ -11,25 +11,26 @@ import { checkToken } from '../utils/misc'
 
 class Login extends React.Component {
   state = {
-    email:'',
-    password:'',
+    email: '',
+    password: '',
     authError: false,
     flashMessage: false,
-    message:'',
+    message: '',
   }
 
   setMessage = () => {
-    if(this.props.User.message) {
+    if (this.props.User.message) {
       this.setState({
         flashMessage: true,
         message: this.props.User.message
       })
     }
   }
-  
-  componentWillMount () {
+
+  componentWillMount() {
     const token = localStorage.getItem('DNDTOKEN')
-    if (token) checkToken(token, this.props.dispatch, this.props.history)
+    // if (token) checkToken(token, this.props.dispatch, this.props.history)
+    if (token) checkToken.bind(this)(token)
   }
 
   componentWillReceiveProps() {
@@ -54,20 +55,20 @@ class Login extends React.Component {
 
   handleLogin = () => {
     API.login(this.state)
-    .then((res) => {
-      if(res.status.code === 200) {
-        localStorage.setItem('DNDTOKEN', res.jwt);
-        this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
-        this.props.dispatch(handleInitialData(res.userId, res.jwt))
-        this.props.history.push({
-          pathname: '/dashboard/characters',
-        });
-      } else {
-        this.setState({
-          authError: true
-        })
-      }
-    })
+      .then((res) => {
+        if (res.status.code === 200) {
+          localStorage.setItem('DNDTOKEN', res.jwt);
+          this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+          this.props.dispatch(handleInitialData(res.userId, res.jwt))
+          this.props.history.push({
+            pathname: '/dashboard/characters',
+          });
+        } else {
+          this.setState({
+            authError: true
+          })
+        }
+      })
   }
 
   handleKeyDown = (event) => {
@@ -83,90 +84,90 @@ class Login extends React.Component {
   handleFBLogin = (res) => {
     const profilePic = res.picture.data.url
     API.fbLogin(res.accessToken)
-    .then((res) => {
-      console.log(res)
-      if(res.status.code === 200) {
-        console.log("Login with Fb successful")
-        localStorage.setItem('DNDTOKEN', res.jwt);
-        this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
-        this.props.dispatch(handleInitialData(res.userId, res.jwt))
-        this.props.history.push({
-          pathname: '/dashboard/characters',
-        })
-      }
-    }).catch( err => console.warn(err))
+      .then((res) => {
+        console.log(res)
+        if (res.status.code === 200) {
+          console.log("Login with Fb successful")
+          localStorage.setItem('DNDTOKEN', res.jwt);
+          this.props.dispatch(setAuthedUser(res.email, profilePic, res.isDM, res.userId))
+          this.props.dispatch(handleInitialData(res.userId, res.jwt))
+          this.props.history.push({
+            pathname: '/dashboard/characters',
+          })
+        }
+      }).catch(err => console.warn(err))
   }
 
   render() {
     return (
       <div>
         <div>
-          { this.state.flashMessage && (
+          {this.state.flashMessage && (
             <MDBAlert color="danger" >
-            <h4 className="alert-heading flash-message"><strong>{this.state.message}</strong></h4>
-          </MDBAlert>
+              <h4 className="alert-heading flash-message"><strong>{this.state.message}</strong></h4>
+            </MDBAlert>
           )}
         </div>
         {(!this.props.User.authenticated || !localStorage.getItem('DNDTOKEN'))
           && (
-          <MDBContainer className='centered'>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <MDBRow className="d-flex justify-content-center">
-              <MDBCol md="6">
-                <MDBCard>
-                  <MDBCardBody className="mx-4" >
-                    <div className="text-center">
-                      <h3 className="deep-orange-text mb-5">
-                        <strong>D&D Turn Tracker</strong>
-                      </h3>
-                    </div>
-                    <img alt='DnD Turn Tracker Logo' src={logo}/>
-                      { this.state.authError && (
-                        <MDBAlert  color="danger" >
+            <MDBContainer className='centered'>
+              <br />
+              <br />
+              <br />
+              <br />
+              <MDBRow className="d-flex justify-content-center">
+                <MDBCol md="6">
+                  <MDBCard>
+                    <MDBCardBody className="mx-4" >
+                      <div className="text-center">
+                        <h3 className="deep-orange-text mb-5">
+                          <strong>D&D Turn Tracker</strong>
+                        </h3>
+                      </div>
+                      <img alt='DnD Turn Tracker Logo' src={logo} />
+                      {this.state.authError && (
+                        <MDBAlert color="danger" >
                           <MDBIcon icon="warning" />
                           &nbsp;&nbsp;&nbsp;Error Logging In
                         </MDBAlert>
                       )}
-                    <MDBInput
-                      label="Your email"
-                      group
-                      type="email"
-                      validate
-                      success="right"
-                      error="Whoops!"
-                      getValue={(e) => this.handleChangeEmail(e)}
-                    />
-                    <MDBInput
-                      label="Your password"
-                      group
-                      type="password"
-                      validate
-                      containerClass="mb-0"
-                      onKeyDown = {(e) => this.handleKeyDown(e)}
-                      getValue={(e) => this.handleChangePassword(e)}
-                    />
-                    <p className="font-small blue-text d-flex justify-content-end pb-3">
-                      Forgot
+                      <MDBInput
+                        label="Your email"
+                        group
+                        type="email"
+                        validate
+                        success="right"
+                        error="Whoops!"
+                        getValue={(e) => this.handleChangeEmail(e)}
+                      />
+                      <MDBInput
+                        label="Your password"
+                        group
+                        type="password"
+                        validate
+                        containerClass="mb-0"
+                        onKeyDown={(e) => this.handleKeyDown(e)}
+                        getValue={(e) => this.handleChangePassword(e)}
+                      />
+                      <p className="font-small blue-text d-flex justify-content-end pb-3">
+                        Forgot
                       <a href="#!" className="blue-text ml-1">
 
-                        Password?
+                          Password?
                       </a>
-                    </p>
-                    <div className="text-center mb-3">
-                      <MDBBtn
-                        type="button"
-                        gradient="peach"
-                        rounded
-                        className="btn-block z-depth-1a"
-                        onClick={() => this.handleLogin()}
-                      >
-                        Sign in
+                      </p>
+                      <div className="text-center mb-3">
+                        <MDBBtn
+                          type="button"
+                          gradient="peach"
+                          rounded
+                          className="btn-block z-depth-1a"
+                          onClick={() => this.handleLogin()}
+                        >
+                          Sign in
                       </MDBBtn>
-                    </div>
-                    <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                      </div>
+                      <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
                         <FacebookLogin
                           appId={config.FACEBOOK_APP_ID}
                           fields="name,email,picture"
@@ -176,22 +177,22 @@ class Login extends React.Component {
                           cssClass="my-facebook-button-class"
                           textButton=" Continue with Facebook"
                         />
-                  </MDBRow>
-                  </MDBCardBody>
-                  <MDBModalFooter className="mx-5 pt-3 mb-1">
-                    <p className="font-small grey-text d-flex justify-content-end">
-                      Not a member?
+                      </MDBRow>
+                    </MDBCardBody>
+                    <MDBModalFooter className="mx-5 pt-3 mb-1">
+                      <p className="font-small grey-text d-flex justify-content-end">
+                        Not a member?
                       <a href="/signup" className="blue-text ml-1">
 
-                        Sign Up
+                          Sign Up
                       </a>
-                    </p>
-                  </MDBModalFooter>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-        )}
+                      </p>
+                    </MDBModalFooter>
+                  </MDBCard>
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          )}
       </div>
     );
   }

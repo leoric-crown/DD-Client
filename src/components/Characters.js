@@ -14,7 +14,7 @@ class Characters extends React.Component {
 
   toggleButtonNavigation = (lastClicked) => {
     this.setState((state, props) => {
-      if (state.lastClicked !== lastClicked ) {
+      if (state.lastClicked !== lastClicked) {
         return {
           activeButtonMyCharacters: !state.activeButtonMyCharacters,
           lastClicked
@@ -27,13 +27,14 @@ class Characters extends React.Component {
 
   componentWillMount() {
     if (!this.props.User.authenticated) {
-        const token = localStorage.getItem('DNDTOKEN')
-        if (token)  {
-          checkToken(token, this.props.dispatch, this.props.history)
-        } else {
-          this.props.history.push({
-            pathname: '/'
-          })
+      const token = localStorage.getItem('DNDTOKEN')
+      if (token) {
+        // checkToken(token, this.props.dispatch, this.props.history)
+        checkToken.bind(this)(token)
+      } else {
+        this.props.history.push({
+          pathname: '/'
+        })
       }
     }
   }
@@ -42,57 +43,57 @@ class Characters extends React.Component {
     return (
       <div>
         {this.props.User.authenticated &&
-        this.props.Characters && (
-        <MDBContainer style={styles} className="">
-          <div className="characters-Container">
-          <MDBRow>
-            <MDBCol md='12' className="mb-4">
-            <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
-            <MDBIcon  icon="magic" size="lg"/>
-              &nbsp;
-              My Characters
+          this.props.Characters && (
+            <MDBContainer style={styles} className="">
+              <div className="characters-Container">
+                <MDBRow>
+                  <MDBCol md='12' className="mb-4">
+                    <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
+                      <MDBIcon icon="magic" size="lg" />
+                      &nbsp;
+                      My Characters
               </MDBBtn>
-            <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")}  color="black">
-            <MDBIcon icon="plus" size="lg"/>
-              &nbsp;
-              Create Character
+                    <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
+                      <MDBIcon icon="plus" size="lg" />
+                      &nbsp;
+                      Create Character
             </MDBBtn>
-          </MDBCol>
-          </MDBRow>
-          <MDBIcon color="black" icon="hat-wizard" />
-          </div>
-          {this.state.activeButtonMyCharacters
-            ?
-              <div>
-                {
-                  this.props.Characters.length > 0
-                  ?
-                  <ol className='my-characters'>
-                    {this.props.Characters.map((character) => (
-                      <li key={character._id}>
-                        <div className="individual-character">
-                          <MyCharacters
-                            character={character}
-                            length={this.props.Characters.length}
-                          />
-                        </div>
-                      </li>
-                    ))}
-                  </ol>
+                  </MDBCol>
+                </MDBRow>
+                <MDBIcon color="black" icon="hat-wizard" />
+              </div>
+              {this.state.activeButtonMyCharacters
+                ?
+                <div>
+                  {
+                    this.props.Characters.length > 0
+                      ?
+                      <ol className='my-characters'>
+                        {this.props.Characters.map((character) => (
+                          <li key={character._id}>
+                            <div className="individual-character">
+                              <MyCharacters
+                                character={character}
+                                length={this.props.Characters.length}
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
 
-                  : <h3>No Characters just yet...</h3>
-                }
-              </div>
-            :
-              <div className="my-characters">
-                <CreateCharacter
-                  toggleButtonNavigation={this.toggleButtonNavigation}
-                />
-              </div>
-          }
-        </MDBContainer>
-      )}
-    </div>
+                      : <h3>No Characters just yet...</h3>
+                  }
+                </div>
+                :
+                <div className="my-characters">
+                  <CreateCharacter
+                    toggleButtonNavigation={this.toggleButtonNavigation}
+                  />
+                </div>
+              }
+            </MDBContainer>
+          )}
+      </div>
 
 
     )
