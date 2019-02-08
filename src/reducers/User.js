@@ -7,6 +7,7 @@ const defaultState = {
 export default function User(state = defaultState, action) {
   switch (action.type) {
     case SET_AUTHED_USER:
+    console.log('SET_AUTHED_USER', action)
       return {
         authenticated: true,
         email: action.authedUser,

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import { setAuthedUser } from '../actions/authedUser'
 
+const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
 
 class Signup extends React.Component {
   state = {
@@ -94,7 +95,7 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
           })
         }
-        this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+        this.props.dispatch(setAuthedUser(res.email, !res.photoUrl ? defaultUserPic : res.photoUrl, res.isDM, res.userId))
         this.props.dispatch(handleInitialData(res.userId, res.jwt))
         this.props.history.push({
           pathname: '/dashboard/characters',
