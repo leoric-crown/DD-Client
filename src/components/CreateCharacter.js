@@ -60,7 +60,7 @@ class CreateCharacter extends Component {
     if (!validator.isURL(this.state.url)) {
       picUrl = null
     } else {
-      picUrl = this.state.url
+      picUrl = this.state.url 
     }
     const payload = {
       name: this.state.name,

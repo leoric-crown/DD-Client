@@ -9,8 +9,6 @@ import { handleInitialData } from '../actions/shared'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
 
-const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
-
 class Login extends React.Component {
   state = {
     email: '',
@@ -58,9 +56,8 @@ class Login extends React.Component {
     API.login(this.state)
       .then((res) => {
         if (res.status.code === 200) {
-          console.log('in handle login', res)
           localStorage.setItem('DNDTOKEN', res.jwt);
-          this.props.dispatch(setAuthedUser(res.email, !res.photoUrl ? defaultUserPic : res.photoUrl, res.isDM, res.userId))
+          this.props.dispatch(setAuthedUser(res))
           this.props.dispatch(handleInitialData(res.userId, res.jwt))
           this.props.history.push({
             pathname: '/dashboard/characters',
@@ -87,10 +84,8 @@ class Login extends React.Component {
     API.fbLogin(res.accessToken)
       .then((res) => {
         if (res.status.code === 200) {
-          console.log("Login with Fb successful")
-          console.log('in handle fb login', res)
           localStorage.setItem('DNDTOKEN', res.jwt);
-          this.props.dispatch(setAuthedUser(res.email, !res.photoUrl ? defaultUserPic : res.photoUrl, res.isDM, res.userId))
+          this.props.dispatch(setAuthedUser(res))
           this.props.dispatch(handleInitialData(res.userId, res.jwt))
           this.props.history.push({
             pathname: '/dashboard/characters',

@@ -60,7 +60,7 @@ export const createEncounter = (token, payload) => {
 }
 
 const getCharacters = (token) => {
-  return fetch(`${api}/characters`, {
+  return fetch(`${api}/characters/user`, {
     method: 'GET',
     headers: {
       ...headers,

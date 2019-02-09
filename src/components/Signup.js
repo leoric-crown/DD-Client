@@ -95,7 +95,7 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
           })
         }
-        this.props.dispatch(setAuthedUser(res.email, !res.photoUrl ? defaultUserPic : res.photoUrl, res.isDM, res.userId))
+        this.props.dispatch(setAuthedUser(res.email, !res.photoURL ? defaultUserPic : res.photoURL, res.isDM, res.userId))
         this.props.dispatch(handleInitialData(res.userId, res.jwt))
         this.props.history.push({
           pathname: '/dashboard/characters',
