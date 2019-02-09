@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import { setAuthedUser } from '../actions/authedUser'
 
+const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
 
 class Signup extends React.Component {
   state = {
@@ -24,7 +25,17 @@ class Signup extends React.Component {
   }
 
   validateInput = (type) => {
+    //TODO
+  }
 
+  handleKeyDown = (event) => {
+    switch (event.key) {
+      case 'Enter':
+        this.handleLogin()
+        break
+      default:
+        break
+    }
   }
 
   handleChange = (type, value) => {
@@ -94,7 +105,15 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
           })
         }
-        this.props.dispatch(setAuthedUser(res.email, "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png", res.isDM, res.userId))
+        // Signup wasn't working with parameter destructuring
+        // In setAuthedUser Action
+        const authedUserData = {
+          email: res.email,
+          photoURL: !res.photoURL ? defaultUserPic : res.photoURL,
+          isDM: res.idDM,
+          userId: res.userId
+        }
+        this.props.dispatch(setAuthedUser(authedUserData))
         this.props.dispatch(handleInitialData(res.userId, res.jwt))
         this.props.history.push({
           pathname: '/dashboard/characters',
@@ -115,8 +134,8 @@ class Signup extends React.Component {
           <MDBCol md="6">
             <MDBCard>
               <MDBCardBody className="mx-4 d-row" >
-                <div className="text-center">
-                  <h3 className="deep-orange-text mb-5">
+                <div className="">
+                  <h3 className="deep-red-text mb-5">
                     <MDBIcon onClick={() =>
                       this.props.history.push({
                         pathname: '/',
@@ -136,6 +155,7 @@ class Signup extends React.Component {
                 <MDBInput
                   label="Your name"
                   icon='user'
+                  color="black"
                   group
                   containerClass="mb-0"
                   required={true}
@@ -168,6 +188,7 @@ class Signup extends React.Component {
                   icon='check'
                   containerClass="mb-0"
                   getValue={(e) => this.handleChange("passwordConfirm", e)}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
                 />
                 {!this.state.passwordsMatch && (
                   <MDBAlert color="danger" >
@@ -180,7 +201,7 @@ class Signup extends React.Component {
                   {this.state.readyForSubmit && (
                     <MDBBtn
                       type="button"
-                      gradient="peach"
+                      color="red"
                       rounded
                       className="btn-block z-depth-1a"
                       onClick={() => this.handleLogin()}

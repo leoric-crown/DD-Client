@@ -48,16 +48,90 @@ export const createCharacter = (token, payload) => {
   }).then(res => res.json())
 }
 
-export const getInitialData = (userId, token) =>
-  fetch(`${api}/characters/user`, {
-    method: 'GET',
+export const editCharacter = (token, payload, id) => {
+  return fetch(`${api}/characters/${id}`, {
+    method: 'PATCH',
     headers: {
       ...headers,
       'Authorization': `Bearer ${token}`
     },
-  })
-    .then(res => res.json())
-    .then(res => res.characters)
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+export const deleteCharacter = (token, id) => {
+  return fetch(`${api}/characters/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+const getCharacters = (token) => {
+  return fetch(`${api}/characters/user`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+export const createEncounter = (token, payload) => {
+  return fetch(`${api}/encounters`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+export const editEncounter = (token, payload, id) => {
+  return fetch(`${api}/encounters/${id}`, {
+    method: 'PATCH',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+export const deleteEncounter = (token, id) => {
+  return fetch(`${api}/encounters/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+const getEncounters = (token) => {
+  return fetch(`${api}/encounters`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+export const getInitialData = (userId, token) => {
+  return Promise.all([
+    getCharacters(token),
+    getEncounters(token)
+  ])
+    .then(([charactersResponse, encountersResponse]) => {
+      const { characters } = charactersResponse
+      const { encounters } = encountersResponse
+      return { characters, encounters }
+    })
+}
 
 export const verifyToken = (token) =>
   fetch(`${api}/users/verifyToken`, {

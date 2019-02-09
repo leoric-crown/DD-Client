@@ -1,10 +1,13 @@
 export const SET_AUTHED_USER = 'SET_AUTHED_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 
-export function setAuthedUser(authedUser, photoURL, isDM, userId) {
+const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+
+export function setAuthedUser({ email, photoURL, isDM, userId }) {
+  if(!photoURL) photoURL = defaultUserPic
   return {
     type: SET_AUTHED_USER,
-    authedUser,
+    authedUser: email,
     photoURL,
     isDM,
     userId
