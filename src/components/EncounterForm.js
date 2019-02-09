@@ -1,13 +1,43 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
-import { createEncounter } from '../actions/encounters'
+import { createEncounter, patchEncounter, cancelEditEncounter } from '../actions/encounters'
 
 class EncounterForm extends Component {
     state = {
         name: '',
-        status: ''
+        status: '',
+        updating: false
     }
+
+    componentDidMount() {
+        if(!this.state.updating && this.props.encounter) {
+            console.log('setting updating', this.props.encounter)
+            const { name, status } = this.props.encounter
+            this.setState({
+                name,
+                status,
+                updating: this.props.encounter
+            })
+        }
+    }
+
+    validateInput = () => {
+        //TODO
+    }
+
+    handleKeyDown = (event) => {
+        switch(event.key) {
+          case 'Enter':
+            this.handleSubmit(this.props.toggleButtonNavigation)
+            break
+          case 'Escape':
+            this.handleCancel()
+            break
+          default:
+            break
+        }
+      }
 
     handleChange = (type, value) => {
         switch (type) {
@@ -26,16 +56,51 @@ class EncounterForm extends Component {
         }
     }
 
-    handleSubmit = () => {
+    handleUpdate = () => {
+        console.log('handleUpdate')
+        const { updating, ...changedEncounter } = this.state
+        const fieldsToUpdate = Object.entries(changedEncounter).filter(([key, value]) => {
+            return (updating[key] && updating[key] !== value)
+          }).map(([propName, value]) => {
+            return {
+              propName,
+              value
+            }
+          })
+          if(fieldsToUpdate.length > 0) {
+            this.props.dispatch(patchEncounter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, updating._id))
+          } else {
+            this.handleCancel()
+          }
+    }
+
+    handleCreate = () => {
+        console.log('handleCreate')
         const payload = {
             name: this.state.name,
             status: this.state.status
         }
 
         this.props.dispatch(createEncounter(localStorage.getItem('DNDTOKEN'), payload))
+        this.props.toggleButtonNavigation('Submit_Encounter')
+    }
+
+    handleSubmit = () => {
+        if(!this.state.updating) {
+            this.handleCreate()
+        } else {
+            this.handleUpdate()
+        }
+
+    }
+
+    handleCancel = () => {
+        this.props.dispatch(cancelEditEncounter())
     }
 
     render() {
+        const { name, status } = this.state
+        const { toggleButtonNavigation } = this.props
         return (
             <MDBContainer className=''>
                 <MDBRow className="d-flex justify-content-center">
@@ -45,7 +110,7 @@ class EncounterForm extends Component {
                                 <div className="text-center">
                                     <h3 className="mb-5">
                                         <strong>
-                                            &nbsp;Create Encounter
+                                            &nbsp;{this.state.updating ? `Edit ${this.state.updating.name}` : 'Create Encounter'}
                                         </strong>
                                     </h3>
                                 </div>
@@ -55,12 +120,16 @@ class EncounterForm extends Component {
                                     group
                                     containerClass="mb-0"
                                     required={true}
-                                    getValue={(e) => this.handleChange("name", e)}
+                                    onChange={(e) => this.handleChange("name", e.target.value)}
+                                    onKeyDown={(e) => this.handleKeyDown(e)}
+                                    value={name}
                                 />
                                 <MDBInput
                                     label="Status"
                                     group
-                                    getValue={(e) => this.handleChange("status", e)}
+                                    onChange={(e) => this.handleChange("status", e.target.value)}
+                                    onKeyDown={(e) => this.handleKeyDown(e)}
+                                    value={status}
                                 />
                                 <br />
                                 <div className="text-center">
@@ -69,11 +138,24 @@ class EncounterForm extends Component {
                                         rounded
                                         color="black"
                                         className="btn-block z-depth-1a"
-                                        onClick={() => this.handleSubmit()}
+                                        onClick={() => this.handleSubmit(toggleButtonNavigation)}
                                     >
-                                        Create
+                                        {this.state.updating? 'Save' : 'Create'}
                                     </MDBBtn>
                                 </div>
+                                {this.state.updating &&
+                                <div className="text-center">
+                                    <MDBBtn
+                                        type="button"
+                                        rounded
+                                        color="black"
+                                        className="btn-block z-depth-1a"
+                                        onClick={() => this.handleCancel()}
+                                    >
+                                        Cancel
+                                    </MDBBtn>
+                                </div>
+                                }
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>

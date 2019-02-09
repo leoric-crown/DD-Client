@@ -100,7 +100,7 @@ class CharacterForm extends Component {
     }
 
     this.props.dispatch(createCharacter(localStorage.getItem('DNDTOKEN'), payload))
-    toggleCharacterNavigation("Submit_Character")
+    toggleCharacterNavigation('Submit_Character')
   }
 
   handleUpdate = () => {
@@ -210,19 +210,18 @@ class CharacterForm extends Component {
                   </MDBBtn>
                 </div>
                 <br/>
-                <div className="text-center">
                   {this.state.updating && 
+                  <div className="text-center">
                     <MDBBtn
                     type="button"
                       rounded
                       color="black"
                       className="btn-block z-depth-1a"
                       onClick={() => this.handleCancel()}
-                  >
+                    >
                     Cancel
-                  </MDBBtn>
-                  }
-                </div>
+                    </MDBBtn>
+                  </div>}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

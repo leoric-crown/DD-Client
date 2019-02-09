@@ -21,7 +21,7 @@ export function patchCharacter(token, payload, id) {
   return (dispatch) => {
     return API.editCharacter(token, payload, id)
       .then((response) => {
-        if(response.status.code === 200) {
+        if (response.status.code === 200) {
           dispatch(updateCharacter(payload, id))
         }
       })
@@ -31,12 +31,12 @@ export function patchCharacter(token, payload, id) {
 export function deleteCharacter(token, id) {
   return (dispatch) => {
     return API.deleteCharacter(token, id)
-    .then(response => {
-      console.log(response)
-      if(response.status.code === 200) {
-        dispatch(removeCharacter(id))
-      }
-    })
+      .then(response => {
+        console.log(response)
+        if (response.status.code === 200) {
+          dispatch(removeCharacter(id))
+        }
+      })
   }
 }
 

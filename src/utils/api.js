@@ -69,6 +69,16 @@ export const deleteCharacter = (token, id) => {
   }).then(res => res.json())
 }
 
+const getCharacters = (token) => {
+  return fetch(`${api}/characters/user`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
 export const createEncounter = (token, payload) => {
   return fetch(`${api}/encounters`, {
     method: 'POST',
@@ -80,9 +90,20 @@ export const createEncounter = (token, payload) => {
   }).then(res => res.json())
 }
 
-const getCharacters = (token) => {
-  return fetch(`${api}/characters/user`, {
-    method: 'GET',
+export const editEncounter = (token, payload, id) => {
+  return fetch(`${api}/encounters/${id}`, {
+    method: 'PATCH',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+export const deleteEncounter = (token, id) => {
+  return fetch(`${api}/encounters/${id}`, {
+    method: 'DELETE',
     headers: {
       ...headers,
       'Authorization': `Bearer ${token}`
