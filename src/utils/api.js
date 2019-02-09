@@ -48,6 +48,27 @@ export const createCharacter = (token, payload) => {
   }).then(res => res.json())
 }
 
+export const editCharacter = (token, payload, id) => {
+  return fetch(`${api}/characters/${id}`, {
+    method: 'PATCH',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+export const deleteCharacter = (token, id) => {
+  return fetch(`${api}/characters/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
 export const createEncounter = (token, payload) => {
   return fetch(`${api}/encounters`, {
     method: 'POST',
@@ -84,11 +105,11 @@ export const getInitialData = (userId, token) => {
     getCharacters(token),
     getEncounters(token)
   ])
-  .then(([charactersReponse, encountersResponse]) => {
-    const { characters } = charactersReponse
-    const { encounters } = encountersResponse
-    return { characters, encounters}
-  })
+    .then(([charactersResponse, encountersResponse]) => {
+      const { characters } = charactersResponse
+      const { encounters } = encountersResponse
+      return { characters, encounters }
+    })
 }
 
 export const verifyToken = (token) =>

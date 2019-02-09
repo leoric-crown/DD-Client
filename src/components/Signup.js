@@ -25,7 +25,17 @@ class Signup extends React.Component {
   }
 
   validateInput = (type) => {
+    //TODO
+  }
 
+  handleKeyDown = (event) => {
+    switch (event.key) {
+      case 'Enter':
+        this.handleLogin()
+        break
+      default:
+        break
+    }
   }
 
   handleChange = (type, value) => {
@@ -169,6 +179,7 @@ class Signup extends React.Component {
                   icon='check'
                   containerClass="mb-0"
                   getValue={(e) => this.handleChange("passwordConfirm", e)}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
                 />
                 {!this.state.passwordsMatch && (
                   <MDBAlert color="danger" >

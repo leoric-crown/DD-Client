@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CreateEncounter from './CreateEncounter'
+import EncounterForm from './EncounterForm'
 
 class Encounters extends Component {
     render() {
@@ -9,7 +9,7 @@ class Encounters extends Component {
                 <br />
                 <br />
                 <h1>Encounters Component</h1>
-                <CreateEncounter></CreateEncounter>
+                <EncounterForm/>
             </div>
         )
     }

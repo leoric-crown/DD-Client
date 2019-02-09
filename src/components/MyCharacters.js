@@ -4,6 +4,8 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import config from '../config.json';
+import { connect } from 'react-redux'
+import { startEditCharacter, deleteCharacter } from '../actions/characters'
 
 const ONE_ITEM = 1
 const TWO_ITEMS = 2
@@ -25,6 +27,15 @@ class MyCharacters extends Component {
       return
     }
   }
+
+  handleEdit = () => {
+    this.props.dispatch(startEditCharacter(this.props.character))
+  }
+
+  handleDelete = () => {
+    this.props.dispatch(deleteCharacter(localStorage.getItem('DNDTOKEN'), this.props.character._id))
+  }
+
   render() {
     return (
       <MDBContainer className="">
@@ -50,9 +61,21 @@ class MyCharacters extends Component {
                 rounded
                 color="black"
                 className="btn-block z-depth-1a black character-stats"
-                onClick={() => console.log("Clicked")}
+                onClick={this.handleEdit}
               >
                 Edit
+                </MDBBtn>
+            </div>
+            <br/>
+            <div className="text-center mb-3">
+              <MDBBtn
+                type="button"
+                rounded
+                color="black"
+                className="btn-block z-depth-1a black character-stats"
+                onClick={this.handleDelete}
+              >
+                Delete
                 </MDBBtn>
             </div>
           </MDBCardBody>
@@ -62,4 +85,4 @@ class MyCharacters extends Component {
   }
 }
 
-export default MyCharacters
+export default connect()(MyCharacters)

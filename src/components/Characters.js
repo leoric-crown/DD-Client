@@ -1,6 +1,6 @@
 import React from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-import CreateCharacter from './CreateCharacter'
+import CharacterForm from './CharacterForm'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
@@ -38,10 +38,11 @@ class Characters extends React.Component {
   }
 
   render() {
+    const characterList = this.props.Characters.list
     return (
       <div>
         {this.props.User.authenticated &&
-          this.props.Characters && (
+          characterList && (
             <MDBContainer style={styles} className="">
               <div className="characters-Container">
                 <MDBRow>
@@ -64,16 +65,20 @@ class Characters extends React.Component {
                 ?
                 <div>
                   {
-                    this.props.Characters.length > 0
+                    characterList.length > 0
                       ?
                       <ol className='my-characters'>
-                        {this.props.Characters.map((character) => (
+                        {characterList.map((character) => (
                           <li key={character._id}>
                             <div className="individual-character">
-                              <MyCharacters
-                                character={character}
-                                length={this.props.Characters.length}
-                              />
+                              {(this.props.Characters.editing &&
+                                this.props.Characters.editing._id === character._id) ?
+                                (<CharacterForm character={character}/>) :
+                                <MyCharacters
+                                  character={character}
+                                  length={characterList.length}
+                                />
+                              }
                             </div>
                           </li>
                         ))}
@@ -84,7 +89,7 @@ class Characters extends React.Component {
                 </div>
                 :
                 <div className="my-characters">
-                  <CreateCharacter
+                  <CharacterForm
                     toggleButtonNavigation={this.toggleButtonNavigation}
                   />
                 </div>

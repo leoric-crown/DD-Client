@@ -3,7 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, M
 import { connect } from 'react-redux'
 import { createEncounter } from '../actions/encounters'
 
-class CreateEncounter extends Component {
+class EncounterForm extends Component {
     state = {
         name: '',
         status: ''
@@ -90,4 +90,4 @@ function mapStateToProps({ User }) {
     }
 }
 
-export default connect(mapStateToProps)(CreateEncounter)
+export default connect(mapStateToProps)(EncounterForm)

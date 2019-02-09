@@ -14,7 +14,6 @@ const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.
 // }
 
 export function setAuthedUser(user) {
-  console.log('setAuthedUser', user)
   var { email, photoURL, isDM, userId } = user
   if(!photoURL) photoURL = defaultUserPic
   return {
