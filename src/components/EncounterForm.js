@@ -7,7 +7,8 @@ class EncounterForm extends Component {
     state = {
         name: '',
         status: '',
-        updating: false
+        updating: false,
+        style: {}
     }
 
     componentDidMount() {
@@ -17,7 +18,10 @@ class EncounterForm extends Component {
             this.setState({
                 name,
                 status,
-                updating: this.props.encounter
+                updating: this.props.encounter,
+                style: {
+                    width: '25em',
+                }
             })
         }
     }
@@ -102,14 +106,14 @@ class EncounterForm extends Component {
         const { name, status } = this.state
         const { toggleButtonNavigation } = this.props
         return (
-            <MDBContainer className=''>
+            <MDBContainer style={this.state.style}>
                 <MDBRow className="d-flex justify-content-center">
                     <MDBCol md="8">
                         <MDBCard className="create-character">
                             <MDBCardBody className="mx-4 d-row" >
                                 <div className="text-center">
                                     <h3 className="mb-5">
-                                        <strong>
+                                        <strong style={formHeaderStyle}>
                                             &nbsp;{this.state.updating ? `Edit ${this.state.updating.name}` : 'Create Encounter'}
                                         </strong>
                                     </h3>
@@ -143,6 +147,7 @@ class EncounterForm extends Component {
                                         {this.state.updating? 'Save' : 'Create'}
                                     </MDBBtn>
                                 </div>
+                                {this.state.updating? <br /> : ''}
                                 {this.state.updating &&
                                 <div className="text-center">
                                     <MDBBtn
@@ -171,5 +176,10 @@ function mapStateToProps({ User }) {
         User
     }
 }
+
+const formHeaderStyle = {
+    color:'black'
+}
+  
 
 export default connect(mapStateToProps)(EncounterForm)

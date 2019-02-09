@@ -3,7 +3,6 @@ import { MDBContainer, MDBCard, MDBCardBody, MDBBtn, MDBIcon } from 'mdbreact';
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import config from '../config.json';
 import { connect } from 'react-redux'
 import { startEditEncounter, deleteEncounter } from '../actions/encounters'
 
@@ -51,8 +50,8 @@ class MyEncounters extends Component {
               <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/3f8958b2-0d97-487e-86b8-07281543baf7_scaled.jpg`} />
             </div>
             <div className="character-specs mb-3">
-              <h5><MDBIcon icon="user" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Name:</strong> {encounter.name}</h5>
-              <h5><MDBIcon icon="heart" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Status:</strong> {encounter.status}</h5>
+              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Name:</strong> {encounter.name}</h5>
+              <h5><MDBIcon icon="heart" size="lg" className="pr-3" /><strong className="character-stats">Status:</strong> {encounter.status}</h5>
             </div>
             <div className="text-center mb-3">
               <MDBBtn
@@ -62,10 +61,10 @@ class MyEncounters extends Component {
                 className="btn-block z-depth-1a black character-stats"
                 onClick={this.handleEdit}
               >
-                Edit
+              <MDBIcon icon="pencil" size="lg" />
+                &nbsp;&nbsp;Edit
                 </MDBBtn>
             </div>
-            <br/>
             <div className="text-center mb-3">
               <MDBBtn
                 type="button"
@@ -74,7 +73,8 @@ class MyEncounters extends Component {
                 className="btn-block z-depth-1a black character-stats"
                 onClick={this.handleDelete}
               >
-                Delete
+              <MDBIcon icon="trash" size="lg" />
+              &nbsp;&nbsp;Delete
                 </MDBBtn>
             </div>
           </MDBCardBody>

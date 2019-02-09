@@ -126,8 +126,8 @@ class Signup extends React.Component {
           <MDBCol md="6">
             <MDBCard>
               <MDBCardBody className="mx-4 d-row" >
-                <div className="text-center">
-                  <h3 className="deep-orange-text mb-5">
+                <div className="">
+                  <h3 className="deep-red-text mb-5">
                     <MDBIcon onClick={() =>
                       this.props.history.push({
                         pathname: '/',
@@ -147,6 +147,7 @@ class Signup extends React.Component {
                 <MDBInput
                   label="Your name"
                   icon='user'
+                  color="black"
                   group
                   containerClass="mb-0"
                   required={true}
@@ -192,7 +193,7 @@ class Signup extends React.Component {
                   {this.state.readyForSubmit && (
                     <MDBBtn
                       type="button"
-                      gradient="peach"
+                      color="red"
                       rounded
                       className="btn-block z-depth-1a"
                       onClick={() => this.handleLogin()}

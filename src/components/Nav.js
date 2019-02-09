@@ -36,7 +36,7 @@ class Navbars extends React.Component {
             <header>
               <MDBNavbar color="black" fixed="top" dark expand="md">
                 <MDBNavbarBrand href="/">
-                  <strong>Dnd Turn Tracker</strong>
+                  <strong className="text-in-black">Dnd Turn Tracker</strong>
                 </MDBNavbarBrand>
                 {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
                 <MDBCollapse isOpen={this.state.collapse} navbar>

@@ -1,6 +1,5 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBModalFooter, MDBAlert, MDBIcon } from 'mdbreact';
-import logo from '../logo.svg'
 import * as API from '../utils/api'
 import FacebookLogin from 'react-facebook-login';
 import config from '../config.json';
@@ -115,12 +114,12 @@ class Login extends React.Component {
                 <MDBCol md="6">
                   <MDBCard>
                     <MDBCardBody className="mx-4" >
+                      <img alt='DnD Turn Tracker Logo' src="http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1" />
                       <div className="text-center">
-                        <h3 className="deep-orange-text mb-5">
-                          <strong>D&D Turn Tracker</strong>
+                        <h3 className="">
+                          <strong>Turn Tracker</strong>
                         </h3>
                       </div>
-                      <img alt='DnD Turn Tracker Logo' src={logo} />
                       {this.state.authError && (
                         <MDBAlert color="danger" >
                           <MDBIcon icon="warning" />
@@ -155,7 +154,7 @@ class Login extends React.Component {
                       <div className="text-center mb-3">
                         <MDBBtn
                           type="button"
-                          gradient="peach"
+                          color="red darken-4"
                           rounded
                           className="btn-block z-depth-1a"
                           onClick={() => this.handleLogin()}
@@ -171,7 +170,7 @@ class Login extends React.Component {
                           icon="fa-facebook"
                           size="small"
                           cssClass="my-facebook-button-class"
-                          textButton=" Continue with Facebook"
+                          textButton=" Facebook Login"
                         />
                       </MDBRow>
                     </MDBCardBody>

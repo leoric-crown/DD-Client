@@ -51,10 +51,10 @@ class MyCharacters extends Component {
               <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
             </div>
             <div className="character-specs mb-3">
-              <h5><MDBIcon icon="user" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {character.level}</h5>
-              <h5><MDBIcon icon="shield" size="lg" className="red-text pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {character.armorclass}</h5>
-              <h5><MDBIcon icon="heartbeat" size="lg" className="red-text pr-3" /><strong className="character-stats">Hitpoints:</strong> {character.hitpoints}</h5>
-              <h5><MDBIcon icon="heart" size="lg" className="red-text pr-3" /><strong className="character-stats">Max Hit Points:</strong> {character.maxhitpoints}</h5>
+              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {character.level}</h5>
+              <h5><MDBIcon icon="shield" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {character.armorclass}</h5>
+              <h5><MDBIcon icon="heartbeat" size="lg" className="pr-3" /><strong className="character-stats">Hitpoints:</strong> {character.hitpoints}</h5>
+              <h5><MDBIcon icon="heart" size="lg" className="pr-3" /><strong className="character-stats">Max Hit Points:</strong> {character.maxhitpoints}</h5>
             </div>
             <div className="text-center mb-3">
               <MDBBtn
@@ -64,10 +64,10 @@ class MyCharacters extends Component {
                 className="btn-block z-depth-1a black character-stats"
                 onClick={this.handleEdit}
               >
-                Edit
+              <MDBIcon icon="pencil" size="lg" />
+              &nbsp;&nbsp;Edit
                 </MDBBtn>
             </div>
-            <br/>
             <div className="text-center mb-3">
               <MDBBtn
                 type="button"
@@ -76,7 +76,8 @@ class MyCharacters extends Component {
                 className="btn-block z-depth-1a black character-stats"
                 onClick={this.handleDelete}
               >
-                Delete
+              <MDBIcon icon="trash" size="lg" />
+                &nbsp;&nbsp;Delete
                 </MDBBtn>
             </div>
           </MDBCardBody>

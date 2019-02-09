@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn } from 'mdbreact';
 import { connect } from 'react-redux'
 import { createCharacter, patchCharacter, cancelEditCharacter } from '../actions/characters'
 import validator from 'validator';
@@ -12,10 +12,12 @@ class CharacterForm extends Component {
     maxhitpoints: '',
     url: '',
     characterPic: null,
-    updating: false
+    updating: false,
+    style: {}
   }
 
   componentDidMount() {
+    console.log("CDM", this.state.updating )
     if (!this.state.updating && this.props.character) {
       const { armorclass, level, maxhitpoints, name } = this.props.character
       this.setState({
@@ -23,7 +25,10 @@ class CharacterForm extends Component {
         level,
         armorclass,
         maxhitpoints,
-        updating: this.props.character
+        updating: this.props.character,
+        style: {
+          width: '25em'
+        }
       })
     }
   }
@@ -136,19 +141,18 @@ class CharacterForm extends Component {
     const { name, level, armorclass, maxhitpoints } = this.state
     const { toggleButtonNavigation } = this.props
     return (
-      <MDBContainer className=''>
+      <MDBContainer style={this.state.style} className=''>
         <MDBRow className="d-flex justify-content-center">
           <MDBCol md="8">
             <MDBCard className="create-character">
               <MDBCardBody className="mx-4 d-row" >
                 <div className="text-center">
                   <h3 className="mb-5">
-                    <strong>
+                    <strong style={formHeaderStyle}>
                       &nbsp;{this.state.updating ? `Edit Character '${this.state.updating.name}'` : 'Create Character'}
                     </strong>
                   </h3>
                 </div>
-                <MDBIcon icon="khanda" />
                 <MDBInput
                   label="Name"
                   group
@@ -237,6 +241,11 @@ function mapStateToProps({ User }) {
     User
   }
 
+}
+
+// TODO: Move all these inline css to sepate file
+const formHeaderStyle = {
+  color:'black'
 }
 
 export default connect(mapStateToProps)(CharacterForm)
