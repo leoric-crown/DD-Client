@@ -105,7 +105,15 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
           })
         }
-        this.props.dispatch(setAuthedUser(res.email, !res.photoURL ? defaultUserPic : res.photoURL, res.isDM, res.userId))
+        // Signup wasn't working with parameter destructuring
+        // In setAuthedUser Action
+        const authedUserData = {
+          email: res.email,
+          photoURL: !res.photoURL ? defaultUserPic : res.photoURL,
+          isDM: res.idDM,
+          userId: res.userId
+        }
+        this.props.dispatch(setAuthedUser(authedUserData))
         this.props.dispatch(handleInitialData(res.userId, res.jwt))
         this.props.history.push({
           pathname: '/dashboard/characters',
