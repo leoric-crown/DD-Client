@@ -65,8 +65,8 @@ class Characters extends React.Component {
               </MDBRow>
                 
               </div>
-          <div class="page-heading">
-            <h1 class="page-title">
+          <div className="page-heading">
+            <h1 className="page-title">
               <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
             </h1>
           </div>

@@ -50,12 +50,16 @@ class Encounters extends React.Component {
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
+                      <strong className='navigation-button'>
                       My Encounters
+                      </strong>
               </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
-                      Create Encounter
+                      <strong className='navigation-button'>
+                      My Encounters
+                      </strong>
             </MDBBtn>
                   </MDBCol>
                 </MDBRow>

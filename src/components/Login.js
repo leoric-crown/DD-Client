@@ -110,11 +110,11 @@ class Login extends React.Component {
               <br />
               <br />
               <br />
-              <MDBRow className="d-flex justify-content-center">
+              <MDBRow className="d-flex justify-content-center transparent">
                 <MDBCol md="6">
-                  <MDBCard>
+                  <MDBCard style={{backgroundColor:'transparent'}} className='login-container'>
                     <MDBCardBody className="mx-4" >
-                      <img alt='DnD Turn Tracker Logo' src="http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1" />
+                      <img className='app-logo' alt='DnD Turn Tracker Logo' src="http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1" />
                       <div className="text-center">
                         <h3 className="">
                           <strong>Turn Tracker</strong>
