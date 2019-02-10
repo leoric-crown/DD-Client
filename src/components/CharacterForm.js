@@ -144,12 +144,12 @@ class CharacterForm extends Component {
       <MDBContainer style={this.state.style} className=''>
         <MDBRow className="d-flex justify-content-center">
           <MDBCol md="8">
-            <MDBCard className="create-character">
+            <MDBCard style={{backgroundColor:'transparent'}} className="create-character">
               <MDBCardBody className="mx-4 d-row" >
                 <div className="text-center">
                   <h3 className="mb-5">
                     <strong style={formHeaderStyle}>
-                      &nbsp;{this.state.updating ? `Edit Character '${this.state.updating.name}'` : 'Create Character'}
+                      &nbsp;{this.state.updating ? `Edit '${this.state.updating.name}'` : ''}
                     </strong>
                   </h3>
                 </div>

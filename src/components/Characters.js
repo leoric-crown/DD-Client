@@ -51,16 +51,22 @@ class Characters extends React.Component {
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
                       My Characters
-              </MDBBtn>
+                  </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
                       Create Character
-            </MDBBtn>
+                  </MDBBtn>
                   </MDBCol>
-                </MDBRow>
-                <MDBIcon color="black" icon="hat-wizard" />
+              </MDBRow>
+                
               </div>
+          <div class="page-heading">
+            <h1 class="page-title">
+              <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
+            </h1>
+          </div>
+          <br />
               {this.state.activeButtonMyCharacters
                 ?
                 <div>
