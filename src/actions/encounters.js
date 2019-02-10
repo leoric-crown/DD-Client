@@ -6,6 +6,7 @@ export const CANCEL_EDIT_ENCOUNTER = 'CANCEL_EDIT_ENCOUNTER'
 export const UPDATE_ENCOUNTER = 'UPDATE_ENCOUNTER'
 export const DELETE_ENCOUNTER = 'DELETE_ENCOUNTER'
 export const REMOVE_ENCOUNTER = 'REMOVE_ENCOUNTER'
+export const SET_ACTIVE_ENCOUNTER = 'SET_ACTIVE_ENCOUNTER'
 
 
 export function createEncounter(token, payload) {
@@ -39,6 +40,17 @@ export function deleteEncounter(token, id) {
     }
 }
 
+export function changeActiveEncounter(token, id, prevActive) {
+    return (dispatch) => {
+        return API.changeActiveEncounter(token, id)
+            .then(response => {
+                if(response.status.code === 200) {
+                    dispatch(setActiveEncounter(response.activeEncounter, prevActive))
+                }
+            })
+    }
+}
+
 export function removeEncounter(id) {
     return {
         type: REMOVE_ENCOUNTER,
@@ -55,17 +67,24 @@ export function startEditEncounter(encounter) {
 
 export function cancelEditEncounter() {
     return {
-      type: CANCEL_EDIT_ENCOUNTER
+        type: CANCEL_EDIT_ENCOUNTER
     }
-  }
-  
-  export function updateEncounter(payload, id) {
+}
+
+export function updateEncounter(payload, id) {
     return {
-      type: UPDATE_ENCOUNTER,
-      id,
-      payload
+        type: UPDATE_ENCOUNTER,
+        id,
+        payload
     }
-  }
+}
+export function setActiveEncounter(encounter, prevActive) {
+    return {
+        type: SET_ACTIVE_ENCOUNTER,
+        active: encounter,
+        prevActive
+    }
+}
 
 export function receiveEncounters(encounters) {
     return {

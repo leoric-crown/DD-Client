@@ -20,7 +20,7 @@ export default function User(state = defaultState, action) {
         message: action.message
       }
     default:
-      return state
+      return { ...state }
   }
 
 }

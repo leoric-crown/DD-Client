@@ -12,7 +12,6 @@ class Encounters extends React.Component {
   }
 
   toggleButtonNavigation = (lastClicked) => {
-    console.log('toggleButtonNavigation', this.state, lastClicked)
     this.setState((state, props) => {
       if (state.lastClicked !== lastClicked) {
         return {
@@ -78,14 +77,17 @@ class Encounters extends React.Component {
                                 <MyEncounters
                                   encounter={encounter}
                                   length={encounterList.length}
+                                  activeEncounter={this.props.Encounters.active}
                                 />
                               }
                             </div>
                           </li>
                         ))}
                       </ol>
-
-                      : <h3>No Encounters just yet...</h3>
+                      :
+                      <div className="d-flex justify-content-center">
+                        <h3>No Encounters just yet...</h3>
+                      </div>
                   }
                 </div>
                 :
@@ -111,7 +113,8 @@ let styles = {
 function mapStateToProps({ User, Encounters }) {
   return {
     User,
-    Encounters
+    Encounters,
+    activeId: Encounters.active ? Encounters.active._id : false
   }
 
 }

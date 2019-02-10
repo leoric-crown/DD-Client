@@ -101,6 +101,16 @@ export const editEncounter = (token, payload, id) => {
   }).then(res => res.json())
 }
 
+export const changeActiveEncounter = (token, id) => {
+  return fetch(`${api}/encounters/${id}/setActive`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
 export const deleteEncounter = (token, id) => {
   return fetch(`${api}/encounters/${id}`, {
     method: 'DELETE',

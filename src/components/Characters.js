@@ -83,8 +83,10 @@ class Characters extends React.Component {
                           </li>
                         ))}
                       </ol>
-
-                      : <h3>No Characters just yet...</h3>
+                      : 
+                      <div className="d-flex justify-content-center">
+                        <h3>No Characters just yet...</h3>
+                      </div>
                   }
                 </div>
                 :

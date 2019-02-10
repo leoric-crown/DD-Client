@@ -13,9 +13,10 @@ export default function Characters(state = defaultState, action) {
         list: action.characters
       }
     case CREATE_CHARACTERS:
+      state.list.push(action.character)
       return {
-        list: state.list.push(action.character),
         ...state,
+        list: state.list
       }
     case START_EDIT_CHARACTER:
       return {
@@ -31,7 +32,7 @@ export default function Characters(state = defaultState, action) {
       return {
         ...state,
         list: state.list.map(character => {
-          if(character._id === action.id) {
+          if (character._id === action.id) {
             action.payload.forEach(update => {
               character[update.propName] = update.value
             })
@@ -49,7 +50,7 @@ export default function Characters(state = defaultState, action) {
         })
       }
     default:
-      return state
+      return { ...state}
   }
 
 }

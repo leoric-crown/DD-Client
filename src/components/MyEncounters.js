@@ -4,15 +4,19 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
-import { startEditEncounter, deleteEncounter } from '../actions/encounters'
+import { startEditEncounter, deleteEncounter, changeActiveEncounter } from '../actions/encounters'
 
 const ONE_ITEM = 1
 const TWO_ITEMS = 2
 
-
 class MyEncounters extends Component {
   // Hack in case we only have one or two Characters
   // In the grid
+
+  state = {
+    count: 0
+  }
+
   getStyling = () => {
     if (this.props.length === ONE_ITEM) {
       return {
@@ -33,6 +37,10 @@ class MyEncounters extends Component {
 
   handleDelete = () => {
     this.props.dispatch(deleteEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id))
+  }
+
+  handleSetActive = () => {
+    this.props.dispatch(changeActiveEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id, this.props.activeEncounter))
   }
 
   render() {
@@ -77,6 +85,20 @@ class MyEncounters extends Component {
               &nbsp;&nbsp;Delete
                 </MDBBtn>
             </div>
+            {encounter.status !== 'Active' &&
+              <div className="text-center mb-3">
+              <MDBBtn
+                type="button"
+                rounded
+                color="black"
+                className="btn-block z-depth-1a black character-stats"
+                onClick={this.handleSetActive}
+              >
+              <MDBIcon icon="star" size="lg" />
+              &nbsp;&nbsp;Set Active
+                </MDBBtn>
+            </div>
+            }
           </MDBCardBody>
         </MDBCard>
       </MDBContainer>
