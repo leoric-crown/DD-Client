@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
 import { createCharacter, patchCharacter, cancelEditCharacter } from '../actions/characters'
 import validator from 'validator';
@@ -148,8 +148,10 @@ class CharacterForm extends Component {
               <MDBCardBody className="mx-4 d-row" >
                 <div className="text-center">
                   <h3 className="mb-5">
-                    <strong style={formHeaderStyle}>
-                      &nbsp;{this.state.updating ? `Edit '${this.state.updating.name}'` : ''}
+                    <strong>
+                      &nbsp;{this.state.updating ? `Edit '${this.state.updating.name}'` 
+                      : 
+                      <MDBIcon className="black-text" icon='magic' size='4x' />}
                     </strong>
                   </h3>
                 </div>

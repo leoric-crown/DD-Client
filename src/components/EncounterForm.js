@@ -114,7 +114,9 @@ class EncounterForm extends Component {
                                 <div className="text-center">
                                     <h3 className="mb-5">
                                         <strong style={formHeaderStyle}>
-                                            &nbsp;{this.state.updating ? `Edit ${this.state.updating.name}` : ''}
+                                            &nbsp;{this.state.updating ? `Edit ${this.state.updating.name}` 
+                                            : 
+                                            <MDBIcon className="black-text" icon='users' size='4x' />}
                                         </strong>
                                     </h3>
                                 </div>
