@@ -119,4 +119,6 @@ div.card-body.mx-4 > div {
   border-bottom: 3px solid red;
   padding-bottom: 8px;
   padding-top: 16px;
+  margin-left:10%;
+  margin-right:10%;
 }
