@@ -34,7 +34,7 @@ class MyCharacters extends Component {
                   <MDBIcon style={{cursor:'pointer'}} onClick={this.handleEdit} icon="pencil" size="lg" />
                   &nbsp;
                   &nbsp;
-                  <MDBIcon alt="Yo" style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />
+                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />
               </div>
             </div>
             <div className="text-center mb-3">

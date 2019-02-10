@@ -61,6 +61,12 @@ class Encounters extends React.Component {
                 </MDBRow>
                 <MDBIcon color="black" icon="hat-wizard" />
               </div>
+              <div class="page-heading">
+                <h1 class="page-title">
+                  <strong>{this.state.activeButtonMyEncounters ? 'Encounters' : 'Create Encounter'}</strong>
+                </h1>
+              </div>
+              <br />
               {this.state.activeButtonMyEncounters
                 ?
                 <div>

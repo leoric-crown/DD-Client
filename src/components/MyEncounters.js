@@ -6,29 +6,9 @@ import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
 import { startEditEncounter, deleteEncounter, changeActiveEncounter } from '../actions/encounters'
 
-const ONE_ITEM = 1
-const TWO_ITEMS = 2
-
 class MyEncounters extends Component {
-  // Hack in case we only have one or two Characters
-  // In the grid
-
   state = {
     count: 0
-  }
-
-  getStyling = () => {
-    if (this.props.length === ONE_ITEM) {
-      return {
-        "width": "31.250em",
-      }
-    } else if (this.props.length === TWO_ITEMS) {
-      return {
-        "width": "21.875em",
-      }
-    } else {
-      return
-    }
   }
 
   handleEdit = () => {
@@ -47,43 +27,34 @@ class MyEncounters extends Component {
     const { encounter } = this.props
     return (
       <MDBContainer className="">
-        <MDBCard style={this.getStyling()} className="character-container">
+        <MDBCard className="character-container">
           <MDBCardBody>
-            <div>
+            <div className='card-top'>
               <h3 className="black-text mb-5">
-                <strong className="character-name">{encounter.name}</strong>
+                <strong className="character-name">
+                  {encounter.name}
+                  &nbsp;
+                  {encounter.status === 'Active' && (
+                  <MDBIcon className="amber-text" icon="star" size="lg" />
+                  )}
+                  </strong>
               </h3>
+              &nbsp;
+              &nbsp;
+              &nbsp;
+              <div>
+                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleEdit} icon="pencil" size="lg" />
+                  &nbsp;
+                  &nbsp;
+                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />
+              </div>
             </div>
             <div className="text-center mb-3">
               <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/3f8958b2-0d97-487e-86b8-07281543baf7_scaled.jpg`} />
             </div>
             <div className="character-specs mb-3">
-              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Name:</strong> {encounter.name}</h5>
-              <h5><MDBIcon icon="heart" size="lg" className="pr-3" /><strong className="character-stats">Status:</strong> {encounter.status}</h5>
-            </div>
-            <div className="text-center mb-3">
-              <MDBBtn
-                type="button"
-                rounded
-                color="black"
-                className="btn-block z-depth-1a black character-stats"
-                onClick={this.handleEdit}
-              >
-              <MDBIcon icon="pencil" size="lg" />
-                &nbsp;&nbsp;Edit
-                </MDBBtn>
-            </div>
-            <div className="text-center mb-3">
-              <MDBBtn
-                type="button"
-                rounded
-                color="black"
-                className="btn-block z-depth-1a black character-stats"
-                onClick={this.handleDelete}
-              >
-              <MDBIcon icon="trash" size="lg" />
-              &nbsp;&nbsp;Delete
-                </MDBBtn>
+              <h5><MDBIcon icon="users" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Name:</strong> {encounter.name}</h5>
+              <h5><MDBIcon icon="ravelry" size="lg" className="pr-3" /><strong className="character-stats">Status:</strong> {encounter.status}</h5>
             </div>
             {encounter.status !== 'Active' &&
               <div className="text-center mb-3">

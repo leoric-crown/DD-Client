@@ -5,12 +5,12 @@ html, body, .root, .App {
   background-repeat: no-repeat;
   background-size: 100% auto;
   /* background-repeat: repeat-x  */
- 
 }
 
-
-.text-in-black {
-  color:red;
+@media (min-width: 50px) and (max-width:600px ) {
+  .navigation-button {
+    font-size: 7px;
+  }
 }
 
 .centered {

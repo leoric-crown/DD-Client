@@ -50,12 +50,16 @@ class Characters extends React.Component {
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
+                      <strong className='navigation-button'>
                       My Characters
+                      </strong>
                   </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
-                      Create Character
+                      <strong className='navigation-button'>
+                      Create Characters
+                      </strong>
                   </MDBBtn>
                   </MDBCol>
               </MDBRow>
