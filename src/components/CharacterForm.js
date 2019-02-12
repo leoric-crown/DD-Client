@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
 import { createCharacter, patchCharacter, cancelEditCharacter } from '../actions/characters'
 import validator from 'validator';
@@ -17,7 +17,6 @@ class CharacterForm extends Component {
   }
 
   componentDidMount() {
-    console.log("CDM", this.state.updating )
     if (!this.state.updating && this.props.character) {
       const { armorclass, level, maxhitpoints, name } = this.props.character
       this.setState({
@@ -144,12 +143,14 @@ class CharacterForm extends Component {
       <MDBContainer style={this.state.style} className=''>
         <MDBRow className="d-flex justify-content-center">
           <MDBCol md="8">
-            <MDBCard className="create-character">
+            <MDBCard style={{backgroundColor:'transparent'}} className="create-character">
               <MDBCardBody className="mx-4 d-row" >
                 <div className="text-center">
                   <h3 className="mb-5">
-                    <strong style={formHeaderStyle}>
-                      &nbsp;{this.state.updating ? `Edit Character '${this.state.updating.name}'` : 'Create Character'}
+                    <strong>
+                      &nbsp;{this.state.updating ? `Edit '${this.state.updating.name}'` 
+                      : 
+                      <MDBIcon className="black-text" icon='magic' size='4x' />}
                     </strong>
                   </h3>
                 </div>
@@ -241,11 +242,6 @@ function mapStateToProps({ User }) {
     User
   }
 
-}
-
-// TODO: Move all these inline css to sepate file
-const formHeaderStyle = {
-  color:'black'
 }
 
 export default connect(mapStateToProps)(CharacterForm)

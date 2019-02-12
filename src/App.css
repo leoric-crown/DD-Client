@@ -3,11 +3,17 @@
 html, body, .root, .App {
   background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg") fixed;
   background-repeat: no-repeat;
-  background-size: 100%; 
+  background-size: 100% auto;
 }
 
-.text-in-black {
-  color:red;
+@media (min-width: 50px) and (max-width:1024px ) {
+  .navigation-button {
+    font-size: 7px;
+  }
+
+  .app-logo {
+    width: 200px;
+  }
 }
 
 .centered {
@@ -73,10 +79,6 @@ div.card-body.mx-4 > div {
   align-items: center;
 }
 
-.character-specs {
-  align-self: center;
-}
-
 .character-name {
   font-family: MedievalSharp;
   font-size: 40px;
@@ -104,4 +106,22 @@ div.card-body.mx-4 > div {
 .flash-message {
   text-align: center;
   color: black !important;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.character-specs-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-heading {
+  border-bottom: 3px solid red;
+  padding-bottom: 8px;
+  padding-top: 16px;
+  margin-left:10%;
+  margin-right:10%;
 }

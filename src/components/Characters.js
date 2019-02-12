@@ -4,6 +4,7 @@ import CharacterForm from './CharacterForm'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { logoutUser } from '../actions/authedUser'
 
 class Characters extends React.Component {
   state = {
@@ -30,6 +31,7 @@ class Characters extends React.Component {
       if (token) {
         checkToken.bind(this)(token)
       } else {
+        this.props.dispatch(logoutUser('Please login to continue...'))
         this.props.history.push({
           pathname: '/'
         })
@@ -50,17 +52,27 @@ class Characters extends React.Component {
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
+                      <strong className='navigation-button'>
                       My Characters
-              </MDBBtn>
+                      </strong>
+                  </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
-                      Create Character
-            </MDBBtn>
+                      <strong className='navigation-button'>
+                      Create Characters
+                      </strong>
+                  </MDBBtn>
                   </MDBCol>
-                </MDBRow>
-                <MDBIcon color="black" icon="hat-wizard" />
+              </MDBRow>
+                
               </div>
+          <div className="page-heading">
+            <h1 className="page-title">
+              <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
+            </h1>
+          </div>
+          <br />
               {this.state.activeButtonMyCharacters
                 ?
                 <div>

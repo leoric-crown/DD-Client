@@ -4,6 +4,7 @@ import EncounterForm from './EncounterForm'
 import MyEncounters from './MyEncounters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { logoutUser } from '../actions/authedUser'
 
 class Encounters extends React.Component {
   state = {
@@ -30,6 +31,7 @@ class Encounters extends React.Component {
       if (token) {
         checkToken.bind(this)(token)
       } else {
+        this.props.dispatch(logoutUser('Please login to continue...'))
         this.props.history.push({
           pathname: '/'
         })
@@ -50,17 +52,27 @@ class Encounters extends React.Component {
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
+                      <strong className='navigation-button'>
                       My Encounters
+                      </strong>
               </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
-                      Create Encounter
+                      <strong className='navigation-button'>
+                      My Encounters
+                      </strong>
             </MDBBtn>
                   </MDBCol>
                 </MDBRow>
                 <MDBIcon color="black" icon="hat-wizard" />
               </div>
+              <div className="page-heading">
+                <h1 className="page-title">
+                  <strong>{this.state.activeButtonMyEncounters ? 'Encounters' : 'Create Encounter'}</strong>
+                </h1>
+              </div>
+              <br />
               {this.state.activeButtonMyEncounters
                 ?
                 <div>
