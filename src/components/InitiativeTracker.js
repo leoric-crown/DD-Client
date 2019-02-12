@@ -4,6 +4,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 // import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { logoutUser } from '../actions/authedUser'
 
 class InitiativeTracker extends React.Component {
     state = {
@@ -16,6 +17,7 @@ class InitiativeTracker extends React.Component {
             if (token) {
                 checkToken.bind(this)(token)
             } else {
+                this.props.dispatch(logoutUser('Please login to continue...'))
                 this.props.history.push({
                     pathname: '/'
                 })
@@ -32,12 +34,12 @@ class InitiativeTracker extends React.Component {
                             <div className="characters-Container">
                                 <MDBRow>
                                     <MDBCol md='12' className="mb-4">
-                                        <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
+                                        <MDBBtn color="black">
                                             <MDBIcon icon="magic" size="lg" />
                                             &nbsp;
                                             Active Encounter
               </MDBBtn>
-                                        <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
+                                        <MDBBtn color="black">
                                             <MDBIcon icon="plus" size="lg" />
                                             &nbsp;
                                             Add Character

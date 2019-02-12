@@ -4,6 +4,7 @@ import CharacterForm from './CharacterForm'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { logoutUser } from '../actions/authedUser'
 
 class Characters extends React.Component {
   state = {
@@ -30,6 +31,7 @@ class Characters extends React.Component {
       if (token) {
         checkToken.bind(this)(token)
       } else {
+        this.props.dispatch(logoutUser('Please login to continue...'))
         this.props.history.push({
           pathname: '/'
         })

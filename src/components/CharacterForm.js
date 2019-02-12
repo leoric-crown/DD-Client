@@ -17,7 +17,6 @@ class CharacterForm extends Component {
   }
 
   componentDidMount() {
-    console.log("CDM", this.state.updating )
     if (!this.state.updating && this.props.character) {
       const { armorclass, level, maxhitpoints, name } = this.props.character
       this.setState({
