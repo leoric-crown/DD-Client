@@ -3,9 +3,9 @@ import { MDBContainer, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import config from '../config.json';
+import config from '../../config.json';
 import { connect } from 'react-redux'
-import { startEditCharacter, deleteCharacter } from '../actions/characters'
+import { startEditCharacter, deleteCharacter } from '../../actions/characters'
 
 class MyCharacters extends Component {
 

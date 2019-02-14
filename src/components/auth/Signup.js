@@ -1,10 +1,10 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBAlert, MDBIcon } from 'mdbreact';
-import * as API from '../utils/api'
+import * as API from '../../utils/api'
 import * as EmailValidator from 'email-validator'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../actions/shared'
-import { setAuthedUser } from '../actions/authedUser'
+import { handleInitialData } from '../../actions/shared'
+import { setAuthedUser } from '../../actions/authedUser'
 
 const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
 

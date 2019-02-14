@@ -4,7 +4,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
-import { startEditEncounter, deleteEncounter, changeActiveEncounter } from '../actions/encounters'
+import { startEditEncounter, deleteEncounter, changeActiveEncounter } from '../../actions/encounters'
 
 class MyEncounters extends Component {
   state = {

@@ -32,7 +32,6 @@ export function deleteCharacter(token, id) {
   return (dispatch) => {
     return API.deleteCharacter(token, id)
       .then(response => {
-        console.log(response)
         if (response.status.code === 200) {
           dispatch(removeCharacter(id))
         }

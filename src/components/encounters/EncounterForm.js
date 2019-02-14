@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
-import { createEncounter, patchEncounter, cancelEditEncounter } from '../actions/encounters'
+import { createEncounter, patchEncounter, cancelEditEncounter } from '../../actions/encounters'
 
 class EncounterForm extends Component {
     state = {
@@ -13,7 +13,6 @@ class EncounterForm extends Component {
 
     componentDidMount() {
         if(!this.state.updating && this.props.encounter) {
-            console.log('setting updating', this.props.encounter)
             const { name, status } = this.props.encounter
             this.setState({
                 name,
@@ -61,7 +60,6 @@ class EncounterForm extends Component {
     }
 
     handleUpdate = () => {
-        console.log('handleUpdate')
         const { updating, ...changedEncounter } = this.state
         const fieldsToUpdate = Object.entries(changedEncounter).filter(([key, value]) => {
             return (updating[key] && updating[key] !== value)
@@ -79,7 +77,6 @@ class EncounterForm extends Component {
     }
 
     handleCreate = () => {
-        console.log('handleCreate')
         const payload = {
             name: this.state.name,
             status: this.state.status

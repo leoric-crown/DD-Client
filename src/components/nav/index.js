@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink } from 'mdbreact'
 import { connect } from 'react-redux'
-import { logoutUser } from '../actions/authedUser'
+import { logoutUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
 class Navbars extends React.Component {
