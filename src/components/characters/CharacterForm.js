@@ -7,7 +7,7 @@ import validator from 'validator';
 const levelOptions = (() => {
   const levels = Array.from(Array(21).keys())
   return levels.map(level => {
-    if(level === 0) return (
+    if (level === 0) return (
       <option key={level} value='' disabled> Choose level... </option>
     )
     return (
@@ -19,7 +19,7 @@ const levelOptions = (() => {
 const armorClassOptions = (() => {
   const armorClasses = Array.from(Array(31).keys())
   return armorClasses.map(armorClass => {
-    if(armorClass === 0) return (
+    if (armorClass === 0) return (
       <option key={armorClass} value='' disabled> Choose Armor Class... </option>
     )
     return (
@@ -134,7 +134,7 @@ class CharacterForm extends Component {
   }
 
   handleUpdate = () => {
-    const { updating, characterPic, ...changedCharacter } = this.state
+    const { updating, characterPic, style, levelOptions, armorClassOptions, ...changedCharacter } = this.state
     const fieldsToUpdate = Object.entries(changedCharacter).filter(([key, value]) => {
       return (updating[key] && updating[key] !== value)
     }).map(([propName, value]) => {
@@ -196,7 +196,7 @@ class CharacterForm extends Component {
                   onChange={e => this.handleChange('level', e.target.value)}>
                   {this.state.levelOptions}
                 </select>
-                <br/>
+                <br />
                 <label>AC</label>
                 <select
                   label="selectLabel"

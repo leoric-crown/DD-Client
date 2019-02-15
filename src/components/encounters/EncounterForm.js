@@ -67,7 +67,7 @@ class EncounterForm extends Component {
     }
 
     handleUpdate = () => {
-        const { updating, ...changedEncounter } = this.state
+        const { updating, style, statusOptions, ...changedEncounter } = this.state
         const fieldsToUpdate = Object.entries(changedEncounter).filter(([key, value]) => {
             return (updating[key] && updating[key] !== value)
         }).map(([propName, value]) => {
