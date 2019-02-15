@@ -7,13 +7,39 @@ import validator from 'validator';
 class CharacterForm extends Component {
   state = {
     name: '',
-    level: '',
-    armorclass: '',
+    level: '1',
+    armorclass: '10',
     maxhitpoints: '',
     url: '',
     characterPic: null,
     updating: false,
+    levelOptions: this.getLevelOptions(),
+    armorClassOptions: this.getArmorClassOptions(),
     style: {}
+  }
+
+  getLevelOptions() {
+    const levels = Array.from(Array(21).keys())
+    return levels.map(level => {
+      if(level === 0) return (
+        <option key={level} value='' disabled> Choose level... </option>
+      )
+      return (
+        <option key={level} value={level}>{level}</option>
+      )
+    })
+  }
+
+  getArmorClassOptions() {
+    const armorClasses = Array.from(Array(31).keys())
+    return armorClasses.map(armorClass => {
+      if(armorClass === 0) return (
+        <option key={armorClass} value='' disabled> Choose Armor Class... </option>
+      )
+      return (
+        <option key={armorClass} value={armorClass}>{armorClass}</option>
+      )
+    })
   }
 
   componentDidMount() {
@@ -139,6 +165,7 @@ class CharacterForm extends Component {
   render() {
     const { name, level, armorclass, maxhitpoints } = this.state
     const { toggleButtonNavigation } = this.props
+    console.log('render', this.state)
     return (
       <MDBContainer style={this.state.style} className=''>
         <MDBRow className="d-flex justify-content-center">
@@ -163,21 +190,22 @@ class CharacterForm extends Component {
                   onKeyDown={(e) => this.handleKeyDown(e)}
                   value={name}
                 />
-                <MDBInput
-                  label="Level"
-                  group
-                  type="email"
-                  onChange={(e) => this.handleChange("level", e.target.value)}
-                  onKeyDown={(e) => this.handleKeyDown(e)}
-                  value={level.toString()}
-                />
-                <MDBInput
-                  label="Armor Class"
-                  containerClass="mb-0"
-                  onChange={(e) => this.handleChange("armorclass", e.target.value)}
-                  onKeyDown={(e) => this.handleKeyDown(e)}
-                  value={armorclass.toString()}
-                />
+                <label>Level</label>
+                <select
+                  id='level'
+                  value={level}
+                  onChange={e => this.handleChange('level', e.target.value)}>
+                  {this.state.levelOptions}
+                </select>
+                <br/>
+                <label>AC</label>
+                <select
+                  label="selectLabel"
+                  id='armorclass'
+                  value={armorclass}
+                  onChange={e => this.handleChange('armorclass', e.target.value)}>
+                  {this.state.armorClassOptions}
+                </select>
                 <MDBInput
                   label="Max Hit Points"
                   containerClass="mb-0"
