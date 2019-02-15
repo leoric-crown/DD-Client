@@ -4,6 +4,30 @@ import { connect } from 'react-redux'
 import { createCharacter, patchCharacter, cancelEditCharacter } from '../../actions/characters'
 import validator from 'validator';
 
+const levelOptions = (() => {
+  const levels = Array.from(Array(21).keys())
+  return levels.map(level => {
+    if(level === 0) return (
+      <option key={level} value='' disabled> Choose level... </option>
+    )
+    return (
+      <option key={level} value={level}>{level}</option>
+    )
+  })
+})()
+
+const armorClassOptions = (() => {
+  const armorClasses = Array.from(Array(31).keys())
+  return armorClasses.map(armorClass => {
+    if(armorClass === 0) return (
+      <option key={armorClass} value='' disabled> Choose Armor Class... </option>
+    )
+    return (
+      <option key={armorClass} value={armorClass}>{armorClass}</option>
+    )
+  })
+})()
+
 class CharacterForm extends Component {
   state = {
     name: '',
@@ -13,33 +37,9 @@ class CharacterForm extends Component {
     url: '',
     characterPic: null,
     updating: false,
-    levelOptions: this.getLevelOptions(),
-    armorClassOptions: this.getArmorClassOptions(),
+    levelOptions: levelOptions,
+    armorClassOptions: armorClassOptions,
     style: {}
-  }
-
-  getLevelOptions() {
-    const levels = Array.from(Array(21).keys())
-    return levels.map(level => {
-      if(level === 0) return (
-        <option key={level} value='' disabled> Choose level... </option>
-      )
-      return (
-        <option key={level} value={level}>{level}</option>
-      )
-    })
-  }
-
-  getArmorClassOptions() {
-    const armorClasses = Array.from(Array(31).keys())
-    return armorClasses.map(armorClass => {
-      if(armorClass === 0) return (
-        <option key={armorClass} value='' disabled> Choose Armor Class... </option>
-      )
-      return (
-        <option key={armorClass} value={armorClass}>{armorClass}</option>
-      )
-    })
   }
 
   componentDidMount() {
@@ -165,7 +165,6 @@ class CharacterForm extends Component {
   render() {
     const { name, level, armorclass, maxhitpoints } = this.state
     const { toggleButtonNavigation } = this.props
-    console.log('render', this.state)
     return (
       <MDBContainer style={this.state.style} className=''>
         <MDBRow className="d-flex justify-content-center">

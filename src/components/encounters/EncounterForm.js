@@ -57,7 +57,6 @@ class EncounterForm extends Component {
                 })
                 break
             case 'status':
-            console.log('handleChange type status', value)
                 this.setState({
                     status: value
                 })
