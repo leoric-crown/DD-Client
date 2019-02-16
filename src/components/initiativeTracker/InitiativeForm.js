@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { createInitiative } from '../../actions/initiatives'
+import EncounterSelect from '../encounters/EncounterSelect'
 
 class InitiativeForm extends Component {
     state = {
@@ -9,18 +10,6 @@ class InitiativeForm extends Component {
         initiative: '',
         encounterOptions: false,
         characterOptions: false
-    }
-
-    encounterOptions() {
-        const { encounters } = this.props
-        if (encounters && encounters.list.length > 0) {
-            return encounters.list.map(encounter => {
-                return (
-                    <option key={encounter._id} value={encounter._id}>{encounter.name}</option>
-                )
-            })
-        }
-        return []
     }
 
     characterOptions() {
@@ -36,13 +25,6 @@ class InitiativeForm extends Component {
     }
     
     checkSelectOptions() {
-        if (this.props.encounters.list && !this.state.encounterOptions) {
-            const encounterOptions = this.encounterOptions()
-            this.setState({
-                encounterOptions,
-                encounter: encounterOptions[0].props.value
-            })
-        }
         if (this.props.characters.list && !this.state.characterOptions) {
             const characterOptions = this.characterOptions()
             this.setState({
@@ -121,15 +103,6 @@ class InitiativeForm extends Component {
                     <MDBCol md="8">
                         <MDBCard className="create-character">
                             <MDBCardBody className="mx-4 d-row" >
-                                <div className="text-center">
-                                    <h3 className="mb-5">
-                                        <strong style={formHeaderStyle}>
-                                            &nbsp;{this.state.updating ? `Edit ${this.state.updating.name}`
-                                                :
-                                                <MDBIcon className="black-text" icon='users' size='4x' />}
-                                        </strong>
-                                    </h3>
-                                </div>
                                 <MDBIcon icon="khanda" />
                                 <MDBInput
                                     label="Initiative"
@@ -139,14 +112,7 @@ class InitiativeForm extends Component {
                                     onKeyDown={(e) => this.handleKeyDown(e)}
                                     value={this.state.initiative}
                                 />
-                                <label className="select-label">Encounter</label>
-                                <select
-                                    className="browser-default custom-select"
-                                    id="Encounter"
-                                    value={this.state.encounter}
-                                    onChange={e => this.handleChange('encounter', e.target.value)}>
-                                    {this.state.encounterOptions}
-                                </select>
+                                <EncounterSelect onChange={(value) => this.handleChange('encounter', value)}/>
                                 <br />
                                 <label className="select-label">Character</label>
                                 <select

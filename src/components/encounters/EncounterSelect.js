@@ -31,14 +31,22 @@ class EncounterSelect extends Component {
 }
 
 function mapStateToProps({ Encounters }) {
-    const encounterOptions = Encounters.list.map((encounter) => (
-        <option key={encounter._id} value={encounter._id}>{encounter.name}</option>
-    ))
-    encounterOptions.unshift(defaultSelect)
-    return({
-        encounterOptions,
-        defaultSelect: encounterOptions[0]
-    })
+    console.log('mapStateToProps', Encounters)
+    if(Encounters.list) {
+        const encounterOptions = Encounters.list.map((encounter) => (
+            <option key={encounter._id} value={encounter._id}>{encounter.name}</option>
+        ))
+        encounterOptions.unshift(defaultSelect)
+        return({
+            encounterOptions
+        })
+    }
+    else{
+        return({
+            
+        })
+    }
+
 }
 
 export default connect(mapStateToProps)(EncounterSelect)

@@ -14,39 +14,54 @@ class TurnTracker extends Component {
             encounter: id
         })
     }
+
+    getProgressBarStyle = (percentage) => {
+        return {
+      width: `${percentage}%`
+    }
+    }
    
     render() {      
+        console.log(this.state)
         return (
             <div>
+                
                 {
-                    !this.state.encounter ?
-                    this.setState({ encounter:"Hi"}) : console.log("JHJJ")
-                }
-                {
-                this.props.Initiatives.list && (
+                (this.props.Initiatives.list) && (
                 <MDBContainer className="d-flex justify-content-center">
                     <MDBCol md="10">
                         <div>
                             <EncounterSelect onChange={this.setEncounter}/>
                         </div>
-                        {this.props.Initiatives.list.map(initiative => {
-                            return (
-                                <div key={initiative._id} className="initiatives-container">
-                                    <div className="initiative-element"> Roll: {initiative.initiative} </div>
-                                    <div className='initiative-column'>
-                                        <img alt="character pic" className="rounded-circle z-depth-0 initiative-pic" src={`http://localhost:5000/${initiative.characterStamp['picUrl']}`} />
-                                        <div> {initiative.characterStamp.name} </div>
+                        {this.state.encounter && (
+                            this.props.Initiatives.list.filter(initiative => {
+                                return initiative.encounter === this.state.encounter
+                            })
+                            .map(initiative => {
+                                return (
+                                    <div key={initiative._id} className="initiatives-container">
+                                        <div className="initiative-column"> {initiative.initiative} </div>
+                                            <div className='initiative-column'>
+                                                <img alt="character pic" className="rounded-circle z-depth-0 initiative-pic" src={`http://localhost:5000/${initiative.characterStamp['picUrl']}`} />
+                                                <div> {initiative.characterStamp.name} </div>
+                                            </div>
+                                            <div className='initiative-column'>
+                                                AC: {initiative.characterStamp.armorclass}
+                                            </div>
+                                            <div className='initiative-column'>
+                                                <div className='hp-column'>
+                                                    <div className="progress-bar-border">
+                                                    <h6 className='initiative-column'>HP</h6>
+                                                    <div style={this.getProgressBarStyle(100 * initiative.characterStamp.hitpoints / initiative.characterStamp.maxhitpoints)} className="progress-bar">
+                                                        {`${initiative.characterStamp.hitpoints} / ${initiative.characterStamp.maxhitpoints}`}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='initiative-column'>
-                                        <div> AC: {initiative.characterStamp.armorclass} </div>
-                                    </div>
-                                    <div className='initiative-column'>
-                                        <div> HP: {initiative.characterStamp.hitpoints} </div>
-                                        <div> Max HP: {initiative.characterStamp.maxhitpoints} </div>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })
+                        )}
                     </MDBCol>
                 </MDBContainer>
                 )
