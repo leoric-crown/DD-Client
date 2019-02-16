@@ -58,7 +58,7 @@ class InitiativeTracker extends Component {
                                 characters={this.props.Characters}
                                 dispatch={this.props.dispatch}
                             />
-                            <TurnTracker />
+                            <TurnTracker/>
                         </React.Fragment>
                     )}
             </div>

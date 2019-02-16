@@ -45,15 +45,14 @@ class Navbars extends React.Component {
 
   getNavItems = () => {
     return navRoutes.map(item => {
-      const active = item.label === this.state.selected
       return (
-        <MDBNavItem active={active}>
+        <MDBNavItem key={item.label} active={item.label === this.state.selected}>
           <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item.label)}>{item.label}</MDBNavLink>
         </MDBNavItem>
       )
     })
   }
-  
+
   render() {
     return (
       <div>
@@ -89,8 +88,6 @@ class Navbars extends React.Component {
                   </MDBNavbarNav>
                 </MDBCollapse>
               </MDBNavbar>
-
-
             </header>
           </div>
         )}
