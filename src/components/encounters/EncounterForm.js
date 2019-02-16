@@ -134,13 +134,16 @@ class EncounterForm extends Component {
                                     onKeyDown={(e) => this.handleKeyDown(e)}
                                     value={name}
                                 />
+                                <label className="select-label">Status </label>
                                 <select
+                                    className="browser-default custom-select"
                                     id="status"
                                     value={status}
                                     onChange={e => this.handleChange('status', e.target.value)}>
                                     {this.state.statusOptions}
                                 </select>
-                                <br />
+                                <br/>
+                                <br/>
                                 <div className="text-center">
                                     <MDBBtn
                                         type="button"

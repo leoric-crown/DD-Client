@@ -36,6 +36,7 @@ class CharacterForm extends Component {
     maxhitpoints: '',
     url: '',
     characterPic: null,
+    player: false,
     updating: false,
     levelOptions: levelOptions,
     armorClassOptions: armorClassOptions,
@@ -75,41 +76,12 @@ class CharacterForm extends Component {
     }
   }
 
-  handleChange = (type, value) => {
-    switch (type) {
-      case 'name':
-        this.setState({
-          name: value
-        })
-        break
-      case 'level':
-        this.setState({
-          level: value
-        })
-        break
-      case 'armorclass':
-        this.setState({
-          armorclass: value
-        })
-        break;
-      case 'maxhitpoints':
-        this.setState({
-          maxhitpoints: value
-        })
-        break
-      case 'url':
-        this.setState({
-          url: value
-        })
-        break
-      case 'file':
-        this.setState({
-          characterPic: value
-        })
-        break
-      default:
-        return;
-    }
+  handleChange = (type, value) => {    
+    const newState = {}
+    newState[type] = value
+    this.setState({
+      ...newState
+    })
   }
 
   handleCreate = (toggleCharacterNavigation) => {
@@ -123,7 +95,7 @@ class CharacterForm extends Component {
       name: this.state.name,
       level: this.state.level,
       armorclass: this.state.armorclass,
-      player: true,
+      player: this.state.player,
       maxhitpoints: this.state.maxhitpoints,
       user: this.props.User.userId,
       characterPic: this.state.characterPic ? this.state.characterPic : picUrl
@@ -163,7 +135,8 @@ class CharacterForm extends Component {
   }
 
   render() {
-    const { name, level, armorclass, maxhitpoints } = this.state
+    console.log(this.state)
+    const { name, level, armorclass, maxhitpoints, player } = this.state
     const { toggleButtonNavigation } = this.props
     return (
       <MDBContainer style={this.state.style} className=''>
@@ -189,28 +162,38 @@ class CharacterForm extends Component {
                   onKeyDown={(e) => this.handleKeyDown(e)}
                   value={name}
                 />
-                <label>Level</label>
+                <label className="select-label">Level</label>
                 <select
+                  className="browser-default custom-select"
                   id='level'
                   value={level}
                   onChange={e => this.handleChange('level', e.target.value)}>
                   {this.state.levelOptions}
                 </select>
                 <br />
-                <label>AC</label>
+                <label className="select-label">AC</label>
                 <select
-                  label="selectLabel"
+                  className="browser-default custom-select"
                   id='armorclass'
                   value={armorclass}
                   onChange={e => this.handleChange('armorclass', e.target.value)}>
                   {this.state.armorClassOptions}
                 </select>
                 <MDBInput
+                  className="browser-default custom-select"
                   label="Max Hit Points"
                   containerClass="mb-0"
                   onChange={(e) => this.handleChange("maxhitpoints", e.target.value)}
                   onKeyDown={(e) => this.handleKeyDown(e)}
                   value={maxhitpoints.toString()}
+                />
+                <MDBInput
+                  label="Player Character"
+                  className="mycheckbox"
+                  type="checkbox"
+                  id="checkbox"
+                  onChange={(e) => this.handleChange("player", e.target.checked)}
+                  value={player ? "true" : "false"}
                 />
                 {!this.state.updating &&
                   (

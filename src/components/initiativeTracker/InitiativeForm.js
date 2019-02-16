@@ -34,8 +34,8 @@ class InitiativeForm extends Component {
         }
         return []
     }
-
-    componentWillMount() {
+    
+    checkSelectOptions() {
         if (this.props.encounters.list && !this.state.encounterOptions) {
             const encounterOptions = this.encounterOptions()
             this.setState({
@@ -52,8 +52,12 @@ class InitiativeForm extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillReceiveProps() {
+        this.checkSelectOptions()
+    }
 
+    componentDidMount() {
+        this.checkSelectOptions()
     }
 
     handleKeyDown = (event) => {
@@ -135,21 +139,25 @@ class InitiativeForm extends Component {
                                     onKeyDown={(e) => this.handleKeyDown(e)}
                                     value={this.state.initiative}
                                 />
-                                <label>Encounter</label>
+                                <label className="select-label">Encounter</label>
                                 <select
+                                    className="browser-default custom-select"
                                     id="Encounter"
                                     value={this.state.encounter}
                                     onChange={e => this.handleChange('encounter', e.target.value)}>
                                     {this.state.encounterOptions}
                                 </select>
                                 <br />
-                                <label>Character</label>
+                                <label className="select-label">Character</label>
                                 <select
+                                    className="browser-default custom-select"
                                     id="Character"
                                     value={this.state.character}
                                     onChange={e => this.handleChange('character', e.target.value)}>
                                     {this.state.characterOptions}
                                 </select>
+                                <br/>
+                                <br/>
                                 <div className="text-center">
                                     <MDBBtn
                                         type="button"

@@ -5,6 +5,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 import { connect } from 'react-redux'
 import { checkToken } from '../../utils/misc'
 import InitiativeForm from './InitiativeForm'
+import TurnTracker from './TurnTracker'
 
 class InitiativeTracker extends Component {
     state = {
@@ -55,7 +56,9 @@ class InitiativeTracker extends Component {
                             <InitiativeForm
                                 encounters={this.props.Encounters}
                                 characters={this.props.Characters}
-                                dispatch={this.props.dispatch}/>
+                                dispatch={this.props.dispatch}
+                            />
+                            <TurnTracker />
                         </React.Fragment>
                     )}
             </div>

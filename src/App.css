@@ -30,6 +30,37 @@ div.card-body.mx-4 > div {
   color: #EC2127
 }
 
+.select-label {
+  color:#757575;
+  padding-top: inherit;
+  padding-bottom: inherit/2;
+}
+
+.select {
+  padding-bottom: inherit;
+}
+
+#checkbox {
+  color:#757575;
+  height:1.5rem;
+  padding-right: 40%
+}
+
+.form-check-input {
+  position: absolute;
+  margin-top: 0rem !important;
+  margin-left: -1.25rem;
+}
+
+.form-check {
+  position: relative;
+  display: block;
+  margin-top: 0rem;
+  padding-top: inherit;
+  padding-left: 0rem !important;
+}
+
+
 .my-facebook-button-class {
     font-family: Helvetica,sans-serif;
     font-weight: 700;
