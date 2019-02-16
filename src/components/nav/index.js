@@ -4,15 +4,24 @@ import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
+const navRoutes = [
+  { label: 'Characters', route: '/dashboard/characters' },
+  { label: 'Encounters', route: '/dashboard/encounters' },
+  { label: 'Initiative Tracker', route: '/dashboard/initiativeTracker' }
+]
+
 class Navbars extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
       isWideEnough: false,
+      selected: navRoutes[0].label
     };
     this.onClick = this.onClick.bind(this);
   }
+
 
   onClick() {
     this.setState({
@@ -28,6 +37,23 @@ class Navbars extends React.Component {
     })
   }
 
+  handleNavClick = (newSelected) => {
+    this.setState({
+      selected: newSelected
+    })
+  }
+
+  getNavItems = () => {
+    return navRoutes.map(item => {
+      const active = item.label === this.state.selected
+      return (
+        <MDBNavItem active={active}>
+          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item.label)}>{item.label}</MDBNavLink>
+        </MDBNavItem>
+      )
+    })
+  }
+  
   render() {
     return (
       <div>
@@ -41,15 +67,7 @@ class Navbars extends React.Component {
                 {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
                 <MDBCollapse isOpen={this.state.collapse} navbar>
                   <MDBNavbarNav right>
-                    <MDBNavItem active>
-                      <MDBNavLink to="/dashboard/characters">Characters</MDBNavLink>
-                    </MDBNavItem>
-                    <MDBNavItem>
-                      <MDBNavLink to="/dashboard/encounters">Encounters</MDBNavLink>
-                    </MDBNavItem>
-                    <MDBNavItem>
-                      <MDBNavLink to="/dashboard/initiativeTracker">Initiative Tracker</MDBNavLink>
-                    </MDBNavItem>
+                    {this.getNavItems()}
                   </MDBNavbarNav>
                   <MDBNavbarNav right>
                     <NavItem>
