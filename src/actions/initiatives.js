@@ -12,9 +12,9 @@ export const SET_NEXT_TURN = 'SET_NEXT_TURN'
 export function createInitiative(token, payload) {
     return (dispatch) => {
         return API.createInitiative(token, payload)
-        .then(response => {
-            dispatch(createInitiatives(response.createdInitiative))
-        })
+            .then(response => {
+                dispatch(createInitiatives(response.createdInitiative))
+            })
     }
 }
 
@@ -27,7 +27,14 @@ export function patchInitiativeCharacter(token, payload, id) {
 }
 
 export function deleteInitiative(token, id) {
-
+    return (dispatch) => {
+        return API.deleteInitiative(token, id)
+            .then(response => {
+                if(response.status.code === 200) {
+                    dispatch(removeInitiative(id))
+                }
+            })
+    }
 }
 
 export function getNextTurn(token) {
@@ -35,19 +42,30 @@ export function getNextTurn(token) {
 }
 
 export function removeInitiative(id) {
-
+    return {
+        type: REMOVE_INITIATIVE,
+        id
+    }
 }
 
 export function startEditInitiative(initiative) {
-
+    return {
+        type: START_EDIT_INITIATIVE,
+        initiative
+    }
 }
 
 export function cancelEditInitiative() {
+    return {
+        type: CANCEL_EDIT_INITIATIVE
+    }
 
 }
 
 export function updateInitiative(payload, id) {
+    return {
 
+    }
 }
 
 export function setNextTurn(initiative, prevTurn) {

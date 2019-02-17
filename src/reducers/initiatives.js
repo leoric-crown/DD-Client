@@ -1,4 +1,4 @@
-import { RECEIVE_INITIATIVES, CREATE_INITIATIVES } from '../actions/initiatives'
+import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, START_EDIT_INITIATIVE, CANCEL_EDIT_INITIATIVE, REMOVE_INITIATIVE} from '../actions/initiatives'
 
 const defaultState = {
     list: null,
@@ -22,6 +22,23 @@ export default function Encounters(state = defaultState, action) {
             return {
                 ...state,
                 list: state.list,
+            }
+        case START_EDIT_INITIATIVE:
+            return {
+                ...state,
+                editing: action.initiative
+            }
+        case CANCEL_EDIT_INITIATIVE:
+            return {
+                ...state,
+                editing: false
+            }
+        case REMOVE_INITIATIVE:
+            return {
+                ...state,
+                list: state.list.filter(initiative => {
+                    return initiative._id !== action.id
+                })
             }
         default:
             return { ...state }

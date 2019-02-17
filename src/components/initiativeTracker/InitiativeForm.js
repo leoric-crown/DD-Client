@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { createInitiative } from '../../actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
+import CharacterSelect from '../characters/CharacterSelect'
 
 class InitiativeForm extends Component {
     state = {
         encounter: '',
         character: '',
         initiative: '',
-        encounterOptions: false,
-        characterOptions: false
+        updating: false
     }
 
     characterOptions() {
@@ -23,7 +23,7 @@ class InitiativeForm extends Component {
         }
         return []
     }
-    
+
     checkSelectOptions() {
         if (this.props.characters.list && !this.state.characterOptions) {
             const characterOptions = this.characterOptions()
@@ -40,6 +40,16 @@ class InitiativeForm extends Component {
 
     componentDidMount() {
         this.checkSelectOptions()
+
+        if (!this.state.updating && this.props.initiative) {
+            const { encounter, character, initiative } = this.props.initiative
+            this.setState({
+                encounter,
+                character,
+                initiative,
+                updating: this.props.initiative
+            })
+        }
     }
 
     handleKeyDown = (event) => {
@@ -112,18 +122,25 @@ class InitiativeForm extends Component {
                                     onKeyDown={(e) => this.handleKeyDown(e)}
                                     value={this.state.initiative}
                                 />
-                                <EncounterSelect onChange={(value) => this.handleChange('encounter', value)}/>
+                                <EncounterSelect
+                                    onChange={(value) => this.handleChange('encounter', value)}
+                                    preSelected={true}
+                                />
                                 <br />
-                                <label className="select-label">Character</label>
-                                <select
-                                    className="browser-default custom-select"
-                                    id="Character"
-                                    value={this.state.character}
-                                    onChange={e => this.handleChange('character', e.target.value)}>
-                                    {this.state.characterOptions}
-                                </select>
-                                <br/>
-                                <br/>
+                                {
+                                    this.state.encounter && (
+                                        <div>
+                                            <CharacterSelect
+                                                onChange={(value) => this.handleChange('character', value)}
+                                                preSelected={true}
+                                                filterBy="encounters"
+                                                filterValue={this.state.encounter}
+                                            />
+                                        </div>
+                                    )
+                                }
+                                <br />
+                                <br />
                                 <div className="text-center">
                                     <MDBBtn
                                         type="button"
