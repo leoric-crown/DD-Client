@@ -105,8 +105,7 @@ class Signup extends React.Component {
             serverErrorMessage: res.message
           })
         }
-        // Signup wasn't working with parameter destructuring
-        // In setAuthedUser Action
+        
         const authedUserData = {
           email: res.email,
           photoURL: !res.photoURL ? defaultUserPic : res.photoURL,

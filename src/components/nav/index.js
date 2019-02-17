@@ -4,15 +4,24 @@ import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
 
+const navRoutes = [
+  { label: 'Characters', route: '/dashboard/characters' },
+  { label: 'Encounters', route: '/dashboard/encounters' },
+  { label: 'Initiative Tracker', route: '/dashboard/initiativeTracker' }
+]
+
 class Navbars extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
       isWideEnough: false,
+      selected: navRoutes[0].label
     };
     this.onClick = this.onClick.bind(this);
   }
+
 
   onClick() {
     this.setState({
@@ -25,6 +34,22 @@ class Navbars extends React.Component {
     this.props.dispatch(logoutUser('You have logged out'))
     this.props.history.push({
       pathname: '/'
+    })
+  }
+
+  handleNavClick = (newSelected) => {
+    this.setState({
+      selected: newSelected
+    })
+  }
+
+  getNavItems = () => {
+    return navRoutes.map(item => {
+      return (
+        <MDBNavItem key={item.label} active={item.label === this.state.selected}>
+          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item.label)}>{item.label}</MDBNavLink>
+        </MDBNavItem>
+      )
     })
   }
 
@@ -41,15 +66,7 @@ class Navbars extends React.Component {
                 {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
                 <MDBCollapse isOpen={this.state.collapse} navbar>
                   <MDBNavbarNav right>
-                    <MDBNavItem active>
-                      <MDBNavLink to="/dashboard/characters">Characters</MDBNavLink>
-                    </MDBNavItem>
-                    <MDBNavItem>
-                      <MDBNavLink to="/dashboard/encounters">Encounters</MDBNavLink>
-                    </MDBNavItem>
-                    <MDBNavItem>
-                      <MDBNavLink to="/dashboard/initiativeTracker">Initiative Tracker</MDBNavLink>
-                    </MDBNavItem>
+                    {this.getNavItems()}
                   </MDBNavbarNav>
                   <MDBNavbarNav right>
                     <NavItem>
@@ -71,8 +88,6 @@ class Navbars extends React.Component {
                   </MDBNavbarNav>
                 </MDBCollapse>
               </MDBNavbar>
-
-
             </header>
           </div>
         )}

@@ -1,3 +1,55 @@
+/*
+  This will go on its own
+*/
+
+.initiative-pic {
+  height: 4.0rem;
+}
+
+.initiatives-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.initiative-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: 1.5rem;
+  /* width:20%; */
+}
+
+.progress-bar-border {
+  flex: 1;
+  border: 1px solid #ccc!important;
+}
+.progress-bar {
+  flex: 1;
+  color: #fff!important;
+  background-color: green!important;
+}
+
+.hp-column{
+  flex: 1;
+  width: 75%;
+  justify-content: center;
+
+}
+
+
+
+/*
+  --------------------------------------------
+*/
+
+
+
+
+
 @import url('https://fonts.googleapis.com/css?family=MedievalSharp');
 
 html, body, .root, .App {
@@ -29,6 +81,39 @@ html, body, .root, .App {
 div.card-body.mx-4 > div {
   color: #EC2127
 }
+
+.select-label {
+  color:#757575;
+  padding-top: inherit;
+  padding-bottom: inherit/2;
+}
+
+.select {
+  padding-bottom: inherit;
+}
+
+#checkbox {
+  color:#757575;
+  height:1.5rem;
+  padding-right: 40%
+}
+
+.form-check-input {
+  position: absolute;
+  margin-top: 0rem !important;
+  margin-left: -1.25rem;
+}
+
+.form-check {
+  position: relative;
+  display: block;
+  margin-top: 0rem;
+  padding-top: inherit;
+  padding-left: 0rem !important;
+}
+
+
+
 
 .my-facebook-button-class {
     font-family: Helvetica,sans-serif;

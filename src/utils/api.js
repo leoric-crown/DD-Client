@@ -101,6 +101,10 @@ export const editEncounter = (token, payload, id) => {
   }).then(res => res.json())
 }
 
+export const patchByUrl = (token, payload, url) => {
+  
+}
+
 export const changeActiveEncounter = (token, id) => {
   return fetch(`${api}/encounters/${id}/setActive`, {
     method: 'POST',
@@ -131,15 +135,38 @@ const getEncounters = (token) => {
   }).then(res => res.json())
 }
 
+export const createInitiative = (token, payload) => {
+  return fetch(`${api}/initiatives`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+}
+
+const getInitiatives = (token) => {
+  return fetch(`${api}/initiatives`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
 export const getInitialData = (userId, token) => {
   return Promise.all([
     getCharacters(token),
-    getEncounters(token)
+    getEncounters(token),
+    getInitiatives(token)
   ])
-    .then(([charactersResponse, encountersResponse]) => {
+    .then(([charactersResponse, encountersResponse, initiativesResponse]) => {
       const { characters } = charactersResponse
       const { encounters } = encountersResponse
-      return { characters, encounters }
+      const { initiatives } = initiativesResponse
+      return { characters, encounters, initiatives }
     })
 }
 

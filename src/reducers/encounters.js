@@ -3,7 +3,7 @@ import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTERS, START_EDIT_ENCOUNTER, CANCEL_EDI
 const defaultState = {
   list: null,
   editing: false,
-  active: false
+  active: false,
 }
 
 export default function Encounters(state = defaultState, action) {
