@@ -2,7 +2,6 @@ import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, START_EDIT_INITIATIVE, CANCEL_
 
 const defaultState = {
     list: null,
-    count:0,
     encounter: null,
     editing: false,
     active: false
