@@ -33,10 +33,7 @@ class InitiativeForm extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('componentididupate', prevProps, this.props)
-        console.log('componentdidupdate', prevState, this.state)
         if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
-            console.log('this is hapening?')
             const characterOptions = this.filterCharacters(this.state.encounter)
             const found = characterOptions.find(c => c._id === prevState.character)
             let newCharacter = prevState.character
