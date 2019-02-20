@@ -135,6 +135,16 @@ const getEncounters = (token) => {
   }).then(res => res.json())
 }
 
+export const deleteInitiative = (token, id) => {
+  return fetch(`${api}/initiatives/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
 export const createInitiative = (token, payload) => {
   return fetch(`${api}/initiatives`, {
     method: 'POST',
@@ -166,7 +176,7 @@ export const getInitialData = (userId, token) => {
       const { characters } = charactersResponse
       const { encounters } = encountersResponse
       const { initiatives } = initiativesResponse
-      return { characters, encounters, initiatives }
+      return { characters, encounters, initiatives}
     })
 }
 

@@ -8,10 +8,6 @@ import InitiativeForm from './InitiativeForm'
 import TurnTracker from './TurnTracker'
 
 class InitiativeTracker extends Component {
-    state = {
-
-    }
-
     componentWillMount() {
         if (!this.props.User.authenticated) {
             const token = localStorage.getItem('DNDTOKEN')
@@ -54,8 +50,9 @@ class InitiativeTracker extends Component {
                                 </div>
                             </MDBContainer>
                             <InitiativeForm
-                                encounters={this.props.Encounters}
-                                characters={this.props.Characters}
+                                Initiatives={this.props.Initiatives}
+                                Encounters={this.props.Encounters}   
+                                Characters={this.props.Characters}
                                 dispatch={this.props.dispatch}
                             />
                             <TurnTracker/>
@@ -72,11 +69,12 @@ let styles = {
     marginTop: '5em',
 };
 
-function mapStateToProps({ User, Encounters, Characters }) {
+function mapStateToProps({ User, Characters, Encounters, Initiatives}) {
     return {
         User,
+        Characters,
         Encounters,
-        Characters
+        Initiatives
     }
 
 }

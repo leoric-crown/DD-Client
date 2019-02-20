@@ -2,50 +2,28 @@ import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { createInitiative } from '../../actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
+import CharacterSelect from '../characters/CharacterSelect'
+
 
 class InitiativeForm extends Component {
-    state = {
-        encounter: '',
-        character: '',
-        initiative: '',
-        encounterOptions: false,
-        characterOptions: false
-    }
-
-    characterOptions() {
-        const { characters } = this.props
-        if (characters && characters.list.length > 0) {
-            return characters.list.map(character => {
-                return (
-                    <option key={character._id} value={character._id}>{character.name}</option>
-                )
-            })
+    constructor(props) {
+        super(props)
+        const encounter = this.props.Encounters && this.props.Encounters.list && this.props.Encounters.list.length > 0 ? this.props.Encounters.list[0]._id : false
+        const characterOptions = this.filterCharacters(encounter)
+        const character = characterOptions.length > 0 ? characterOptions[0]._id : false
+        this.state = {
+            encounter,
+            character,
+            characterOptions,
+            initiative: '',
+            updating: false
         }
-        return []
-    }
-    
-    checkSelectOptions() {
-        if (this.props.characters.list && !this.state.characterOptions) {
-            const characterOptions = this.characterOptions()
-            this.setState({
-                characterOptions,
-                character: characterOptions[0].props.value
-            })
-        }
-    }
-
-    componentWillReceiveProps() {
-        this.checkSelectOptions()
-    }
-
-    componentDidMount() {
-        this.checkSelectOptions()
     }
 
     handleKeyDown = (event) => {
         switch (event.key) {
             case 'Enter':
-                this.handleSubmit(this.props.toggleButtonNavigation)
+                this.handleSubmit()
                 break
             case 'Escape':
                 this.handleCancel()
@@ -58,8 +36,11 @@ class InitiativeForm extends Component {
     handleChange = (type, value) => {
         switch (type) {
             case 'encounter':
+                const characterOptions = this.filterCharacters(value)
                 this.setState({
-                    encounter: value
+                    encounter: value,
+                    characterOptions: characterOptions,
+                    character: characterOptions.length > 0 ? characterOptions[0]._id : false
                 })
                 break
             case 'character':
@@ -74,6 +55,17 @@ class InitiativeForm extends Component {
                 break
             default:
                 return
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
+            const characterOptions = this.filterCharacters(this.state.encounter)
+            this.setState({
+                encounter: this.state.encounter,
+                characterOptions: characterOptions,
+                character: characterOptions.length > 0 ? characterOptions[0]._id : false
+            })
         }
     }
 
@@ -96,6 +88,28 @@ class InitiativeForm extends Component {
         this.handleCreate()
     }
 
+
+
+    filterCharacters(encounter) {
+        if (!encounter) return []
+        const { Characters, Initiatives } = this.props
+        let characterList = Characters.list
+        const initiativeList = Initiatives.list
+        if (encounter) {
+            let encounterPlayerCharacterIds = initiativeList.filter(initiative => {
+                return ((initiative.encounter === encounter) && (initiative.characterStamp.player))
+            }).map(i => i.characterStamp._id)
+            encounterPlayerCharacterIds = [...new Set(encounterPlayerCharacterIds)]
+
+            if (encounterPlayerCharacterIds.length > 0) {
+                characterList = characterList.filter(character => {
+                    return character.player ? !encounterPlayerCharacterIds.includes(character._id) : true
+                })
+            }
+        }
+        return characterList
+    }
+
     render() {
         return (
             <MDBContainer style={this.state.style}>
@@ -112,18 +126,27 @@ class InitiativeForm extends Component {
                                     onKeyDown={(e) => this.handleKeyDown(e)}
                                     value={this.state.initiative}
                                 />
-                                <EncounterSelect onChange={(value) => this.handleChange('encounter', value)}/>
+                                {
+                                    this.props.Encounters.list && (
+                                        <EncounterSelect
+                                            encounters={this.props.Encounters.list}
+                                            onChange={value => this.handleChange('encounter', value)}
+                                        />
+                                    )
+                                }
+
                                 <br />
-                                <label className="select-label">Character</label>
-                                <select
-                                    className="browser-default custom-select"
-                                    id="Character"
-                                    value={this.state.character}
-                                    onChange={e => this.handleChange('character', e.target.value)}>
-                                    {this.state.characterOptions}
-                                </select>
-                                <br/>
-                                <br/>
+                                {
+                                    this.state.encounter ?
+                                        <CharacterSelect
+                                            characters={this.state.characterOptions}
+                                            onChange={(value) => this.handleChange('character', value)}
+                                            value={this.state.character}
+                                        /> :
+                                        <div>Please select Encounter first!</div>
+                                }
+                                <br />
+                                <br />
                                 <div className="text-center">
                                     <MDBBtn
                                         type="button"
@@ -144,10 +167,5 @@ class InitiativeForm extends Component {
         )
     }
 }
-
-const formHeaderStyle = {
-    color: 'black'
-}
-
 
 export default InitiativeForm

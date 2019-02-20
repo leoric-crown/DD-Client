@@ -135,7 +135,6 @@ class CharacterForm extends Component {
   }
 
   render() {
-    console.log(this.state)
     const { name, level, armorclass, maxhitpoints, player } = this.state
     const { toggleButtonNavigation } = this.props
     return (

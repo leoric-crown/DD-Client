@@ -13,11 +13,10 @@ export default function Characters(state = defaultState, action) {
         list: action.characters
       }
     case CREATE_CHARACTERS:
-      state.list.push(action.character)
-      return {
-        ...state,
-        list: state.list
-      }
+    return {
+      ...state,
+      list: [...state.list, action.character]
+    }
     case START_EDIT_CHARACTER:
       return {
         ...state,
