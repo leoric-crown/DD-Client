@@ -30,6 +30,7 @@ class TurnTracker extends Component {
                                 <div>
                                     <EncounterSelect 
                                         encounters={this.props.Encounters.list}
+                                        value={this.state.encounter}
                                         onChange={this.setEncounter}
                                     />
                                 </div>

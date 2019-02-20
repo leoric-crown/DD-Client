@@ -1,36 +1,48 @@
 import React from 'react'
+import Select from 'react-select'
 
-const handleChange = (value, onChange) => {
-    onChange(value)
+const selectStyles = {
+    control: styles => ({ ...styles }),
+    option: (styles, { isDisabled }) => {
+        return {
+            ...styles,
+            backgroundColor: 'white',
+            color: 'black',
+            cursor: isDisabled ? 'not-allowed' : 'default'
+        }
+    }
 }
 
-const getOptions = (props) => {
-    const { characters } = props
-    let characterList = characters
-    const characterOptions = characterList.map((character) => (
-        <option key={character._id} value={character._id} player={character.player ? "true" : "false"}>{character.name}</option>
-    ))
-    characterOptions.unshift(
-        characterOptions.length > 0 ?
-            <option key='default' value='' player='false' disabled>Select Character...</option> :
-            <option key='invalid' value='' player='false' disabled>No valid Characters! </option>
-    )
-    return characterOptions
+const defaultOption = { value: false, label: 'No Valid Characters' }
+
+const getOptionFromId = (list, id) => {
+    return { value: id, label: list.find(c => c._id === id).name }
 }
-const NewCharacterSelect = (props) => {
+
+const getSelectOptions = (props) => {
+    const options = []
+    const list = props.characters
+    list.forEach(character => {
+        options.push({ value: character._id, label: character.name })
+    })
+    if (options.length === 0) options.push(defaultOption)
+    return options
+}
+
+const CharacterSelect = (props) => {
     return (
         <div>
-            {
-                props.characters && (
+            {props.characters &&
+                (
                     <div>
                         <label className="select-label">Character</label>
-                        <select
-                            className="browser-default custom-select"
-                            id="Character"
-                            onChange={e => handleChange(e.target.value, props.onChange)}
-                            value={props.value}>
-                            {getOptions(props)}
-                        </select>
+                        <Select
+                            value={props.value ? getOptionFromId(props.characters, props.value) : defaultOption}
+                            onChange={e => props.onChange(e.value)}
+                            options={getSelectOptions(props)}
+                            isSearchable={true}
+                            styles={selectStyles}
+                        />
                     </div>
                 )
             }
@@ -38,4 +50,4 @@ const NewCharacterSelect = (props) => {
     )
 }
 
-export default NewCharacterSelect
+export default CharacterSelect
