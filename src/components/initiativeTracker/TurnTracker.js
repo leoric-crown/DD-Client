@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBContainer, MDBCol } from 'mdbreact';
 import EncounterSelect from '../encounters/EncounterSelect'
 import InitiativeRow from './InitiativeRow'
 
 class TurnTracker extends Component {
-    state = {
-        encounter: null,
-        activeTurn: null
+    constructor(props) {
+        super(props)
+        const encounter = this.props.Encounters && this.props.Encounters.list && this.props.Encounters.list.length > 0 ? this.props.Encounters.list[0]._id : false
+        this.state = {
+            encounter,
+            activeTurn: null
+        }
     }
 
     setEncounter = (id) => {
@@ -24,7 +28,10 @@ class TurnTracker extends Component {
                         <MDBContainer className="d-flex justify-content-center">
                             <MDBCol md="10">
                                 <div>
-                                    <EncounterSelect onChange={this.setEncounter} />
+                                    <EncounterSelect 
+                                        encounters={this.props.Encounters.list}
+                                        onChange={this.setEncounter}
+                                    />
                                 </div>
                                 {this.state.encounter && this.props.Initiatives.list && (
                                     this.props.Initiatives.list.filter(initiative => {

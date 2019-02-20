@@ -18,10 +18,9 @@ export default function Encounters(state = defaultState, action) {
         active: active.length > 0 ? active.pop() : false
       }
     case CREATE_ENCOUNTERS:
-      state.list.push(action.encounter)
       return {
         ...state,
-        list: state.list,
+        list: [...state.list, action.encounter]
       }
     case START_EDIT_ENCOUNTER:
       return {

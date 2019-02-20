@@ -176,7 +176,7 @@ export const getInitialData = (userId, token) => {
       const { characters } = charactersResponse
       const { encounters } = encountersResponse
       const { initiatives } = initiativesResponse
-      return { characters, encounters, initiatives }
+      return { characters, encounters, initiatives}
     })
 }
 

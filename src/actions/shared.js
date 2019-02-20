@@ -9,7 +9,7 @@ export function handleInitialData(userId, jwt) {
       .then(data => {
         dispatch(receiveCharacters(data.characters))
         dispatch(receiveEncounters(data.encounters))
-        dispatch(receiveInitiatives(data.initiatives))
+        dispatch(receiveInitiatives(data.initiatives, data.initiativesCount))
       })
   }
 }

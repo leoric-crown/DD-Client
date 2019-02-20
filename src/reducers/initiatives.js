@@ -2,6 +2,8 @@ import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, START_EDIT_INITIATIVE, CANCEL_
 
 const defaultState = {
     list: null,
+    count:0,
+    encounter: null,
     editing: false,
     active: false
 }
@@ -15,13 +17,13 @@ export default function Encounters(state = defaultState, action) {
             return {
                 ...state,
                 list: action.initiatives,
+                count: action.count,
                 active: active.length > 0 ? active.pop() : false
             }
         case CREATE_INITIATIVES:
-            state.list.push(action.initiative)
             return {
                 ...state,
-                list: state.list,
+                list: [...state.list, action.initiative]
             }
         case START_EDIT_INITIATIVE:
             return {

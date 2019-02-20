@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import { startEditInitiative, deleteInitiative } from '../../actions/initiatives'
 
 class InitiativeRow extends Component {
@@ -20,8 +20,7 @@ class InitiativeRow extends Component {
 
     render() {
         const { initiative } = this.props
-        const characterStats = (initiative.characterStamp.player ? initiative.character : initiative.characterStamp)
-        const requestUrl = initiative.characterStamp.request.url
+        const characterStats = initiative.characterStamp
         const { name, armorclass, hitpoints, maxhitpoints, player } = characterStats
         return (
             <div>
