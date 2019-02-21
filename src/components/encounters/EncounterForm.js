@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
-import { createEncounter, patchEncounter, cancelEditEncounter } from '../../actions/encounters'
+import { createEncounter, patchEncounter, clearActiveEncounter } from '../../actions/encounters'
 
 const statusOptions = [
     <option key='Preparing' value='Preparing'>Preparing</option>,
-    <option key='Active' value='Active'>Active</option>,
-    <option key='Concluded' value='Concluded'>Concluded</option>
+    <option key='Concluded' value='Concluded'>Concluded</option>,
+    <option key='Active' value='Active'>Active</option>
 ]
 
 class EncounterForm extends Component {
@@ -81,6 +81,9 @@ class EncounterForm extends Component {
         } else {
             this.handleCancel()
         }
+        if(this.state.status !== 'Active' && updating.status === 'Active') {
+            this.props.dispatch(clearActiveEncounter())
+        }
     }
 
     handleCreate = () => {
@@ -99,11 +102,11 @@ class EncounterForm extends Component {
         } else {
             this.handleUpdate()
         }
-
+        if (this.props.done) this.props.done()
     }
 
     handleCancel = () => {
-        this.props.dispatch(cancelEditEncounter())
+        this.props.done()
     }
 
     render() {
@@ -163,7 +166,7 @@ class EncounterForm extends Component {
                                             rounded
                                             color="black"
                                             className="btn-block z-depth-1a"
-                                            onClick={() => this.handleCancel()}
+                                            onClick={this.handleCancel}
                                         >
                                             Cancel
                                     </MDBBtn>

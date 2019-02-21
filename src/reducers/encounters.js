@@ -1,4 +1,4 @@
-import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTERS, START_EDIT_ENCOUNTER, CANCEL_EDIT_ENCOUNTER, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER } from '../actions/encounters'
+import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTERS, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER, CLEAR_ACTIVE_ENCOUNTER } from '../actions/encounters'
 
 const defaultState = {
   list: null,
@@ -21,16 +21,6 @@ export default function Encounters(state = defaultState, action) {
       return {
         ...state,
         list: [...state.list, action.encounter]
-      }
-    case START_EDIT_ENCOUNTER:
-      return {
-        ...state,
-        editing: action.encounter
-      }
-    case CANCEL_EDIT_ENCOUNTER:
-      return {
-        ...state,
-        editing: false
       }
     case UPDATE_ENCOUNTER:
       return {
@@ -69,6 +59,11 @@ export default function Encounters(state = defaultState, action) {
           }
         }),
         active: action.active
+      }
+    case CLEAR_ACTIVE_ENCOUNTER:
+      return {
+        ...state,
+        active: false
       }
     default:
       return { ...state }

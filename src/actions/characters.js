@@ -1,8 +1,6 @@
 import * as API from '../utils/api'
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
 export const CREATE_CHARACTERS = 'CREATE_CHARACTERS'
-export const START_EDIT_CHARACTER = 'START_EDIT_CHARACTER'
-export const CANCEL_EDIT_CHARACTER = 'CANCEL_EDIT_CHARACTER'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
 export const DELETE_CHARACTER = 'DELETE_CHARACTER'
 export const REMOVE_CHARACTER = 'REMOVE_CHARACTER'
@@ -43,19 +41,6 @@ export function removeCharacter(id) {
   return {
     type: REMOVE_CHARACTER,
     id
-  }
-}
-
-export function startEditCharacter(character) {
-  return {
-    type: START_EDIT_CHARACTER,
-    character
-  }
-}
-
-export function cancelEditCharacter() {
-  return {
-    type: CANCEL_EDIT_CHARACTER
   }
 }
 

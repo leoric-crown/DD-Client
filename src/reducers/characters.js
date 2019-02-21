@@ -1,4 +1,4 @@
-import { RECEIVE_CHARACTERS, CREATE_CHARACTERS, START_EDIT_CHARACTER, CANCEL_EDIT_CHARACTER, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../actions/characters'
+import { RECEIVE_CHARACTERS, CREATE_CHARACTERS, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../actions/characters'
 
 const defaultState = {
   list: null,
@@ -17,16 +17,6 @@ export default function Characters(state = defaultState, action) {
       ...state,
       list: [...state.list, action.character]
     }
-    case START_EDIT_CHARACTER:
-      return {
-        ...state,
-        editing: action.character
-      }
-    case CANCEL_EDIT_CHARACTER:
-      return {
-        ...state,
-        editing: false
-      }
     case UPDATE_CHARACTER:
       return {
         ...state,

@@ -4,15 +4,11 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
-import { startEditEncounter, deleteEncounter, changeActiveEncounter } from '../../actions/encounters'
+import { deleteEncounter, changeActiveEncounter } from '../../actions/encounters'
 
 class MyEncounters extends Component {
   state = {
     count: 0
-  }
-
-  handleEdit = () => {
-    this.props.dispatch(startEditEncounter(this.props.encounter))
   }
 
   handleDelete = () => {
@@ -43,7 +39,7 @@ class MyEncounters extends Component {
               &nbsp;
               &nbsp;
               <div>
-                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleEdit} icon="pencil" size="lg" />
+                  <MDBIcon style={{cursor:'pointer'}} onClick={() => this.props.onEdit(encounter)} icon="pencil" size="lg" />
                   &nbsp;
                   &nbsp;
                   <MDBIcon style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />

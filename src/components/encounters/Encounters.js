@@ -8,6 +8,7 @@ import { checkToken } from '../../utils/misc'
 class Encounters extends React.Component {
   state = {
     activeButtonMyEncounters: true,
+    editing: false,
     lastClicked: 'Encounters'
   }
 
@@ -77,14 +78,19 @@ class Encounters extends React.Component {
                         {encounterList.map((encounter) => (
                           <li key={encounter._id}>
                             <div className="individual-character">
-                              {(this.props.Encounters.editing &&
-                                this.props.Encounters.editing._id === encounter._id) ?
-                                (<EncounterForm encounter={encounter}/>) :
-                                <MyEncounters
-                                  encounter={encounter}
-                                  length={encounterList.length}
-                                  activeEncounter={this.props.Encounters.active}
-                                />
+                              {(this.state.editing &&
+                                this.state.editing._id === encounter._id) ? (
+                                  <EncounterForm 
+                                    encounter={encounter}
+                                    done={() => this.setState({editing: false})}
+                                  />
+                                ) :
+                                  <MyEncounters
+                                    encounter={encounter}
+                                    length={encounterList.length}
+                                    activeEncounter={this.props.Encounters.active}
+                                    onEdit={encounter => this.setState({editing: encounter})}
+                                  />
                               }
                             </div>
                           </li>

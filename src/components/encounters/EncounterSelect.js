@@ -16,20 +16,25 @@ const selectStyles = {
 const defaultOption = { value: false, label: 'No Valid Encounters' }
 
 const getOptionFromId = (list, id) => {
-    return { value: id, label: list.find(c => c._id === id).name }
+    const encounter = list.find(e => e._id === id)
+    return { value: id, label: encounter.name, encounter }
 }
 
 const getSelectOptions = (props) => {
     const options = []
     const list = props.encounters
     list.forEach(encounter => {
-        options.push({ value: encounter._id, label: encounter.name })
+        options.push({ value: encounter._id, label: encounter.name, encounter: encounter})
     })
     if (options.length === 0) options.push(defaultOption)
     return options
 }
 
-const EncounterSelect = (props) => {
+const handleChange = (e, props) => {
+    props.onChange(e.encounter)
+}
+
+const EncounterSelect = (props) => {    
     return (
         <div>
             {props.encounters &&
@@ -37,10 +42,11 @@ const EncounterSelect = (props) => {
                     <div>
                         <label className="select-label">Encounter</label>
                         <Select
-                            value={props.value ? getOptionFromId(props.encounters, props.value) : defaultOption}
-                            onChange={e => props.onChange(e.value)}
+                            value={props.value ? getOptionFromId(props.encounters, props.value._id) : defaultOption}
+                            onChange={e => handleChange(e, props)}
                             options={getSelectOptions(props)}
                             isSearchable={true}
+                            isDisabled={props.isDisabled}
                             styles={selectStyles}
                         />
                     </div>

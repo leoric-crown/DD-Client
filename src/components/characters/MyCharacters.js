@@ -5,14 +5,9 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import config from '../../config.json';
 import { connect } from 'react-redux'
-import { startEditCharacter, deleteCharacter } from '../../actions/characters'
+import { deleteCharacter } from '../../actions/characters'
 
 class MyCharacters extends Component {
-
-  handleEdit = () => {
-    this.props.dispatch(startEditCharacter(this.props.character))
-  }
-
   handleDelete = () => {
     this.props.dispatch(deleteCharacter(localStorage.getItem('DNDTOKEN'), this.props.character._id))
   }
@@ -31,7 +26,7 @@ class MyCharacters extends Component {
               &nbsp;
               &nbsp;
               <div>
-                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleEdit} icon="pencil" size="lg" />
+                  <MDBIcon style={{cursor:'pointer'}} onClick={() => this.props.onEdit(character)} icon="pencil" size="lg" />
                   &nbsp;
                   &nbsp;
                   <MDBIcon style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />
@@ -45,6 +40,7 @@ class MyCharacters extends Component {
               <h5><MDBIcon icon="shield" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {character.armorclass}</h5>
               <h5><MDBIcon icon="heartbeat" size="lg" className="pr-3" /><strong className="character-stats">Hitpoints:</strong> {character.hitpoints}</h5>
               <h5><MDBIcon icon="heart" size="lg" className="pr-3" /><strong className="character-stats">Max Hit Points:</strong> {character.maxhitpoints}</h5>
+              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">Player:</strong> {character.player ? 'Yes': 'No'}</h5>
             </div>
           </MDBCardBody>
         </MDBCard>

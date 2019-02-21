@@ -8,7 +8,8 @@ import { checkToken } from '../../utils/misc'
 class Characters extends React.Component {
   state = {
     activeButtonMyCharacters: true,
-    lastClicked: "Characters"
+    editing: false,
+    lastClicked: 'Characters'
   }
 
   toggleButtonNavigation = (lastClicked) => {
@@ -81,12 +82,16 @@ class Characters extends React.Component {
                         {characterList.map((character) => (
                           <li key={character._id}>
                             <div className="individual-character">
-                              {(this.props.Characters.editing &&
-                                this.props.Characters.editing._id === character._id) ?
-                                (<CharacterForm character={character}/>) :
+                              {(this.state.editing &&
+                                this.state.editing._id === character._id) ?  (
+                                <CharacterForm 
+                                  character={character}
+                                  done={() => this.setState({editing: false})}
+                                />) :
                                 <MyCharacters
                                   character={character}
                                   length={characterList.length}
+                                  onEdit={character => this.setState({editing: character})}
                                 />
                               }
                             </div>

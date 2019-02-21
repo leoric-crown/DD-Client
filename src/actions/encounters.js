@@ -1,12 +1,11 @@
 import * as API from '../utils/api'
 export const RECEIVE_ENCOUNTERS = 'RECEIVE_ENCOUNTERS'
 export const CREATE_ENCOUNTERS = 'CREATE_ENCOUNTERS'
-export const START_EDIT_ENCOUNTER = 'START_EDIT_ENCOUNTER'
-export const CANCEL_EDIT_ENCOUNTER = 'CANCEL_EDIT_ENCOUNTER'
 export const UPDATE_ENCOUNTER = 'UPDATE_ENCOUNTER'
 export const DELETE_ENCOUNTER = 'DELETE_ENCOUNTER'
 export const REMOVE_ENCOUNTER = 'REMOVE_ENCOUNTER'
 export const SET_ACTIVE_ENCOUNTER = 'SET_ACTIVE_ENCOUNTER'
+export const CLEAR_ACTIVE_ENCOUNTER = 'CLEAR_ACTIVE_ENCOUNTER'
 
 
 export function createEncounter(token, payload) {
@@ -51,23 +50,16 @@ export function changeActiveEncounter(token, id, prevActive) {
     }
 }
 
+export function clearActiveEncounter() {
+    return {
+        type: CLEAR_ACTIVE_ENCOUNTER
+    }
+}
+
 export function removeEncounter(id) {
     return {
         type: REMOVE_ENCOUNTER,
         id
-    }
-}
-
-export function startEditEncounter(encounter) {
-    return {
-        type: START_EDIT_ENCOUNTER,
-        encounter
-    }
-}
-
-export function cancelEditEncounter() {
-    return {
-        type: CANCEL_EDIT_ENCOUNTER
     }
 }
 

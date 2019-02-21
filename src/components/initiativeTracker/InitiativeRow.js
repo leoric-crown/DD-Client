@@ -37,7 +37,7 @@ class InitiativeRow extends Component {
                         <div className='initiative-column'>
                             <div className='hp-column'>
                                 <div className="progress-bar-border">
-                                    <h6 className='initiative-column'>HP</h6>
+                                    <div className='text-center'>HP</div>
                                     <div style={this.getProgressBarStyle(100 * hitpoints / maxhitpoints)} className="progress-bar">
                                         {`${hitpoints} / ${maxhitpoints}`}
                                     </div>
@@ -45,11 +45,10 @@ class InitiativeRow extends Component {
                             </div>
                         </div>
                         <div className='initiative-column'>
-                            <MDBIcon style={{ cursor: 'pointer' }} onClick={() => this.handleEdit(initiative)} icon="pencil" />
-                            <MDBIcon style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} icon="trash" />
+                            Player: {player ? 'Yes' : 'No'}
                         </div>
                         <div className='initiative-column'>
-                            Player: {player ? 'Yes' : 'No'}
+                            <MDBIcon style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} icon="trash" />
                         </div>
                     </div>
                 )}

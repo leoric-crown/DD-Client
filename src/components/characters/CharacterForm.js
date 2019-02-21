@@ -45,11 +45,12 @@ class CharacterForm extends Component {
 
   componentDidMount() {
     if (!this.state.updating && this.props.character) {
-      const { armorclass, level, maxhitpoints, name } = this.props.character
+      const { armorclass, level, hitpoints, maxhitpoints, name } = this.props.character
       this.setState({
         name,
         level,
         armorclass,
+        hitpoints,
         maxhitpoints,
         updating: this.props.character,
         style: {
@@ -60,7 +61,7 @@ class CharacterForm extends Component {
   }
 
   validateInput = () => {
-    //TODO
+    //TODO make sure we validate hitpoints <= maxhitpoints (this is only relevant when state.updating)
   }
 
   handleKeyDown = (event) => {
@@ -106,9 +107,9 @@ class CharacterForm extends Component {
   }
 
   handleUpdate = () => {
-    const { updating, characterPic, style, levelOptions, armorClassOptions, ...changedCharacter } = this.state
+    const { updating, characterPic, style, levelOptions, armorClassOptions, url, ...changedCharacter } = this.state
     const fieldsToUpdate = Object.entries(changedCharacter).filter(([key, value]) => {
-      return (updating[key] && updating[key] !== value)
+      return (updating[key] !== value)
     }).map(([propName, value]) => {
       return {
         propName,
@@ -128,14 +129,15 @@ class CharacterForm extends Component {
     } else {
       this.handleUpdate()
     }
+    this.props.done()
   }
 
   handleCancel = () => {
-    this.props.dispatch(cancelEditCharacter())
+    this.props.done()
   }
 
   render() {
-    const { name, level, armorclass, maxhitpoints, player } = this.state
+    const { name, level, armorclass, hitpoints, maxhitpoints, player } = this.state
     const { toggleButtonNavigation } = this.props
     return (
       <MDBContainer style={this.state.style} className=''>
@@ -178,9 +180,19 @@ class CharacterForm extends Component {
                   onChange={e => this.handleChange('armorclass', e.target.value)}>
                   {this.state.armorClassOptions}
                 </select>
+                {this.state.updating && (
+                  <MDBInput
+                  className="browser-default custom-select"
+                  label="Hitpoints"
+                  containerClass="mb-0"
+                  onChange={(e) => this.handleChange("hitpoints", e.target.value)}
+                  onKeyDown={(e) => this.handleKeyDown(e)}
+                  value={hitpoints.toString()}
+                  />
+                )}
                 <MDBInput
                   className="browser-default custom-select"
-                  label="Max Hit Points"
+                  label="Max Hitpoints"
                   containerClass="mb-0"
                   onChange={(e) => this.handleChange("maxhitpoints", e.target.value)}
                   onKeyDown={(e) => this.handleKeyDown(e)}

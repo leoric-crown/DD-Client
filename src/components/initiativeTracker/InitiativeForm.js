@@ -20,7 +20,12 @@ const getSelectedCharacter = (options, prevCharacter) => {
 class InitiativeForm extends Component {
     constructor(props) {
         super(props)
-        const encounter = this.props.Encounters && this.props.Encounters.list && this.props.Encounters.list.length > 0 ? this.props.Encounters.list.sort(sortByName)[0]._id : false
+        let encounter = false
+        if (this.props.setEncounter) {
+            encounter = this.props.setEncounter
+        } else if (this.props.Encounters && this.props.Encounters.list && this.props.Encounters.list.length > 0) {
+            encounter = this.props.Encounters.list.sort(sortByName)[0]
+        }
         const characterOptions = this.filterCharacters(encounter)
         const character = characterOptions.length > 0 ? characterOptions[0]._id : false
         this.state = {
@@ -33,17 +38,28 @@ class InitiativeForm extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
-            const characterOptions = this.filterCharacters(this.state.encounter)
-            const found = characterOptions.find(c => c._id === prevState.character)
-            let newCharacter = prevState.character
-            if (!found) {
-                newCharacter = getSelectedCharacter(characterOptions, prevState.character)
+        if (this.props.setEncounter !== prevProps.setEncounter) {
+            if (this.props.setEncounter && this.props.setEncounter._id !== this.state.encounter._id) {
+                this.setState({
+                    encounter: this.props.setEncounter
+                })
             }
+            if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
+                const characterOptions = this.filterCharacters(this.state.encounter)
+                const found = characterOptions.find(c => c._id === prevState.character)
+                let newCharacter = prevState.character
+                if (!found) {
+                    newCharacter = getSelectedCharacter(characterOptions, prevState.character)
+                }
+                this.setState({
+                    encounter: this.state.encounter,
+                    characterOptions: characterOptions,
+                    character: newCharacter
+                })
+            }
+        } else if (this.state.encounter && prevProps.Initiatives.list.length !== this.props.Initiatives.list.length) {
             this.setState({
-                encounter: this.state.encounter,
-                characterOptions: characterOptions,
-                character: newCharacter
+                characterOptions: this.filterCharacters(this.state.encounter)
             })
         }
     }
@@ -55,7 +71,7 @@ class InitiativeForm extends Component {
         const initiativeList = Initiatives.list
         if (encounter) {
             let encounterPlayerCharacterIds = initiativeList.filter(initiative => {
-                return ((initiative.encounter === encounter) && (initiative.characterStamp.player))
+                return ((initiative.encounter === encounter._id) && (initiative.characterStamp.player))
             }).map(i => i.characterStamp._id)
             encounterPlayerCharacterIds = [...new Set(encounterPlayerCharacterIds)]
 
@@ -69,7 +85,7 @@ class InitiativeForm extends Component {
     }
 
     handleCreate() {
-        const { initiative, encounter, character } = this.state
+        const { initiative, encounter, character, characterOptions } = this.state
         const payload = {
             initiative,
             encounter,
@@ -77,9 +93,14 @@ class InitiativeForm extends Component {
         }
 
         this.props.dispatch(createInitiative(localStorage.getItem('DNDTOKEN'), payload))
-        if (this.state.characterOptions.find(c => c._id === character).player) {
+        if (characterOptions.find(c => c._id === character).player) {
+            const [ ...oldOptions ] = characterOptions
+            const addedCharacter = characterOptions.find(c => c._id === character)
+            const index = characterOptions.indexOf(addedCharacter)
+            characterOptions.splice(index, 1)
             this.setState({
-                character: getSelectedCharacter(this.state.characterOptions, character)
+                character: getSelectedCharacter(oldOptions, character),
+                characterOptions
             })
         }
     }
@@ -152,6 +173,7 @@ class InitiativeForm extends Component {
                                             encounters={this.props.Encounters.list.sort(sortByName)}
                                             onChange={value => this.handleChange('encounter', value)}
                                             value={this.state.encounter}
+                                            isDisabled={this.props.setEncounter ? true : false}
                                         />
                                     )
                                 }
@@ -176,7 +198,7 @@ class InitiativeForm extends Component {
                                         className="btn-block z-depth-1a"
                                         onClick={() => this.handleSubmit()}
                                     >
-                                        Create
+                                        Add to Encounter
                                     </MDBBtn>
                                 </div>
                             </MDBCardBody>
