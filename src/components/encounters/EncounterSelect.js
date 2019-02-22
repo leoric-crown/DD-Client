@@ -13,7 +13,7 @@ const selectStyles = {
     }
 }
 
-const defaultOption = { value: false, label: 'No Valid Encounters' }
+const defaultOption = { value: false, label: 'No Valid Encounters', encounter: false }
 
 const getOptionFromId = (list, id) => {
     const encounter = list.find(e => e._id === id)
@@ -24,7 +24,7 @@ const getSelectOptions = (props) => {
     const options = []
     const list = props.encounters
     list.forEach(encounter => {
-        options.push({ value: encounter._id, label: encounter.name, encounter: encounter})
+        options.push({ value: encounter._id, label: encounter.name, encounter })
     })
     if (options.length === 0) options.push(defaultOption)
     return options

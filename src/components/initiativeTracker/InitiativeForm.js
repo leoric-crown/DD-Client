@@ -11,10 +11,12 @@ const sortByName = (a, b) => {
 }
 
 const getSelectedCharacter = (options, prevCharacter) => {
+    console.log('options', options, 'prevchar', prevCharacter)
     const characterIds = options.map(c => c._id)
-    const index = characterIds.indexOf(prevCharacter)
-    if (index === characterIds.length - 1) return characterIds[index - 1]
-    else return characterIds[(index + 1) % (characterIds.length)]
+    const index = characterIds.indexOf(prevCharacter._id)
+    console.log('index', index)
+    if (index === characterIds.length - 1) return options[index - 1]
+    else return options[(index + 1) % (options.length)]
 }
 
 class InitiativeForm extends Component {
@@ -27,12 +29,13 @@ class InitiativeForm extends Component {
             encounter = this.props.Encounters.list.sort(sortByName)[0]
         }
         const characterOptions = this.filterCharacters(encounter)
-        const character = characterOptions.length > 0 ? characterOptions[0]._id : false
+        const character = characterOptions.length > 0 ? characterOptions[0] : false
         this.state = {
             encounter,
             character,
             characterOptions,
             initiative: '',
+            multiple: false,
             updating: false
         }
     }
@@ -46,7 +49,7 @@ class InitiativeForm extends Component {
             }
             if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
                 const characterOptions = this.filterCharacters(this.state.encounter)
-                const found = characterOptions.find(c => c._id === prevState.character)
+                const found = characterOptions.find(c => c._id === prevState.character._id)
                 let newCharacter = prevState.character
                 if (!found) {
                     newCharacter = getSelectedCharacter(characterOptions, prevState.character)
@@ -57,10 +60,12 @@ class InitiativeForm extends Component {
                     character: newCharacter
                 })
             }
-        } else if (this.state.encounter && prevProps.Initiatives.list.length !== this.props.Initiatives.list.length) {
-            this.setState({
-                characterOptions: this.filterCharacters(this.state.encounter)
-            })
+        } else {
+            if (this.state.encounter && prevProps.Initiatives.list.length !== this.props.Initiatives.list.length) {
+                this.setState({
+                    characterOptions: this.filterCharacters(this.state.encounter)
+                })
+            }
         }
     }
 
@@ -74,7 +79,8 @@ class InitiativeForm extends Component {
                 return ((initiative.encounter === encounter._id) && (initiative.characterStamp.player))
             }).map(i => i.characterStamp._id)
             encounterPlayerCharacterIds = [...new Set(encounterPlayerCharacterIds)]
-
+            console.log('encounterPlayerCharacterIds', encounterPlayerCharacterIds)
+            console.log('characterList', characterList)
             if (encounterPlayerCharacterIds.length > 0) {
                 characterList = characterList.filter(character => {
                     return character.player ? !encounterPlayerCharacterIds.includes(character._id) : true
@@ -93,14 +99,12 @@ class InitiativeForm extends Component {
         }
 
         this.props.dispatch(createInitiative(localStorage.getItem('DNDTOKEN'), payload))
-        if (characterOptions.find(c => c._id === character).player) {
-            const [ ...oldOptions ] = characterOptions
+        if (character.player) {
             const addedCharacter = characterOptions.find(c => c._id === character)
             const index = characterOptions.indexOf(addedCharacter)
-            characterOptions.splice(index, 1)
             this.setState({
-                character: getSelectedCharacter(oldOptions, character),
-                characterOptions
+                character: getSelectedCharacter(characterOptions, character),
+                characterOptions: [...characterOptions].splice(index, 1)
             })
         }
     }
@@ -125,7 +129,7 @@ class InitiativeForm extends Component {
                 this.setState({
                     encounter: value,
                     characterOptions: characterOptions,
-                    character: characterOptions.length > 0 ? characterOptions[0]._id : false
+                    character: characterOptions.length > 0 ? characterOptions[0] : false
                 })
                 break
             case 'character':
@@ -152,6 +156,7 @@ class InitiativeForm extends Component {
     }
 
     render() {
+        console.log('initiativeform', this.state.character)
         return (
             <MDBContainer style={this.state.style}>
                 <MDBRow className="d-flex justify-content-center">

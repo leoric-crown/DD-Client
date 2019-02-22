@@ -129,11 +129,11 @@ class CharacterForm extends Component {
     } else {
       this.handleUpdate()
     }
-    this.props.done()
+    if(this.props.done) this.props.done()
   }
 
   handleCancel = () => {
-    this.props.done()
+    if(this.props.done) this.props.done()
   }
 
   render() {

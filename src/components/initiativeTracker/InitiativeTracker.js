@@ -53,6 +53,7 @@ class InitiativeTracker extends Component {
         const TurnTrackerAttributes = {
             setEncounter : this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
         }
+        console.log('turntrackerattributes', TurnTrackerAttributes)
         return (
             <div>
                 {

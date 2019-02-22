@@ -25,20 +25,11 @@ class TurnTracker extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.setEncounter !== prevProps.setEncounter) {
-            if (this.props.setEncounter && this.state.encounter !== this.props.setEncounter) {
-                this.setState({
-                    encounter: this.props.setEncounter,
-                    fixedEncounter: true
-                })
-            }
-            else if (!this.props.setEncounter && this.state.encounter._id !== this.props.Encounters.list[0]._id) {
-                this.setState({
-                    encounter: this.props.Encounters.list[0],
-                    fixedEncounter: false
-                })
-            }
+            this.setState({
+                encounter: this.props.setEncounter ? this.props.setEncounter : this.props.Encounters.list[0],
+                fixedEncounter: !this.state.fixedEncounter
+            })
         }
-
     }
 
     setEncounter = (encounter) => {
@@ -54,6 +45,7 @@ class TurnTracker extends Component {
                 return initiative.encounter === this.state.encounter._id
             })
         }
+        console.log('turntracker',this.state)
         return (
             <div>
                 {

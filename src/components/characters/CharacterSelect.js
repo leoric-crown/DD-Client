@@ -13,17 +13,22 @@ const selectStyles = {
     }
 }
 
-const defaultOption = { value: false, label: 'No Valid Characters' }
+const defaultOption = { value: false, label: 'No Valid Characters', character: false }
 
-const getOptionFromId = (list, id) => {
-    return { value: id, label: list.find(c => c._id === id).name }
+const getValueOption = (props) => {
+    if (props.value) {
+        const character = props.value
+        console.log('tying to make selected option', character, props)
+        return { value: character._id, label: character.name, character }
+    }
+    return defaultOption
 }
 
 const getSelectOptions = (props) => {
     const options = []
     const list = props.characters
     list.forEach(character => {
-        options.push({ value: character._id, label: character.name })
+        options.push({ value: character._id, label: character.name, character })
     })
     if (options.length === 0) options.push(defaultOption)
     return options
@@ -37,8 +42,8 @@ const CharacterSelect = (props) => {
                     <div>
                         <label className="select-label">Character</label>
                         <Select
-                            value={props.value ? getOptionFromId(props.characters, props.value) : defaultOption}
-                            onChange={e => props.onChange(e.value)}
+                            value={getValueOption(props)}
+                            onChange={e => props.onChange(e.character)}
                             options={getSelectOptions(props)}
                             isSearchable={true}
                             styles={selectStyles}
