@@ -45,7 +45,6 @@ class TurnTracker extends Component {
                 return initiative.encounter === this.state.encounter._id
             })
         }
-        console.log('turntracker',this.state)
         return (
             <div>
                 {

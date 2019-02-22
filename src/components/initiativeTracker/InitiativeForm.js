@@ -11,10 +11,8 @@ const sortByName = (a, b) => {
 }
 
 const getSelectedCharacter = (options, prevCharacter) => {
-    console.log('options', options, 'prevchar', prevCharacter)
     const characterIds = options.map(c => c._id)
     const index = characterIds.indexOf(prevCharacter._id)
-    console.log('index', index)
     if (index === characterIds.length - 1) return options[index - 1]
     else return options[(index + 1) % (options.length)]
 }
@@ -36,7 +34,8 @@ class InitiativeForm extends Component {
             characterOptions,
             initiative: '',
             multiple: false,
-            updating: false
+            updating: false,
+            quantity: 1
         }
     }
 
@@ -79,8 +78,6 @@ class InitiativeForm extends Component {
                 return ((initiative.encounter === encounter._id) && (initiative.characterStamp.player))
             }).map(i => i.characterStamp._id)
             encounterPlayerCharacterIds = [...new Set(encounterPlayerCharacterIds)]
-            console.log('encounterPlayerCharacterIds', encounterPlayerCharacterIds)
-            console.log('characterList', characterList)
             if (encounterPlayerCharacterIds.length > 0) {
                 characterList = characterList.filter(character => {
                     return character.player ? !encounterPlayerCharacterIds.includes(character._id) : true
@@ -91,11 +88,12 @@ class InitiativeForm extends Component {
     }
 
     handleCreate() {
-        const { initiative, encounter, character, characterOptions } = this.state
+        const { initiative, encounter, character, quantity, characterOptions } = this.state
         const payload = {
             initiative,
             encounter,
-            character
+            character,
+            quantity
         }
 
         this.props.dispatch(createInitiative(localStorage.getItem('DNDTOKEN'), payload))
@@ -123,28 +121,26 @@ class InitiativeForm extends Component {
     }
 
     handleChange = (type, value) => {
+        const newState = {}
         switch (type) {
             case 'encounter':
                 const characterOptions = this.filterCharacters(value)
-                this.setState({
-                    encounter: value,
-                    characterOptions: characterOptions,
-                    character: characterOptions.length > 0 ? characterOptions[0] : false
-                })
+                newState.characterOptions = characterOptions
+                newState.character = characterOptions.length > 0 ? characterOptions[0] : false
                 break
-            case 'character':
-                this.setState({
-                    character: value
-                })
+            case 'multiple':
+                newState.quantity = 1
                 break
-            case 'initiative':
-                this.setState({
-                    initiative: value
-                })
+            case 'quantity':
+                value = parseInt(value)
                 break
             default:
-                return
+                break
         }
+        newState[type] = value
+        this.setState({
+            ...newState
+        })
     }
 
     validateInput() {
@@ -156,7 +152,7 @@ class InitiativeForm extends Component {
     }
 
     render() {
-        console.log('initiativeform', this.state.character)
+        console.log('initiativeform', this.state)
         return (
             <MDBContainer style={this.state.style}>
                 <MDBRow className="d-flex justify-content-center">
@@ -192,6 +188,30 @@ class InitiativeForm extends Component {
                                             value={this.state.character}
                                         /> :
                                         <div>Please select Encounter first!</div>
+                                }
+                                {
+                                    !this.state.character.player && !this.state.updating && (
+                                        <MDBInput
+                                            label="Bulk"
+                                            className="mycheckbox"
+                                            type="checkbox"
+                                            id="checkbox"
+                                            onChange={(e) => this.handleChange('multiple', e.target.checked)}
+                                            value={this.state.multiple ? "true" : "false"}
+                                        />
+                                    )
+                                }
+                                {
+                                    this.state.multiple && (
+                                        <MDBInput
+                                            label="Quantity"
+                                            containerClass="mb-0"
+                                            required={true}
+                                            onChange={(e) => this.handleChange('quantity', e.target.value)}
+                                            onKeyDown={(e) => this.handleKeyDown(e)}
+                                            value={this.state.quantity.toString()}
+                                        />
+                                    )
                                 }
                                 <br />
                                 <br />

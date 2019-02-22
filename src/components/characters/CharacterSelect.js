@@ -18,7 +18,6 @@ const defaultOption = { value: false, label: 'No Valid Characters', character: f
 const getValueOption = (props) => {
     if (props.value) {
         const character = props.value
-        console.log('tying to make selected option', character, props)
         return { value: character._id, label: character.name, character }
     }
     return defaultOption
