@@ -1,10 +1,7 @@
-import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, START_EDIT_INITIATIVE, CANCEL_EDIT_INITIATIVE, REMOVE_INITIATIVE} from '../actions/initiatives'
+import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE} from '../actions/initiatives'
 
 const defaultState = {
     list: null,
-    encounter: null,
-    editing: false,
-    active: false
 }
 
 export default function Encounters(state = defaultState, action) {
@@ -20,19 +17,10 @@ export default function Encounters(state = defaultState, action) {
                 active: active.length > 0 ? active.pop() : false
             }
         case CREATE_INITIATIVES:
+        console.log('creating initiatives', ...action.initiatives)
             return {
                 ...state,
-                list: [...state.list, action.initiative]
-            }
-        case START_EDIT_INITIATIVE:
-            return {
-                ...state,
-                editing: action.initiative
-            }
-        case CANCEL_EDIT_INITIATIVE:
-            return {
-                ...state,
-                editing: false
+                list: [...state.list, ...action.initiatives]
             }
         case REMOVE_INITIATIVE:
             return {

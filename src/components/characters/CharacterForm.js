@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
-import { createCharacter, patchCharacter, cancelEditCharacter } from '../../actions/characters'
+import { createCharacter, patchCharacter } from '../../actions/characters'
 import validator from 'validator';
 
 const levelOptions = (() => {

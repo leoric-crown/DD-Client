@@ -128,6 +128,12 @@ class InitiativeForm extends Component {
                 newState.characterOptions = characterOptions
                 newState.character = characterOptions.length > 0 ? characterOptions[0] : false
                 break
+            case 'character':
+                if(value.player) {
+                    newState.multiple = false
+                    newState.quantity = 1
+                }
+                break
             case 'multiple':
                 newState.quantity = 1
                 break

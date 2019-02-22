@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MDBIcon } from 'mdbreact';
-import { startEditInitiative, deleteInitiative } from '../../actions/initiatives'
+import { deleteInitiative } from '../../actions/initiatives'
 
 class InitiativeRow extends Component {
     getProgressBarStyle = (percentage) => {
         return {
             width: `${percentage}%`
         }
-    }
-
-    handleEdit = (initiative) => {
-        this.props.dispatch(startEditInitiative(initiative))
     }
 
     handleDelete(initiative) {
