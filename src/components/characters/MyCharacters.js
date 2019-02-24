@@ -14,7 +14,6 @@ class MyCharacters extends Component {
 
   render() {
     const { character } = this.props
-    console.log(character)
     return (
       <MDBContainer className="">
         <MDBCard style={{ backgroundColor: 'transparent' }} className="character-container">

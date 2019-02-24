@@ -87,6 +87,7 @@ class CharacterHitPoints extends Component {
             switch (type) {
                 case 'hitpoints':
                     hitpoints = hitpoints + (sum ? addHitpoints : -addHitpoints)
+                    if (hitpoints > maxhitpoints) hitpoints = maxhitpoints
                     addHitpoints = 0
                     break
                 case 'maxhitpoints':
@@ -98,7 +99,7 @@ class CharacterHitPoints extends Component {
             }
 
             if (hitpoints < 0) {
-                hitpoints = this.state.hpCurrent.hitpoints
+                hitpoints = 0
             }
             if (maxhitpoints < 0) {
                 maxhitpoints = this.state.hpCurrent.maxhitpoints
