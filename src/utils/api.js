@@ -110,17 +110,10 @@ export const editEncounter = (token, payload, id) => {
 }
 
 export const patchByUrl = (token, payload, url) => {
-  console.log(payload, {
+  console.log('patchByUrl', url, payload)
+  return fetch(url, {
     method: 'PATCH',
-    header: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  })
-  return fetch('http://localhost:5000/characters/5c6f7566c563cf4350140ee7', {
-    method: 'PATCH',
-    header: {
+    headers: {
       ...headers,
       'Authorization': `Bearer ${token}`
     },

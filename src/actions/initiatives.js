@@ -7,6 +7,7 @@ export const DELETE_INITIATIVE = 'DELETE_INITIATIVE'
 export const REMOVE_INITIATIVE = 'REMOVE_INITIATIVE'
 export const SET_NEXT_TURN = 'SET_NEXT_TURN'
 export const SET_ENCOUNTER = 'SET_ENCOUNTER'
+export const UPDATE_INITIATIVE_STAMP = 'UPDATE_INITIATIVE_STAMP'
 
 export function createInitiative(token, payload) {
     return (dispatch) => {
@@ -17,19 +18,26 @@ export function createInitiative(token, payload) {
     }
 }
 
-export function patchInitiative(token, payload, id) {
+export function patchInitiative(token, payload, url) {
 
 }
 
-export function patchInitiativeCharacter(token, payload, id) {
-
+export function patchInitiativeCharacter(token, payload, url) {
+    return (dispatch) => {
+        return API.patchByUrl(token, payload, url)
+            .then((response) => {
+                if (response.status.code === 200) {
+                    dispatch(updateInitiativeStamp(payload, response._id))
+                }
+            })
+    }
 }
 
 export function deleteInitiative(token, id) {
     return (dispatch) => {
         return API.deleteInitiative(token, id)
             .then(response => {
-                if(response.status.code === 200) {
+                if (response.status.code === 200) {
                     dispatch(removeInitiative(id))
                 }
             })
@@ -47,9 +55,11 @@ export function removeInitiative(id) {
     }
 }
 
-export function updateInitiative(payload, id) {
+export function updateInitiativeStamp(payload, id) {
     return {
-
+        type: UPDATE_INITIATIVE_STAMP,
+        id,
+        payload
     }
 }
 

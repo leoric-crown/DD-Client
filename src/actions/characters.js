@@ -1,5 +1,4 @@
 import * as API from '../utils/api'
-import { updateInitiative } from './initiatives';
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
 export const CREATE_CHARACTERS = 'CREATE_CHARACTERS'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
@@ -31,7 +30,7 @@ export function patchCharacter(token, payload, id, url = false) {
     return API.patchByUrl(token, payload, url)
       .then((response) => {
         if(response.status.code === 200) {
-          dispatch(updateInitiative(payload, id))
+          dispatch(updateCharacter(payload, response._id))
         }
       })
   }

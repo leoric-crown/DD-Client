@@ -6,17 +6,33 @@ import CharacterHitPoints from './characterHitpoints/CharacterHitpoints';
 import config from '../../config.json'
 
 class InitiativeRow extends Component {
+    constructor(props) {
+        super(props)
+        const { initiative, character } = this.props
+        this.state = {
+            character,
+            initiative
+        }
+    }
     handleDelete(initiative) {
         this.props.dispatch(deleteInitiative(localStorage.getItem('DNDTOKEN'), initiative._id))
     }
 
-    updateHP = () => {
+    componentDidUpdate(prevProps) {
+        console.log(';componentddiupdate initiativerow', prevProps.character.hitpoints, this.props.character.hitpoints)
 
     }
 
+    updateHP = () => {
+        
+    }
+
     render() {
-        const { initiative } = this.props
-        const characterStats = initiative.characterStamp
+        const { initiative, character } = this.props
+        console.log('CHECK THIS',character.hitpoints)
+        const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
+        console.log('characterStats', characterStats.name, characterStats.hitpoints)
+        console.log(characterStats.name, characterStats)
         const { name, armorclass, player } = characterStats
         return (
             <div>
@@ -36,7 +52,6 @@ class InitiativeRow extends Component {
                             <CharacterHitPoints
                                 {...{ characterStats }}
                                 onClick={this.openModal}
-                                onSubmit={this.updateHP}
                                 dispatch={this.props.dispatch} />
                         </div>
                         <div className='initiative-column'>

@@ -7,6 +7,7 @@ import { patchCharacter } from '../../../actions/characters'
 import { patchInitiativeCharacter } from '../../../actions/initiatives'
 
 const getProgressBarStyle = (percentage) => {
+    if(percentage > 100) percentage = 100
     return {
         width: `${percentage}%`
     }
@@ -33,6 +34,10 @@ class CharacterHitPoints extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        console.log('compoonent did update charHP', prevProps.characterStats.hitpoints, this.props.characterStats.hitpoints)
+    }
+    
     cancelModal = () => {
         this.setState({
             updating: false
@@ -119,8 +124,8 @@ class CharacterHitPoints extends Component {
         const { characterStats } = this.props
         const { hpCurrent, hpNew } = this.state
         
-        const fieldsToUpdate = Object.entries(hpCurrent).filter(([key, value]) => {
-            return (hpNew[key] !== value)
+        const fieldsToUpdate = Object.entries(hpNew).filter(([propName, value]) => {
+            return (hpCurrent[propName] !== value)
         }).map(([propName, value]) => {
             return {
                 propName,
@@ -137,10 +142,15 @@ class CharacterHitPoints extends Component {
             
         }
         
-        this.props.onSubmit()
+        this.setState({
+            updating: false,
+            hpCurrent: hpNew,
+            hpNew
+        })
     }
 
     render() {
+        console.log(this.state.hpNew)
         const { characterStats } = this.props
         const { hpCurrent, hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (

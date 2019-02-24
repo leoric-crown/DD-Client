@@ -30,6 +30,7 @@ class TurnTracker extends Component {
                 fixedEncounter: !this.state.fixedEncounter
             })
         }
+        if (this.props.Characters.list !== prevProps.Characters.list) console.log('CHANGE')
     }
 
     setEncounter = (encounter) => {
@@ -72,7 +73,11 @@ class TurnTracker extends Component {
                                     {this.state.encounter && this.props.Initiatives.list && (
                                         initiativeList.sort((a, b) => b.initiative - a.initiative).map(initiative => {
                                             return (
-                                                <InitiativeRow key={initiative._id} initiative={initiative} />
+                                                <InitiativeRow
+                                                    key={initiative._id}
+                                                    initiative={initiative}
+                                                    character={this.props.Characters.list.find(c => c._id === initiative.characterStamp._id)}
+                                                />
                                             )
                                         })
                                     )}
