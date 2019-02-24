@@ -2,14 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MDBIcon } from 'mdbreact';
 import { deleteInitiative } from '../../actions/initiatives'
+import CharacterHitPoints from '../characters/CharacterHitpoints';
 
 class InitiativeRow extends Component {
-    getProgressBarStyle = (percentage) => {
-        return {
-            width: `${percentage}%`
-        }
-    }
-
     handleDelete(initiative) {
         this.props.dispatch(deleteInitiative(localStorage.getItem('DNDTOKEN'), initiative._id))
     }
@@ -28,17 +23,10 @@ class InitiativeRow extends Component {
                             <div> {name} </div>
                         </div>
                         <div className='initiative-column'>
-                            AC: {armorclass}    
+                            AC: {armorclass}
                         </div>
                         <div className='initiative-column'>
-                            <div className='hp-column'>
-                                <div className="progress-bar-border">
-                                    <div className='text-center'>HP</div>
-                                    <div style={this.getProgressBarStyle(100 * hitpoints / maxhitpoints)} className="progress-bar">
-                                        {`${hitpoints} / ${maxhitpoints}`}
-                                    </div>
-                                </div>
-                            </div>
+                            <CharacterHitPoints {...{ hitpoints, maxhitpoints }} onClick={this.openModal} />
                         </div>
                         <div className='initiative-column'>
                             Player: {player ? 'Yes' : 'No'}

@@ -49,34 +49,36 @@ class TurnTracker extends Component {
             <div>
                 {
                     (initiativeList) && (
-                        <MDBContainer className="d-flex justify-content-center">
-                            <MDBCol md="10">
-                                <div>
-                                    {
-                                        this.state.fixedEncounter ? (
-                                            <div>
-                                                <br />
-                                                <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiativeList.length} Characters</h4>
-                                            </div>
-                                        ) : (
-                                                <EncounterSelect
-                                                    encounters={this.props.Encounters.list}
-                                                    value={this.state.encounter}
-                                                    onChange={value => this.setEncounter(value)}
-                                                    extra="trackerselect"
-                                                />
+                        <React.Fragment>
+                            <MDBContainer className="d-flex justify-content-center">
+                                <MDBCol md="10">
+                                    <div>
+                                        {
+                                            this.state.fixedEncounter ? (
+                                                <div>
+                                                    <br />
+                                                    <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiativeList.length} Characters</h4>
+                                                </div>
+                                            ) : (
+                                                    <EncounterSelect
+                                                        encounters={this.props.Encounters.list}
+                                                        value={this.state.encounter}
+                                                        onChange={value => this.setEncounter(value)}
+                                                        extra="trackerselect"
+                                                    />
+                                                )
+                                        }
+                                    </div>
+                                    {this.state.encounter && this.props.Initiatives.list && (
+                                        initiativeList.sort((a, b) => b.initiative - a.initiative).map(initiative => {
+                                            return (
+                                                <InitiativeRow key={initiative._id} initiative={initiative} />
                                             )
-                                    }
-                                </div>
-                                {this.state.encounter && this.props.Initiatives.list && (
-                                    initiativeList.sort((a, b) => b.initiative - a.initiative).map(initiative => {
-                                        return (
-                                            <InitiativeRow key={initiative._id} initiative={initiative} />
-                                        )
-                                    })
-                                )}
-                            </MDBCol>
-                        </MDBContainer>
+                                        })
+                                    )}
+                                </MDBCol>
+                            </MDBContainer>
+                        </React.Fragment>
                     )
                 }
             </div>
