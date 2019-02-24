@@ -117,7 +117,9 @@ class CharacterForm extends Component {
       }
     })
     if (fieldsToUpdate.length > 0) {
-      this.props.dispatch(patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, updating._id))
+      const maxHpIndex = fieldsToUpdate.map(op => op.propName).indexOf('maxhitpoints')
+      if(maxHpIndex > -1 && !updating.player ) fieldsToUpdate.push({propName: 'hitpoints', value: fieldsToUpdate[maxHpIndex].value})
+      this.props.dispatch(patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, updating.request.url))
     } else {
       this.handleCancel()
     }
@@ -180,7 +182,7 @@ class CharacterForm extends Component {
                   onChange={e => this.handleChange('armorclass', e.target.value)}>
                   {this.state.armorClassOptions}
                 </select>
-                {this.state.updating && (
+                {this.state.updating && this.state.updating.player && (
                   <MDBInput
                   className="browser-default custom-select"
                   label="Hitpoints"

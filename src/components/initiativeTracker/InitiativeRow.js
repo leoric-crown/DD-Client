@@ -18,21 +18,9 @@ class InitiativeRow extends Component {
         this.props.dispatch(deleteInitiative(localStorage.getItem('DNDTOKEN'), initiative._id))
     }
 
-    componentDidUpdate(prevProps) {
-        console.log(';componentddiupdate initiativerow', prevProps.character.hitpoints, this.props.character.hitpoints)
-
-    }
-
-    updateHP = () => {
-        
-    }
-
     render() {
         const { initiative, character } = this.props
-        console.log('CHECK THIS',character.hitpoints)
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
-        console.log('characterStats', characterStats.name, characterStats.hitpoints)
-        console.log(characterStats.name, characterStats)
         const { name, armorclass, player } = characterStats
         return (
             <div>

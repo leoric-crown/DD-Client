@@ -48,17 +48,6 @@ export const createCharacter = (token, payload) => {
   }).then(res => res.json())
 }
 
-export const editCharacter = (token, payload, id) => {
-  return fetch(`${api}/characters/${id}`, {
-    method: 'PATCH',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
-}
-
 export const deleteCharacter = (token, id) => {
   return fetch(`${api}/characters/${id}`, {
     method: 'DELETE',
@@ -90,27 +79,7 @@ export const createEncounter = (token, payload) => {
   }).then(res => res.json())
 }
 
-export const editEncounter = (token, payload, id) => {
-  console.log(payload, {
-    method: 'PATCH',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  } )
-  return fetch(`${api}/encounters/${id}`, {
-    method: 'PATCH',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
-}
-
 export const patchByUrl = (token, payload, url) => {
-  console.log('patchByUrl', url, payload)
   return fetch(url, {
     method: 'PATCH',
     headers: {

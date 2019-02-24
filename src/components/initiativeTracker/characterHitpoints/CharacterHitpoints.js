@@ -33,10 +33,6 @@ class CharacterHitPoints extends Component {
             editMaxHP: false
         }
     }
-
-    componentDidUpdate(prevProps) {
-        console.log('compoonent did update charHP', prevProps.characterStats.hitpoints, this.props.characterStats.hitpoints)
-    }
     
     cancelModal = () => {
         this.setState({
@@ -132,11 +128,9 @@ class CharacterHitPoints extends Component {
                 value
             }
         })
-        console.log('fieldstoupdate', fieldsToUpdate, characterStats.request.url)
-        console.log(characterStats.request.url)
         if(fieldsToUpdate.length > 0) {
             characterStats.player ? 
-                this.props.dispatch(patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, false, characterStats.request.url))
+                this.props.dispatch(patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, characterStats.request.url))
                 :
                 this.props.dispatch(patchInitiativeCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, characterStats.request.url))
             
@@ -150,7 +144,6 @@ class CharacterHitPoints extends Component {
     }
 
     render() {
-        console.log(this.state.hpNew)
         const { characterStats } = this.props
         const { hpCurrent, hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (

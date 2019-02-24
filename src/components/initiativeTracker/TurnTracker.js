@@ -30,7 +30,6 @@ class TurnTracker extends Component {
                 fixedEncounter: !this.state.fixedEncounter
             })
         }
-        if (this.props.Characters.list !== prevProps.Characters.list) console.log('CHANGE')
     }
 
     setEncounter = (encounter) => {

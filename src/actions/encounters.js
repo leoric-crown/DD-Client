@@ -17,12 +17,12 @@ export function createEncounter(token, payload) {
     }
 }
 
-export function patchEncounter(token, payload, id) {
+export function patchEncounter(token, payload, url) {
     return (dispatch) => {
-        return API.editEncounter(token, payload, id)
+        return API.patchByUrl(token, payload, url)
             .then(response => {
                 if (response.status.code === 200) {
-                    dispatch(updateEncounter(payload, id))
+                    dispatch(updateEncounter(payload, response._id))
                 }
             })
     }

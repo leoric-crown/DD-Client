@@ -15,17 +15,7 @@ export function createCharacter(token, payload) {
   }
 }
 
-export function patchCharacter(token, payload, id, url = false) {
-  if (!url) {
-    return (dispatch) => {
-      return API.editCharacter(token, payload, id)
-        .then((response) => {
-          if (response.status.code === 200) {
-            dispatch(updateCharacter(payload, id))
-          }
-        })
-    }
-  }
+export function patchCharacter(token, payload, url) {
   return (dispatch) => {
     return API.patchByUrl(token, payload, url)
       .then((response) => {
