@@ -91,6 +91,14 @@ export const createEncounter = (token, payload) => {
 }
 
 export const editEncounter = (token, payload, id) => {
+  console.log(payload, {
+    method: 'PATCH',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  } )
   return fetch(`${api}/encounters/${id}`, {
     method: 'PATCH',
     headers: {
@@ -102,7 +110,22 @@ export const editEncounter = (token, payload, id) => {
 }
 
 export const patchByUrl = (token, payload, url) => {
-  
+  console.log(payload, {
+    method: 'PATCH',
+    header: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  })
+  return fetch('http://localhost:5000/characters/5c6f7566c563cf4350140ee7', {
+    method: 'PATCH',
+    header: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
 }
 
 export const changeActiveEncounter = (token, id) => {

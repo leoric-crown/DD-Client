@@ -139,6 +139,7 @@ class InitiativeForm extends Component {
                 break
             case 'quantity':
                 value = parseInt(value)
+                if (isNaN(value)) value = 1
                 break
             default:
                 break
@@ -158,7 +159,6 @@ class InitiativeForm extends Component {
     }
 
     render() {
-        console.log('initiativeform', this.state)
         return (
             <MDBContainer style={this.state.style}>
                 <MDBRow className="d-flex justify-content-center">

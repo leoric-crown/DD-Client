@@ -17,7 +17,6 @@ export default function Encounters(state = defaultState, action) {
                 active: active.length > 0 ? active.pop() : false
             }
         case CREATE_INITIATIVES:
-        console.log('creating initiatives', ...action.initiatives)
             return {
                 ...state,
                 list: [...state.list, ...action.initiatives]

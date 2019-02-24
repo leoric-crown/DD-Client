@@ -1,4 +1,5 @@
 import * as API from '../utils/api'
+import { updateInitiative } from './initiatives';
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
 export const CREATE_CHARACTERS = 'CREATE_CHARACTERS'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
@@ -15,15 +16,26 @@ export function createCharacter(token, payload) {
   }
 }
 
-export function patchCharacter(token, payload, id) {
+export function patchCharacter(token, payload, id, url = false) {
+  if (!url) {
+    return (dispatch) => {
+      return API.editCharacter(token, payload, id)
+        .then((response) => {
+          if (response.status.code === 200) {
+            dispatch(updateCharacter(payload, id))
+          }
+        })
+    }
+  }
   return (dispatch) => {
-    return API.editCharacter(token, payload, id)
+    return API.patchByUrl(token, payload, url)
       .then((response) => {
-        if (response.status.code === 200) {
-          dispatch(updateCharacter(payload, id))
+        if(response.status.code === 200) {
+          dispatch(updateInitiative(payload, id))
         }
       })
   }
+
 }
 
 export function deleteCharacter(token, id) {

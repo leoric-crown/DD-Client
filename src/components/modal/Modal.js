@@ -6,16 +6,16 @@ const modal = props => {
     return (
         <React.Fragment>
             <div className="backdrop"></div>
-            <MDBContainer className="my-modal">
+            <MDBContainer className="my-modal text-center">
                 <MDBRow className="d-flex justify-content-center">
                     <div className="my-modal__container">
                         <section>
-                            {<h1>{props.title}</h1>}
+                            {<h3>{props.title}</h3>}
                         </section>
                         <section>
                             {props.children}
                         </section>
-                        <MDBRow>
+                        <MDBRow className="my-modal__actions">
                             {props.canConfirm && (
                                 <MDBCol>
                                     <MDBBtn onClick={props.onConfirm} className="btn-block btn-black z-depth-1a">Confirm</MDBBtn>
