@@ -18,28 +18,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-grow: 1;
   width: 1.5rem;
   /* width:20%; */
 }
 
-.progress-bar-border {
-  flex: 1;
-  border: 1px solid #ccc!important;
+.progress-bar-container {
+  width:100%;
 }
 .progress-bar {
-  flex: 1;
-  color: white!important;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  position: relative;
+  height: 1.1rem;
   background-color: green!important;
 }
 
+.progress-bar-hitpoints {
+  position: absolute;
+  margin-top: 0.8rem;
+  font-weight: 450;
+  text-shadow: -1px 0 lightgray, 0 1px lightgray, 1px 0 lightgray, 0 -1px lightgray;
+  z-index: 999;
+}
+
+.progress-bar-background {
+  position: relative;
+  height: 1.1rem;
+  background-color: darkgray;
+}
+
 .hp-column{
-  flex: 1;
+  display: flex;
   width: 100%;
+  flex-direction: column;;
   justify-content: center;
-  align-items:center
+  align-items: center;
 }
 
 

@@ -7,7 +7,7 @@ import { patchCharacter } from '../../../actions/characters'
 import { patchInitiativeCharacter } from '../../../actions/initiatives'
 
 const getProgressBarStyle = (percentage) => {
-    if(percentage > 100) percentage = 100
+    if (percentage > 100) percentage = 100
     return {
         width: `${percentage}%`
     }
@@ -33,7 +33,7 @@ class CharacterHitPoints extends Component {
             editMaxHP: false
         }
     }
-    
+
     cancelModal = () => {
         this.setState({
             updating: false
@@ -120,7 +120,7 @@ class CharacterHitPoints extends Component {
     handleSubmit = () => {
         const { characterStats } = this.props
         const { hpCurrent, hpNew } = this.state
-        
+
         const fieldsToUpdate = Object.entries(hpNew).filter(([propName, value]) => {
             return (hpCurrent[propName] !== value)
         }).map(([propName, value]) => {
@@ -199,11 +199,15 @@ class CharacterHitPoints extends Component {
                     </Modal>
                 )}
                 <div className='hp-column' onClick={this.openModal}>
-                    <div className="progress-bar-border">
-                        <div className='text-center'>HP</div>
-                        <div style={getProgressBarStyle(100 * hpCurrent.hitpoints / hpCurrent.maxhitpoints)} className="progress-bar">
-                            {`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}
+                    <div className='text-center'>HP</div>
+                    <div className='progress-bar-hitpoints'>{`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}</div>
+                    <div className="progress-bar-container">
+                        <div className="progress-bar-background">
+                            <div style={getProgressBarStyle(100 * hpCurrent.hitpoints / hpCurrent.maxhitpoints)} className="progress-bar">
+                                
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </React.Fragment>
