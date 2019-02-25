@@ -16,7 +16,7 @@ class MyCharacters extends Component {
     const { character } = this.props
     return (
       <MDBContainer className="">
-        <MDBCard style={{backgroundColor:'transparent'}} className="character-container">
+        <MDBCard style={{ backgroundColor: 'transparent' }} className="character-container">
           <MDBCardBody>
             <div className='card-top'>
               <h3 className="black-text mb-5">
@@ -26,10 +26,10 @@ class MyCharacters extends Component {
               &nbsp;
               &nbsp;
               <div>
-                  <MDBIcon style={{cursor:'pointer'}} onClick={() => this.props.onEdit(character)} icon="pencil" size="lg" />
-                  &nbsp;
-                  &nbsp;
-                  <MDBIcon style={{cursor:'pointer'}} onClick={this.handleDelete} icon="trash" size="lg" />
+                <MDBIcon style={{ cursor: 'pointer' }} onClick={() => this.props.onEdit(character)} icon="pencil" size="lg" />
+                &nbsp;
+                &nbsp;
+                  <MDBIcon style={{ cursor: 'pointer' }} onClick={this.handleDelete} icon="trash" size="lg" />
               </div>
             </div>
             <div className="text-center mb-3">
@@ -38,9 +38,13 @@ class MyCharacters extends Component {
             <div className="character-specs mb-3">
               <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Level:</strong> {character.level}</h5>
               <h5><MDBIcon icon="shield" size="lg" className="pr-3" /><strong className="character-stats">&nbsp;Armor Class:</strong> {character.armorclass}</h5>
-              <h5><MDBIcon icon="heartbeat" size="lg" className="pr-3" /><strong className="character-stats">Hitpoints:</strong> {character.hitpoints}</h5>
+              {character.player && (
+                <div>
+                  <h5><MDBIcon icon="heartbeat" size="lg" className="pr-3" /><strong className="character-stats">Hitpoints:</strong> {character.hitpoints}</h5>
+                </div>
+              )}
               <h5><MDBIcon icon="heart" size="lg" className="pr-3" /><strong className="character-stats">Max Hit Points:</strong> {character.maxhitpoints}</h5>
-              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">Player:</strong> {character.player ? 'Yes': 'No'}</h5>
+              <h5><MDBIcon icon="user" size="lg" className="pr-3" /><strong className="character-stats">Player:</strong> {character.player ? 'Yes' : 'No'}</h5>
             </div>
           </MDBCardBody>
         </MDBCard>

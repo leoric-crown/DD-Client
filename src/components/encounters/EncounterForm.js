@@ -77,7 +77,7 @@ class EncounterForm extends Component {
             }
         })
         if (fieldsToUpdate.length > 0) {
-            this.props.dispatch(patchEncounter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, updating._id))
+            this.props.dispatch(patchEncounter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, updating.request.url))
         } else {
             this.handleCancel()
         }

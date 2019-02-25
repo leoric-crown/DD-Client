@@ -18,9 +18,10 @@ export default function Characters(state = defaultState, action) {
       list: [...state.list, action.character]
     }
     case UPDATE_CHARACTER:
+      const list = [...state.list]
       return {
         ...state,
-        list: state.list.map(character => {
+        list: list.map(character => {
           if (character._id === action.id) {
             action.payload.forEach(update => {
               character[update.propName] = update.value

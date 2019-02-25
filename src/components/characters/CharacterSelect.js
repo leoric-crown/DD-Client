@@ -33,7 +33,7 @@ const getSelectOptions = (props) => {
     return options
 }
 
-const CharacterSelect = (props) => {
+const characterSelect = (props) => {
     return (
         <div>
             {props.characters &&
@@ -54,4 +54,4 @@ const CharacterSelect = (props) => {
     )
 }
 
-export default CharacterSelect
+export default characterSelect

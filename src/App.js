@@ -24,7 +24,7 @@ class App extends Component {
           <Route exact path='/dashboard' component={Characters} />
           <Route path='/dashboard/characters' component={Characters} />
           <Route exact path='/dashboard/encounters' component={Encounters} />
-          <Route exact path='/dashboard/initiativeTracker' component={InitiativeTracker}/>
+          <Route exact path='/dashboard/initiativeTracker' component={InitiativeTracker} />
         </Switch>
       </div>
     );

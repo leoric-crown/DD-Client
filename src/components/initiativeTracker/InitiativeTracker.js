@@ -24,7 +24,7 @@ class InitiativeTracker extends Component {
                 return {
                     lastClicked
                 }
-            } 
+            }
             return
         });
     }
@@ -51,7 +51,7 @@ class InitiativeTracker extends Component {
             dispatch: this.props.dispatch
         }
         const TurnTrackerAttributes = {
-            setEncounter : this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
+            setEncounter: this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
         }
         return (
             <div>
@@ -83,21 +83,21 @@ class InitiativeTracker extends Component {
                             {
                                 this.state.lastClicked === ACTIVE_ENCOUNTER ? (
                                     this.props.Encounters.active ? (
-                                        <TurnTracker 
+                                        <TurnTracker
                                             {...TurnTrackerAttributes}
                                         />
                                     ) : (
-                                        <div>
-                                            <br/>
-                                            <h4 className='text-center'>No Active Encounter</h4>
-                                        </div>
-                                    )
-                                    
-                                ) : 
-                                    <TurnTracker 
+                                            <div>
+                                                <br />
+                                                <h4 className='text-center'>No Active Encounter</h4>
+                                            </div>
+                                        )
+
+                                ) :
+                                    <TurnTracker
                                         {...TurnTrackerAttributes}
                                     />
-                                
+
                             }
                         </React.Fragment>
                     )}

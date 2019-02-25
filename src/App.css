@@ -2,6 +2,7 @@
   This will go on its own
 */
 
+
 .initiative-pic {
   height: 4.0rem;
 }
@@ -17,30 +18,50 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-grow: 1;
   width: 1.5rem;
   /* width:20%; */
 }
 
-.progress-bar-border {
-  flex: 1;
-  border: 1px solid #ccc!important;
+.progress-bar-container {
+  width:100%;
 }
+
+.progress-bar-hitpoints {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: row;
+  font-weight: 450;
+  text-shadow: -1px 0 lightgray, 0 1px lightgray, 1px 0 lightgray, 0 -1px lightgray;
+  z-index: 999;
+}
+
+.progress-bar-background {
+  border-radius: 0.5rem;
+  position: relative;
+  height: 1.5rem;
+  background-color: darkgray;
+}
+
 .progress-bar {
-  flex: 1;
-  color: #fff!important;
-  background-color: green!important;
+  border-radius: 0.5rem;
+  position: relative;
+  height: 1.5rem;
 }
+
 
 .hp-column{
-  flex: 1;
+  display: flex;
   width: 100%;
+  flex-direction: row;
   justify-content: center;
-  align-items:center
+  align-items: center;
 }
 
-
+.pad-icon {
+  padding: 0.25rem;
+}
 
 /*
   --------------------------------------------
