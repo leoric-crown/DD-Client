@@ -3,6 +3,7 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse,
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authedUser'
 import { withRouter } from 'react-router-dom'
+import onClickOutside from 'react-onclickoutside'
 
 const navRoutes = [
   { label: 'Characters', route: '/dashboard/characters' },
@@ -15,7 +16,7 @@ class Navbars extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: false,
+      open: false,
       isWideEnough: false,
       selected: navRoutes[0].label
     };
@@ -25,7 +26,7 @@ class Navbars extends React.Component {
 
   onClick() {
     this.setState({
-      collapse: !this.state.collapse,
+      open: !this.state.open,
     });
   }
 
@@ -37,9 +38,17 @@ class Navbars extends React.Component {
     })
   }
 
+  handleClickOutside = () => {
+    if(this.state.open) 
+      this.setState({
+        open: false
+      })
+  }
+
   handleNavClick = (newSelected) => {
     this.setState({
-      selected: newSelected
+      selected: newSelected,
+      open: false
     })
   }
 
@@ -64,7 +73,7 @@ class Navbars extends React.Component {
                   <strong className="text-in-black">Dnd Turn Tracker</strong>
                 </MDBNavbarBrand>
                 {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
-                <MDBCollapse isOpen={this.state.collapse} navbar>
+                <MDBCollapse isOpen={this.state.open} navbar>
                   <MDBNavbarNav right>
                     {this.getNavItems()}
                   </MDBNavbarNav>
@@ -103,4 +112,4 @@ function mapStateToProps({ User }) {
 
 }
 
-export default withRouter(connect(mapStateToProps)(Navbars))
+export default withRouter(connect(mapStateToProps)(onClickOutside(Navbars)))
