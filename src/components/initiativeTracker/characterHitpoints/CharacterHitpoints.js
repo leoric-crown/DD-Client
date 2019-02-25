@@ -3,8 +3,6 @@ import Modal from '../../modal/Modal'
 import { MDBInput, MDBRow, MDBIcon, MDBCol, MDBBtn } from 'mdbreact'
 import config from '../../../config.json'
 import './CharacterHitPoints.css'
-import { patchCharacter } from '../../../actions/characters'
-import { patchInitiativeCharacter } from '../../../actions/initiatives'
 
 const getProgressBarStyle = (percentage) => {
     if (percentage > 100) percentage = 100
@@ -118,7 +116,6 @@ class CharacterHitPoints extends Component {
     }
 
     handleSubmit = () => {
-        const { characterStats } = this.props
         const { hpCurrent, hpNew } = this.state
 
         const fieldsToUpdate = Object.entries(hpNew).filter(([propName, value]) => {
