@@ -40,7 +40,7 @@ class InitiativeRow extends Component {
     render() {
         const { initiative, character } = this.state
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
-        const { name, armorclass, player } = characterStats
+        const { name, armorclass } = characterStats
         return (
             <div>
                 {initiative && (
@@ -62,9 +62,6 @@ class InitiativeRow extends Component {
                                 dispatch={this.props.dispatch}
                                 onSubmit={this.handleHpChange}
                             />
-                        </div>
-                        <div className='initiative-column'>
-                            Player: {player ? 'Yes' : 'No'}
                         </div>
                         <div className='initiative-column'>
                             <MDBIcon

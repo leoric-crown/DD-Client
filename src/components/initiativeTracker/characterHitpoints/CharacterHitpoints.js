@@ -2,12 +2,19 @@ import React, { Component } from 'react'
 import Modal from '../../modal/Modal'
 import { MDBInput, MDBRow, MDBIcon, MDBCol, MDBBtn } from 'mdbreact'
 import config from '../../../config.json'
+import gradient from 'gradient-color'
 import './CharacterHitPoints.css'
 
 const getProgressBarStyle = (percentage) => {
     if (percentage > 100) percentage = 100
+    const colors = gradient([
+        '#930002',
+        '#E0C600',
+        '#009607'
+    ], 10)
     return {
-        width: `${percentage}%`
+        width: `${percentage}%`,
+        backgroundColor: colors[Math.floor(((percentage - 0.001) / 10) % 10)]
     }
 }
 
@@ -196,13 +203,13 @@ class CharacterHitPoints extends Component {
                     </Modal>
                 )}
                 <div className='hp-column' onClick={this.openModal}>
-                    <div className='text-center'>HP</div>
-                    <div className='progress-bar-hitpoints'>{`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}</div>
+                    <div className='progress-bar-hitpoints'>
+                        <MDBIcon className="pad-icon" icon="heartbeat" size="lg" />
+                        {`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}
+                    </div>
                     <div className="progress-bar-container">
                         <div className="progress-bar-background">
-                            <div style={getProgressBarStyle(100 * hpCurrent.hitpoints / hpCurrent.maxhitpoints)} className="progress-bar">
-                                
-                            </div>
+                            <div style={getProgressBarStyle(100 * hpCurrent.hitpoints / hpCurrent.maxhitpoints)} className="progress-bar"></div>
                         </div>
 
                     </div>
