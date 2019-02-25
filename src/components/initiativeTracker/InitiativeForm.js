@@ -171,7 +171,6 @@ class InitiativeForm extends Component {
                                 <MDBIcon icon="khanda" />
                                 <MDBInput
                                     label="Initiative"
-                                    containerClass="mb-0"
                                     required={true}
                                     onChange={(e) => this.handleChange("initiative", e.target.value)}
                                     onKeyDown={(e) => this.handleKeyDown(e)}
@@ -199,7 +198,7 @@ class InitiativeForm extends Component {
                                         <div>Please select Encounter first!</div>
                                 }
                                 {
-                                    !this.state.character.player && !this.state.updating && (
+                                    !this.state.character.player ? (
                                         <MDBInput
                                             label="Bulk"
                                             className="mycheckbox"
@@ -208,7 +207,7 @@ class InitiativeForm extends Component {
                                             onChange={(e) => this.handleChange('multiple', e.target.checked)}
                                             value={this.state.multiple ? "true" : "false"}
                                         />
-                                    )
+                                    ) : <div><br/></div>
                                 }
                                 {
                                     this.state.multiple && (
@@ -232,8 +231,6 @@ class InitiativeForm extends Component {
                                         </React.Fragment>
                                     )
                                 }
-                                <br />
-                                <br />
                                 <div className="text-center">
                                     <MDBBtn
                                         type="button"

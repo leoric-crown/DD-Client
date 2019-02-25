@@ -59,7 +59,7 @@ class InitiativeTracker extends Component {
                     this.props.User.authenticated && this.props.Encounters.list && this.props.Encounters.list.length > 0 && (
                         <React.Fragment>
                             <MDBContainer style={styles} className="">
-                                <div className="characters-Container">
+                                <div className="characters-container">
                                     <MDBRow>
                                         <MDBCol md='12' className="mb-4">
                                             <MDBBtn onClick={() => this.toggleButtonNavigation(ACTIVE_ENCOUNTER)} color="black">

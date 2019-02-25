@@ -2,7 +2,6 @@
   This will go on its own
 */
 
-
 .initiative-pic {
   height: 4.0rem;
 }
@@ -18,14 +17,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-grow: 1;
   width: 1.5rem;
+}
+
+.initiative-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.character-hitpoints {
+  font-size: 1.5rem;
+  margin: 1.5rem 1rem 0.5rem 0.5rem
+}
+
+.stats-column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  flex-grow: 2;
+  flex-wrap: wrap;
   /* width:20%; */
+}
+
+.stats-icons {
+  color: darkred;
+  margin-top: -0.15rem;
 }
 
 .progress-bar-container {
   width:100%;
+}
+.progress-bar-heartbeat {
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+  color: rgba(102, 0, 0, 0.8);
 }
 
 .progress-bar-hitpoints {
@@ -41,7 +71,7 @@
   border-radius: 0.5rem;
   position: relative;
   height: 1.5rem;
-  background-color: darkgray;
+  background-color: lightgray;
 }
 
 .progress-bar {
@@ -133,9 +163,6 @@ div.card-body.mx-4 > div {
   padding-left: 0rem !important;
 }
 
-
-
-
 .my-facebook-button-class {
     font-family: Helvetica,sans-serif;
     font-weight: 700;
@@ -150,7 +177,7 @@ div.card-body.mx-4 > div {
     padding: calc(-0.65565vw + 13.38843px) calc(.34435vw + 18.38843px);
 }
 
-.characters-Container {
+.characters-container {
   display: flex;
   justify-content: center;
 }
@@ -167,16 +194,16 @@ div.card-body.mx-4 > div {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-  }
+}
 
-  .individual-character {
-      padding: 10px 15px;
-      text-align: left;
-  }
+.individual-character {
+    padding: 1rem;
+    text-align: left;
+}
 
 .character-pic {
-  width:150px;
-  height: 150px;
+  width: 10rem;
+  height: 10rem;
 }
 
 .character-container {
@@ -185,22 +212,62 @@ div.card-body.mx-4 > div {
   align-items: center;
 }
 
+.card-top {
+  display: flex;
+  width:25vh;
+  justify-content: space-between;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.star {
+  color: gold;
+  font-size: 2.8rem;
+}
+
+.card-actions-item {
+  cursor: pointer;
+  padding-bottom: 1rem;
+}
+
 .character-name {
   font-family: MedievalSharp;
-  font-size: 40px;
+  font-size: inherit;
   font-style: normal;
   font-variant: normal;
   font-weight: 700;
-  line-height: 26.4px;
+  line-height: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 5rem;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.character-name-title {
+  font-family: MedievalSharp;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 2.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .character-stats {
   font-family: MedievalSharp;
-  font-size: 20px;
+  font-size: 1.3rem;
   font-style: normal;
   font-variant: normal;
   font-weight: 700;
-  line-height: 15.4px;
+  line-height: 1.5rem;
 }
 
 .characters-grid {
@@ -214,20 +281,20 @@ div.card-body.mx-4 > div {
   color: black !important;
 }
 
-.card-top {
-  display: flex;
-  justify-content: space-between;
-}
-
 .character-specs-inner {
   display: flex;
   flex-direction: column;
+  padding: 0;
+}
+
+.page-title {
+  display: flex;
+  justify-content: center;
 }
 
 .page-heading {
   border-bottom: 3px solid red;
   padding-bottom: 8px;
-  padding-top: 16px;
   margin-left:10%;
   margin-right:10%;
 }
