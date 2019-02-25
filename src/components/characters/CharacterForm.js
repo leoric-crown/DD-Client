@@ -29,34 +29,37 @@ const armorClassOptions = (() => {
 })()
 
 class CharacterForm extends Component {
-  state = {
-    name: '',
-    level: '1',
-    armorclass: '10',
-    maxhitpoints: '',
-    url: '',
-    characterPic: null,
-    player: false,
-    updating: false,
-    levelOptions: levelOptions,
-    armorClassOptions: armorClassOptions,
-    style: {}
-  }
+  // state = {
+  //   name: '',
+  //   level: '1',
+  //   armorclass: '10',
+  //   maxhitpoints: '',
+  //   url: '',
+  //   characterPic: null,
+  //   player: false,
+  //   updating: false,
+  //   levelOptions: levelOptions,
+  //   armorClassOptions: armorClassOptions,
+  //   style: {}
+  // }
 
-  componentDidMount() {
-    if (!this.state.updating && this.props.character) {
-      const { armorclass, level, hitpoints, maxhitpoints, name } = this.props.character
-      this.setState({
-        name,
-        level,
-        armorclass,
-        hitpoints,
-        maxhitpoints,
-        updating: this.props.character,
-        style: {
-          width: '25em'
-        }
-      })
+  constructor(props) {
+    super(props)
+    const updating = this.props.character ? this.props.character : false
+    const { name, level, armorclass, hitpoints, maxhitpoints, player } = updating
+    this.state = {
+      updating,
+      name: updating ? name : '',
+      level: updating ? level : '1',
+      armorclass: updating ? armorclass : '10',
+      hitpoints: updating ? hitpoints : '',
+      maxhitpoints: updating ? maxhitpoints : '',
+      url: '',
+      characterPic: null,
+      player: updating ? player :false,
+      levelOptions,
+      armorClassOptions,
+      style: {}
     }
   }
 
@@ -206,13 +209,14 @@ class CharacterForm extends Component {
                   type="checkbox"
                   id="checkbox"
                   onChange={(e) => this.handleChange("player", e.target.checked)}
-                  value={player ? "true" : "false"}
+                  checked={player}
                 />
                 {!this.state.updating &&
                   (
                     <div>
                       <MDBInput
                         label="Photo URL"
+                        className="text-center"
                         containerClass="mb-0"
                         onChange={(e) => this.handleChange("url", e.target.value)}
                         onKeyDown={(e) => this.handleKeyDown(e)}

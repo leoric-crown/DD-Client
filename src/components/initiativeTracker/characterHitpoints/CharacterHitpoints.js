@@ -129,14 +129,7 @@ class CharacterHitPoints extends Component {
                 value
             }
         })
-        if(fieldsToUpdate.length > 0) {
-            characterStats.player ? 
-                this.props.dispatch(patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, characterStats.request.url))
-                :
-                this.props.dispatch(patchInitiativeCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, characterStats.request.url))
-            
-        }
-        
+        this.props.onSubmit(fieldsToUpdate.length > 0 ? fieldsToUpdate : false)
         this.setState({
             updating: false,
             hpCurrent: hpNew,

@@ -29,12 +29,13 @@ class InitiativeForm extends Component {
         const characterOptions = this.filterCharacters(encounter)
         const character = characterOptions.length > 0 ? characterOptions[0] : false
         this.state = {
+            updating: false,
             encounter,
             character,
             characterOptions,
             initiative: '',
             multiple: false,
-            updating: false,
+            prefix: '',
             quantity: 1
         }
     }
@@ -88,12 +89,13 @@ class InitiativeForm extends Component {
     }
 
     handleCreate() {
-        const { initiative, encounter, character, quantity, characterOptions } = this.state
+        const { initiative, encounter, character, quantity, prefix, characterOptions } = this.state
         const payload = {
             initiative,
             encounter,
             character,
-            quantity
+            quantity,
+            prefix
         }
 
         this.props.dispatch(createInitiative(localStorage.getItem('DNDTOKEN'), payload))
@@ -129,13 +131,14 @@ class InitiativeForm extends Component {
                 newState.character = characterOptions.length > 0 ? characterOptions[0] : false
                 break
             case 'character':
-                if(value.player) {
+                if (value.player) {
                     newState.multiple = false
                     newState.quantity = 1
                 }
                 break
             case 'multiple':
                 newState.quantity = 1
+                newState.prefix = ''
                 break
             case 'quantity':
                 value = parseInt(value)
@@ -209,14 +212,24 @@ class InitiativeForm extends Component {
                                 }
                                 {
                                     this.state.multiple && (
-                                        <MDBInput
-                                            label="Quantity"
-                                            containerClass="mb-0"
-                                            required={true}
-                                            onChange={(e) => this.handleChange('quantity', e.target.value)}
-                                            onKeyDown={(e) => this.handleKeyDown(e)}
-                                            value={this.state.quantity.toString()}
-                                        />
+                                        <React.Fragment>
+                                            <MDBInput
+                                                label="Quantity"
+                                                containerClass="mb-0"
+                                                required={true}
+                                                onChange={(e) => this.handleChange('quantity', e.target.value)}
+                                                onKeyDown={(e) => this.handleKeyDown(e)}
+                                                value={this.state.quantity.toString()}
+                                            />
+                                            <MDBInput
+                                                label="Prefix"
+                                                containerClass="mb-0"
+                                                required={true}
+                                                onChange={(e) => this.handleChange('prefix', e.target.value)}
+                                                onKeyDown={(e) => this.handleKeyDown(e)}
+                                                value={this.state.prefix}
+                                            />
+                                        </React.Fragment>
                                     )
                                 }
                                 <br />
