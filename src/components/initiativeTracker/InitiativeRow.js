@@ -24,13 +24,11 @@ class InitiativeRow extends Component {
         if (fieldsToUpdate) {
             const { character, initiative } = this.state
             if (character.player) {
-                console.log('dispatch patchCharacter')
                 this.props.dispatch(
                     patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, character.request.url)
                 )
             }
             else {
-                console.log('dispatch patchInitiativeCharacter')
                 this.props.dispatch(
                     patchInitiativeCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, initiative.characterStamp.request.url)
                 )
