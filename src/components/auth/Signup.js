@@ -12,8 +12,8 @@ import {
 } from "mdbreact";
 import * as API from "../../utils/api";
 import { connect } from "react-redux";
-import { handleInitialData } from "../../actions/shared";
-import { setAuthedUser } from "../../actions/authedUser";
+import { handleInitialData } from "../../redux/actions/shared";
+import { setAuthedUser } from "../../redux/actions/authedUser";
 import { validateAll } from "indicative";
 
 const defaultUserPic =

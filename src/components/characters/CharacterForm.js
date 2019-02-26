@@ -11,7 +11,7 @@ import {
   MDBAlert
 } from "mdbreact";
 import { connect } from "react-redux";
-import { createCharacter, patchCharacter } from "../../actions/characters";
+import { createCharacter, patchCharacter } from "../../redux/actions/characters";
 import validator from "validator";
 import { validateAll } from "indicative";
 

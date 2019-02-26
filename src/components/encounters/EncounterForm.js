@@ -15,7 +15,7 @@ import {
   createEncounter,
   patchEncounter,
   clearActiveEncounter
-} from "../../actions/encounters";
+} from "../../redux/actions/encounters";
 import { validateAll } from "indicative";
 
 const statusOptions = [

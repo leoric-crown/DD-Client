@@ -14,8 +14,8 @@ import {
 import * as API from "../../utils/api";
 import FacebookLogin from "react-facebook-login";
 import config from "../../config.json";
-import { setAuthedUser } from "../../actions/authedUser";
-import { handleInitialData } from "../../actions/shared";
+import { setAuthedUser } from "../../redux/actions/authedUser";
+import { handleInitialData } from "../../redux/actions/shared";
 import { connect } from "react-redux";
 import { checkToken } from "../../utils/misc";
 import { validateAll } from "indicative";
