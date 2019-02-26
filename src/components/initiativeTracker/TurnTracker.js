@@ -51,8 +51,14 @@ class TurnTracker extends Component {
     }
 
     setEncounter = (encounter) => {
+        const initiatives = this.props.Initiatives.list.filter(initiative => {
+            return initiative.encounter === encounter._id
+        }).sort((a, b) => b.initiative - a.initiative)
+        const activeTurn = initiatives.find(i => i.active)
         this.setState({
-            encounter
+            encounter,
+            initiatives,
+            activeTurn: activeTurn ? activeTurn : null
         })
     }
 
@@ -64,6 +70,7 @@ class TurnTracker extends Component {
     }
 
     render() {
+        console.log('turntracker state', this.state)
         const { initiatives } = this.state
         return (
             <div>
