@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "email-validator": "^2.0.4",
     "gradient-color": "^2.0.1",
+    "indicative": "^5.0.8",
     "mdbreact": "^4.8.7",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

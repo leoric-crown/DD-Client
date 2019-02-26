@@ -29,19 +29,6 @@ const armorClassOptions = (() => {
 })()
 
 class CharacterForm extends Component {
-  // state = {
-  //   name: '',
-  //   level: '1',
-  //   armorclass: '10',
-  //   maxhitpoints: '',
-  //   url: '',
-  //   characterPic: null,
-  //   player: false,
-  //   updating: false,
-  //   levelOptions: levelOptions,
-  //   armorClassOptions: armorClassOptions,
-  //   style: {}
-  // }
 
   constructor(props) {
     super(props)
