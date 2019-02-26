@@ -4,6 +4,7 @@ import { MDBInput, MDBRow, MDBIcon, MDBCol, MDBBtn } from 'mdbreact'
 import config from '../../../config.json'
 import gradient from 'gradient-color'
 import './CharacterHitPoints.css'
+import { FaHeartbeat, FaMinus, FaPlus} from 'react-icons/fa'
 
 const getProgressBarStyle = (percentage) => {
     if (percentage > 100) percentage = 100
@@ -165,7 +166,7 @@ class CharacterHitPoints extends Component {
                                 </div>
                             )}
                             <MDBRow className="center-row-content">
-                                <MDBIcon onClick={() => this.previewChanges('hitpoints', false)} className="align-icons" icon="minus" size="2x" />
+                                <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('hitpoints', false)}/>
                                 <MDBInput
                                     className="browser-default custom-select text-center"
                                     label="Hitpoints"
@@ -173,12 +174,12 @@ class CharacterHitPoints extends Component {
                                     onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
                                     value={addHitpoints.toString()}
                                 />
-                                <MDBIcon onClick={() => this.previewChanges('hitpoints')} className="align-icons" icon="plus" size="2x" />
+                                <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('hitpoints')}/>
                             </MDBRow>
                             <MDBRow className="center-row-content">
                                 {this.state.editMaxHP && (
                                     <React.Fragment>
-                                        <MDBIcon onClick={() => this.previewChanges('maxhitpoints', false)} className="align-icons" icon="minus" size="2x" />
+                                        <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)}/>
                                         <MDBInput
                                             className="browser-default custom-select text-center"
                                             label="Max Hitpoints"
@@ -186,7 +187,7 @@ class CharacterHitPoints extends Component {
                                             onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
                                             value={addMaxhitpoints.toString()}
                                         />
-                                        <MDBIcon onClick={() => this.previewChanges('maxhitpoints')} className="align-icons" icon="plus" size="2x" />
+                                        <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')}/>
                                     </React.Fragment>
                                 )}
                             </MDBRow>
@@ -204,8 +205,7 @@ class CharacterHitPoints extends Component {
                 )}
                 <div className='hp-column' onClick={this.openModal}>
                     <div className='progress-bar-hitpoints'>
-                        <MDBIcon className="pad-icon" icon="heartbeat" size="lg" />
-                        {`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}
+                        <FaHeartbeat className='progress-bar-heartbeat'/> {`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}
                     </div>
                     <div className="progress-bar-container">
                         <div className="progress-bar-background">

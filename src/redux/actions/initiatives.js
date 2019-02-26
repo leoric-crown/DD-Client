@@ -1,4 +1,4 @@
-import * as API from '../utils/api'
+import * as API from '../../utils/api'
 
 export const RECEIVE_INITIATIVES = 'RECEIVE_INITIATIVES'
 export const CREATE_INITIATIVES = 'CREATE_INITIATIVES'
@@ -44,10 +44,6 @@ export function deleteInitiative(token, id) {
     }
 }
 
-export function getNextTurn(token) {
-
-}
-
 export function removeInitiative(id) {
     return {
         type: REMOVE_INITIATIVE,
@@ -63,8 +59,37 @@ export function updateInitiativeStamp(payload, id) {
     }
 }
 
-export function setNextTurn(initiative, prevTurn) {
+export function deleteActiveInitiative(token, encounterId, prevActiveId) {
+    return (dispatch) => {
+        return API.deleteActiveInitiative(token, encounterId, prevActiveId)
+            .then(({ nextTurnResponse, deleteResponse }) => {
+                if (nextTurnResponse.status.code === 200 &&
+                    deleteResponse.status.code === 200) {
+                    dispatch(setNextTurn(null, nextTurnResponse.activeInitiative))
+                    dispatch(removeInitiative(prevActiveId))
+                }
 
+            })
+    }
+}
+
+export function getNextTurn(token, encounterId, prevActive) {
+    return (dispatch) => {
+        return API.setNextTurn(token, encounterId).then(response => {
+            if (response.status.code === 200) {
+                dispatch(setNextTurn(prevActive, response.activeInitiative))
+            }
+        })
+    }
+}
+
+export function setNextTurn(prevActive, newActive) {
+    return {
+        type: SET_NEXT_TURN,
+        prevActive,
+        newActive
+
+    }
 }
 
 export function createInitiatives(initiatives) {

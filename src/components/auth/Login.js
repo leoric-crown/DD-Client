@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { checkToken } from "../../utils/misc";
 import { validateAll } from "indicative";
 
+
 class Login extends React.Component {
   state = {
     email: "",

@@ -1,4 +1,4 @@
-import * as API from '../utils/api'
+import * as API from '../../utils/api'
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
 export const CREATE_CHARACTERS = 'CREATE_CHARACTERS'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'

@@ -8555,6 +8555,11 @@ react-facebook-login@^4.1.1:
   resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-4.1.1.tgz#005121236a6ac0dee02099976fb1a3265f9d633e"
   integrity sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw==
 
+react-icons@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-3.4.0.tgz#3be5139a81bad5fa8ffbc0a87137275dc7a75737"
+  integrity sha512-5cyYrl34KGovU/MH3YO+wN1k787vv3EKLeGDyaGOY92jSTQ/xRjkQ7iim5Ml9rgMLU1i0vszev80kWV4uRZ3Bw==
+
 react-image-lightbox@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.0.0.tgz#0c19aa8a43abf41262cbe082c779cc01f6334b5f"
@@ -8594,6 +8599,11 @@ react-numeric-input@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/react-numeric-input/-/react-numeric-input-2.2.3.tgz#4bf5918c3eafed851a80df1eb992d941002bb552"
   integrity sha1-S/WRjD6v7YUagN8euZLZQQArtVI=
+
+react-onclickoutside@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.8.0.tgz#9f91b5b3ed59f4d9e43fd71620dc200773a4d569"
+  integrity sha512-5Q4Rn7QLEoh7WIe66KFvYIpWJ49GeHoygP1/EtJyZjXKgrWH19Tf0Ty3lWyQzrEEDyLOwUvvmBFSE3dcDdvagA==
 
 react-popper@^0.7.5:
   version "0.7.5"
