@@ -120,7 +120,7 @@ class TurnTracker extends Component {
                                             initiatives.map(initiative => {
                                                 return (
                                                     <div
-                                                        tabIndex="1"
+                                                        tabIndex={initiative.active ? '1' : null}
                                                         key={initiative._id}
                                                         ref={initiative.active ? 'activeTurn' : null}
                                                     >

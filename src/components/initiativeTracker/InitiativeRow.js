@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteInitiative } from '../../redux/actions/initiatives'
 import CharacterHitPoints from './characterHitpoints/CharacterHitpoints';
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
-import { patchInitiativeCharacter, getNextTurn } from '../../redux/actions/initiatives'
+import { deleteInitiative, patchInitiativeCharacter, getNextTurn } from '../../redux/actions/initiatives'
 import { FaDiceD20, FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
@@ -50,9 +49,8 @@ class InitiativeRow extends Component {
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
         const { name, armorclass } = characterStats
         const style = {
-            padding: '2px',
-            border: this.props.active ? '2px solid gold' : '',
-            background: this.props.active ? 'rgba(50,50,50,0.1)' : ''
+            border: initiative.active ? '3px solid gold' : '',
+            background: initiative.active ? 'lightgray' : ''
         }
         return (
             <div>

@@ -7,16 +7,14 @@
 
 .initiatives-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding-top: 1rem;
 }
 
 .initiatives-header {
   position: sticky;
   top: 56px;
   background: white;
-  /* background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg"); */
   z-index: 1000;
 }
 
@@ -26,7 +24,7 @@
 
 .initiative-column {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
   flex-grow: 1;
@@ -52,7 +50,6 @@
   justify-content: space-around;
   flex-grow: 2;
   flex-wrap: wrap;
-  /* width:20%; */
 }
 
 .stats-icons {
@@ -255,11 +252,9 @@ div.card-body.mx-4 > div {
   font-variant: normal;
   font-weight: 700;
   line-height: 1rem;
-  /* white-space: nowrap; */
   overflow: hidden;
   width: 5rem;
   text-align: center;
-  /* text-overflow: ellipsis; */
 }
 
 .character-name-title {
