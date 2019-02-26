@@ -1,7 +1,6 @@
 /*
   This will go on its own
 */
-
 .initiative-pic {
   height: 4.0rem;
 }
@@ -11,6 +10,18 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 1rem;
+}
+
+.initiatives-header {
+  position: sticky;
+  top: 56px;
+  background: white;
+  /* background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg"); */
+  z-index: 1000;
+}
+
+.initiatives-table {
+  overflow: auto;
 }
 
 .initiative-column {
@@ -83,6 +94,7 @@
 
 .hp-column{
   display: flex;
+  position: relative;
   width: 100%;
   flex-direction: row;
   justify-content: center;
@@ -107,6 +119,7 @@ html, body, .root, .App {
   background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg") fixed;
   background-repeat: no-repeat;
   background-size: 100% auto;
+  font-size: 16px;
 }
 
 @media (min-width: 50px) and (max-width:1024px ) {

@@ -18,7 +18,7 @@ class InitiativeRow extends Component {
     }
 
     handleDelete(initiative) {
-        if(this.props.active) {
+        if (this.props.active) {
             this.props.dispatch(getNextTurn(localStorage.getItem('DNDTOKEN'),
                 initiative.encounter,
                 initiative._id,
@@ -57,7 +57,13 @@ class InitiativeRow extends Component {
         return (
             <div>
                 {initiative && (
-                    <div key={initiative._id} className="initiatives-container" style={style}>
+                    <div
+                        key={initiative._id}
+                        className="initiatives-container"
+                        style={style}
+                        id={this.props.active ? 'active' : null}
+                        ref={this.props.active ? 'activeTurn' : null}
+                    >
                         <div className='initiative-column' title={name}>
                             <img alt="character pic"
                                 className="rounded-circle z-depth-0 initiative-pic"
@@ -71,8 +77,8 @@ class InitiativeRow extends Component {
                                 dispatch={this.props.dispatch}
                                 onSubmit={this.handleHpChange}
                             />
-                            <div title="Initiative Roll"><FaDiceD20 className='stats-icons'/> {initiative.initiative}</div>
-                            <div title="Armor Class"> <FaShieldAlt className='stats-icons'/> {armorclass} </div>
+                            <div title="Initiative Roll"><FaDiceD20 className='stats-icons' /> {initiative.initiative}</div>
+                            <div title="Armor Class"> <FaShieldAlt className='stats-icons' /> {armorclass} </div>
                         </div>
                         <div className='initiative-actions'>
                             <span title="Delete/Remove"><FaRegTrashAlt style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} /></span>
