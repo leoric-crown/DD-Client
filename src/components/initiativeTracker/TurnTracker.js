@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { MDBContainer, MDBCol } from 'mdbreact';
+import { MDBContainer, MDBCol, MDBBtn } from 'mdbreact'
 import EncounterSelect from '../encounters/EncounterSelect'
 import InitiativeRow from './InitiativeRow'
+
+import { getNextTurn } from '../../redux/actions/initiatives'
 
 class TurnTracker extends Component {
     constructor(props) {
@@ -16,9 +18,15 @@ class TurnTracker extends Component {
             encounter = this.props.Encounters.list[0]
         }
 
+        const initiatives = this.props.Initiatives.list.filter(initiative => {
+            return initiative.encounter === encounter._id
+        }).sort((a, b) => b.initiative - a.initiative).sort((a, b) => a._id - b._id)
+        const activeTurn = initiatives.find(i => i.active)
+
         this.state = {
             encounter,
-            activeTurn: null,
+            initiatives,
+            activeTurn: activeTurn ? activeTurn : null,
             fixedEncounter
         }
     }
@@ -30,6 +38,16 @@ class TurnTracker extends Component {
                 fixedEncounter: !this.state.fixedEncounter
             })
         }
+        if (this.props.Initiatives.list !== prevProps.Initiatives.list && this.state.encounter) {
+            const initiatives = this.props.Initiatives.list.filter(initiative => {
+                return initiative.encounter === this.state.encounter._id
+            }).sort((a, b) => b.initiative - a.initiative)
+            const activeTurn = initiatives.find(i => i.active)
+            this.setState({
+                initiatives,
+                activeTurn: activeTurn ? activeTurn : null
+            })
+        }
     }
 
     setEncounter = (encounter) => {
@@ -38,17 +56,19 @@ class TurnTracker extends Component {
         })
     }
 
+    nextTurn = () => {
+            this.props.dispatch(
+                getNextTurn(localStorage.getItem('DNDTOKEN'),
+                this.state.encounter._id,
+                this.state.activeTurn))
+    }
+
     render() {
-        let initiativeList = false
-        if (this.props.Initiatives.list) {
-            initiativeList = this.props.Initiatives.list.filter(initiative => {
-                return initiative.encounter === this.state.encounter._id
-            })
-        }
+        const { initiatives } = this.state
         return (
             <div>
                 {
-                    (initiativeList) && (
+                    (initiatives) && (
                         <React.Fragment>
                             <MDBContainer className="d-flex justify-content-center">
                                 <MDBCol md="10">
@@ -57,22 +77,30 @@ class TurnTracker extends Component {
                                             this.state.fixedEncounter ? (
                                                 <div>
                                                     <br />
-                                                    <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiativeList.length} Characters</h4>
+                                                    <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiatives.length} Characters</h4>
                                                 </div>
                                             ) : (
-                                                    <EncounterSelect
-                                                        encounters={this.props.Encounters.list}
-                                                        value={this.state.encounter}
-                                                        onChange={value => this.setEncounter(value)}
-                                                        extra="trackerselect"
-                                                    />
-                                                )
+                                                <EncounterSelect
+                                                    encounters={this.props.Encounters.list}
+                                                    value={this.state.encounter}
+                                                    onChange={value => this.setEncounter(value)}
+                                                    extra="trackerselect"
+                                                />
+                                            )
                                         }
+                                        <div className="d-flex justify-content-center">
+                                            <MDBBtn
+                                                type="button"
+                                                color="black"
+                                                onClick={() => this.nextTurn()}
+                                            >{!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}</MDBBtn>
+                                        </div>
                                     </div>
-                                    {this.state.encounter && this.props.Initiatives.list && (
-                                        initiativeList.sort((a, b) => b.initiative - a.initiative).map(initiative => {
+                                    {this.state.encounter && this.state.initiatives && (
+                                        initiatives.map(initiative => {
                                             return (
                                                 <InitiativeRow
+                                                    active={initiative.active}
                                                     key={initiative._id}
                                                     initiative={initiative}
                                                     character={this.props.Characters.list.find(c => c._id === initiative.characterStamp._id)}

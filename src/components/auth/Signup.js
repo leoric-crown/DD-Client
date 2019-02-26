@@ -3,8 +3,8 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, M
 import * as API from '../../utils/api'
 import * as EmailValidator from 'email-validator'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../../actions/shared'
-import { setAuthedUser } from '../../actions/authedUser'
+import { handleInitialData } from '../../redux/actions/shared'
+import { setAuthedUser } from '../../redux/actions/authedUser'
 
 const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
 

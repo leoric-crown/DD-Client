@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
 import { connect } from 'react-redux'
-import { createEncounter, patchEncounter, clearActiveEncounter } from '../../actions/encounters'
+import { createEncounter, patchEncounter, clearActiveEncounter } from '../../redux/actions/encounters'
 
 const statusOptions = [
     <option key='Preparing' value='Preparing'>Preparing</option>,

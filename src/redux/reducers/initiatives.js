@@ -1,4 +1,4 @@
-import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE, UPDATE_INITIATIVE_STAMP} from '../actions/initiatives'
+import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE, UPDATE_INITIATIVE_STAMP, SET_NEXT_TURN } from '../actions/initiatives'
 
 const defaultState = {
     list: null,
@@ -7,14 +7,10 @@ const defaultState = {
 export default function Encounters(state = defaultState, action) {
     switch (action.type) {
         case RECEIVE_INITIATIVES:
-            const active = action.initiatives.filter(initiative => {
-                return initiative.active
-            })
             return {
                 ...state,
                 list: action.initiatives,
-                count: action.count,
-                active: active.length > 0 ? active.pop() : false
+                count: action.count
             }
         case CREATE_INITIATIVES:
             return {
@@ -32,13 +28,27 @@ export default function Encounters(state = defaultState, action) {
             return {
                 ...state,
                 list: state.list.map(initiative => {
-                    if(initiative._id === action.id) {
+                    if (initiative._id === action.id) {
                         action.payload.forEach(update => {
                             initiative.characterStamp[update.propName] = update.value
                         })
                         return initiative
                     }
                     return initiative
+                })
+            }
+        case SET_NEXT_TURN:
+            return {
+                ...state,
+                list: state.list.map(i => {
+                    if(action.prevActive && i._id === action.prevActive._id) {
+                        i.active = false
+                        return i
+                    } else if (action.newActive && i._id === action.newActive._id) {
+                        i.active = true
+                        return i
+                    }
+                    return i
                 })
             }
         default:

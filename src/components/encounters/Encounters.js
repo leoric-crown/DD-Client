@@ -45,9 +45,9 @@ class Encounters extends React.Component {
         {this.props.User.authenticated &&
           encounterList && (
             <MDBContainer style={styles} className="">
-              <div className="characters-Container">
+              <div className="characters-container">
                 <MDBRow>
-                  <MDBCol md='12' className="mb-4">
+                  <MDBCol md='12'>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
