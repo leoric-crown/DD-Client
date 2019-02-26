@@ -73,6 +73,10 @@ class Login extends React.Component {
 
     validateAll(data, rules, messages)
       .then(() => {
+        // We set errors to empty object to clear previous errors
+        this.setState({
+          errors:{}
+        })
         API.login(this.state).then(res => {
           if (res.status.code === 200) {
             localStorage.setItem("DNDTOKEN", res.jwt);
@@ -157,7 +161,7 @@ class Login extends React.Component {
                     {this.state.authError && (
                       <MDBAlert color="danger">
                         <MDBIcon icon="warning" />
-                        &nbsp;&nbsp;&nbsp;Error Logging In
+                        &nbsp;&nbsp;&nbsp;Error Logging in
                       </MDBAlert>
                     )}
                     <MDBInput
