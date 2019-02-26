@@ -114,7 +114,6 @@ class EncounterForm extends Component {
 
     validateAll(data, rules, messages)
       .then(() => {
-        console.log('success')
         this.setState({
           errors: {}
         })
