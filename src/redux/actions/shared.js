@@ -3,13 +3,18 @@ import { receiveCharacters } from './characters'
 import { receiveEncounters } from './encounters';
 import { receiveInitiatives } from './initiatives'
 
-export function handleInitialData(userId, jwt) {
+export function handleInitialData(user, jwt) {
   return (dispatch) => {
-    return API.getInitialData(userId, jwt)
+    return API.getInitialData(user, jwt)
       .then(data => {
-        dispatch(receiveCharacters(data.characters))
-        dispatch(receiveEncounters(data.encounters))
-        dispatch(receiveInitiatives(data.initiatives))
+        const authedUserData = {
+          email: user.email,
+          isDM: user.isDM,
+          userId: user.userId
+        }
+        dispatch(receiveCharacters(data.characters, authedUserData))
+        dispatch(receiveEncounters(data.encounters, authedUserData))
+        dispatch(receiveInitiatives(data.initiatives, authedUserData))
       })
   }
 }

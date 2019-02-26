@@ -73,7 +73,6 @@ class Signup extends React.Component {
               errors:{}
             })
             if (res.status.code !== 200) {
-              console.log(res.status.message)
               this.setState({
                 serverError: true,
                 serverErrorMessage: res.status.message
@@ -84,11 +83,11 @@ class Signup extends React.Component {
             const authedUserData = {
               email: res.email,
               photoURL: !res.photoURL ? defaultUserPic : res.photoURL,
-              isDM: res.idDM,
+              isDM: res.isDM,
               userId: res.userId
             }
             this.props.dispatch(setAuthedUser(authedUserData))
-            this.props.dispatch(handleInitialData(res.userId, res.jwt))
+            this.props.dispatch(handleInitialData(authedUserData, res.jwt))
             this.props.history.push({
               pathname: '/dashboard/characters'
             })

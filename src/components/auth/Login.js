@@ -81,8 +81,9 @@ class Login extends React.Component {
         API.login(this.state).then(res => {
           if (res.status.code === 200) {
             localStorage.setItem('DNDTOKEN', res.jwt)
+
             this.props.dispatch(setAuthedUser(res))
-            this.props.dispatch(handleInitialData(res.userId, res.jwt))
+            this.props.dispatch(handleInitialData(res, res.jwt))
             this.props.history.push({
               pathname: '/dashboard/characters'
             })
@@ -118,7 +119,8 @@ class Login extends React.Component {
         if (res.status.code === 200) {
           localStorage.setItem('DNDTOKEN', res.jwt)
           this.props.dispatch(setAuthedUser(res))
-          this.props.dispatch(handleInitialData(res.userId, res.jwt))
+          this.props.dispatch(handleInitialData(res, res.jwt))
+          // this.props.dispatch(handleInitialData(res.userId, res.jwt))
           this.props.history.push({
             pathname: '/dashboard/characters'
           })

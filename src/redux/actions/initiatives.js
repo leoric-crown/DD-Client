@@ -86,9 +86,10 @@ export function createInitiatives(initiatives) {
     }
 }
 
-export function receiveInitiatives(initiatives) {
+export function receiveInitiatives(initiatives, user) {
     return {
         type: RECEIVE_INITIATIVES,
-        initiatives
+        initiatives,
+        user
     }
 }

@@ -59,7 +59,17 @@ export const deleteCharacter = (token, id) => {
 }
 
 const getCharacters = (token) => {
-  return fetch(`${api}/characters/user`, {
+  return fetch(`${api}/characters`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+const getUserCharacters = (token) => {
+  return fetch(`${api}/characters/`, {
     method: 'GET',
     headers: {
       ...headers,
@@ -121,7 +131,6 @@ const getEncounters = (token) => {
 }
 
 export const deleteInitiative = (token, id) => {
-  console.log('api deleteinitiative')
   return fetch(`${api}/initiatives/${id}`, {
     method: 'DELETE',
     headers: {
@@ -163,7 +172,7 @@ const getInitiatives = (token) => {
   }).then(res => res.json())
 }
 
-export const getInitialData = (userId, token) => {
+export const getInitialData = (user, token) => {
   return Promise.all([
     getCharacters(token),
     getEncounters(token),

@@ -55,7 +55,7 @@
 .progress-bar-heartbeat {
   margin-top: 0.25rem;
   margin-right: 0.25rem;
-  color: rgba(102, 0, 0, 0.8);
+  color: rgba(102, 0, 0, 1);
 }
 
 .progress-bar-hitpoints {
