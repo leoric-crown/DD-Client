@@ -57,8 +57,8 @@ class TurnTracker extends Component {
     }
 
     nextTurn = () => {
-            this.props.dispatch(
-                getNextTurn(localStorage.getItem('DNDTOKEN'),
+        this.props.dispatch(
+            getNextTurn(localStorage.getItem('DNDTOKEN'),
                 this.state.encounter._id,
                 this.state.activeTurn))
     }
@@ -80,23 +80,27 @@ class TurnTracker extends Component {
                                                     <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiatives.length} Characters</h4>
                                                 </div>
                                             ) : (
-                                                <EncounterSelect
-                                                    encounters={this.props.Encounters.list}
-                                                    value={this.state.encounter}
-                                                    onChange={value => this.setEncounter(value)}
-                                                    extra="trackerselect"
-                                                />
+                                                    <EncounterSelect
+                                                        encounters={this.props.Encounters.list}
+                                                        value={this.state.encounter}
+                                                        onChange={value => this.setEncounter(value)}
+                                                        extra="trackerselect"
+                                                    />
+                                                )
+                                        }
+                                        {
+                                            initiatives.length > 0 && (
+                                                <div className="d-flex justify-content-center">
+                                                    <MDBBtn
+                                                        type="button"
+                                                        color="black"
+                                                        onClick={() => this.nextTurn()}
+                                                    >{!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}</MDBBtn>
+                                                </div>
                                             )
                                         }
-                                        <div className="d-flex justify-content-center">
-                                            <MDBBtn
-                                                type="button"
-                                                color="black"
-                                                onClick={() => this.nextTurn()}
-                                            >{!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}</MDBBtn>
-                                        </div>
                                     </div>
-                                    {this.state.encounter && this.state.initiatives && (
+                                    {this.state.encounter && initiatives && (
                                         initiatives.map(initiative => {
                                             return (
                                                 <InitiativeRow

@@ -38,10 +38,15 @@ export default function Encounters(state = defaultState, action) {
                 })
             }
         case SET_NEXT_TURN:
+            if (action.prevActive && action.prevActive._id === action.newActive._id) return { ...state }
+            const list = [...state.list]
+            if(action.deleted) {
+                list.splice(list.map(i => i._id).indexOf(action.deleted), 1)
+            }
             return {
                 ...state,
-                list: state.list.map(i => {
-                    if(action.prevActive && i._id === action.prevActive._id) {
+                list: list.map(i => {
+                    if (action.prevActive && i._id === action.prevActive._id) {
                         i.active = false
                         return i
                     } else if (action.newActive && i._id === action.newActive._id) {
