@@ -5,7 +5,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import config from '../../config.json';
 import { connect } from 'react-redux'
-import { deleteCharacter } from '../../actions/characters'
+import { deleteCharacter } from '../../redux/actions/characters'
 
 class MyCharacters extends Component {
   handleDelete = () => {

@@ -1,6 +1,6 @@
 import * as API from './api'
-import { setAuthedUser, logoutUser } from '../actions/authedUser'
-import { handleInitialData } from '../actions/shared'
+import { setAuthedUser, logoutUser } from '../redux/actions/authedUser'
+import { handleInitialData } from '../redux/actions/shared'
 
 const verifyToken = (token) => {
   return new Promise((resolve, reject) => {

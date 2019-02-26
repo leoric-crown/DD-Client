@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteInitiative } from '../../actions/initiatives'
+import { deleteInitiative } from '../../redux/actions/initiatives'
 import CharacterHitPoints from './characterHitpoints/CharacterHitpoints';
 import config from '../../config.json'
-import { patchCharacter } from '../../actions/characters'
-import { patchInitiativeCharacter } from '../../actions/initiatives'
+import { patchCharacter } from '../../redux/actions/characters'
+import { patchInitiativeCharacter, deleteActiveInitiative } from '../../redux/actions/initiatives'
 import { FaDiceD20, FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
@@ -16,8 +16,13 @@ class InitiativeRow extends Component {
             initiative
         }
     }
+
     handleDelete(initiative) {
-        this.props.dispatch(deleteInitiative(localStorage.getItem('DNDTOKEN'), initiative._id))
+        if(this.props.active) {
+            this.props.dispatch(deleteActiveInitiative(localStorage.getItem('DNDTOKEN'), initiative.encounter, initiative._id))
+        } else {
+            this.props.dispatch(deleteInitiative(localStorage.getItem('DNDTOKEN'), initiative._id))
+        }
     }
 
     handleHpChange = (fieldsToUpdate) => {
@@ -43,6 +48,7 @@ class InitiativeRow extends Component {
         const { name, armorclass } = characterStats
         return (
             <div>
+                {this.props.active ? 'active' : 'not active'}
                 {initiative && (
                     <div key={initiative._id} className="initiatives-container">
                         <div className='initiative-column' title={name}>

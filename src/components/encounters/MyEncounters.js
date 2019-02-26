@@ -4,7 +4,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
-import { deleteEncounter, changeActiveEncounter } from '../../actions/encounters'
+import { deleteEncounter, changeActiveEncounter } from '../../redux/actions/encounters'
 import { FaStar } from 'react-icons/fa'
 
 class MyEncounters extends Component {

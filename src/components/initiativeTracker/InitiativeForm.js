@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
-import { createInitiative } from '../../actions/initiatives'
+import { createInitiative } from '../../redux/actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
 import CharacterSelect from '../characters/CharacterSelect'
 

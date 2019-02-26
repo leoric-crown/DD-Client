@@ -1,4 +1,4 @@
-import * as API from '../utils/api'
+import * as API from '../../utils/api'
 export const RECEIVE_ENCOUNTERS = 'RECEIVE_ENCOUNTERS'
 export const CREATE_ENCOUNTERS = 'CREATE_ENCOUNTERS'
 export const UPDATE_ENCOUNTER = 'UPDATE_ENCOUNTER'

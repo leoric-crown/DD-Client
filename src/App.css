@@ -242,11 +242,11 @@ div.card-body.mx-4 > div {
   font-variant: normal;
   font-weight: 700;
   line-height: 1rem;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   width: 5rem;
   text-align: center;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
 }
 
 .character-name-title {
