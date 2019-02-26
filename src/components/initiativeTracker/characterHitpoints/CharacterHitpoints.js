@@ -1,23 +1,9 @@
 import React, { Component } from 'react'
 import Modal from '../../modal/Modal'
-import { MDBInput, MDBRow, MDBIcon, MDBCol, MDBBtn } from 'mdbreact'
+import { MDBInput, MDBRow, MDBCol, MDBBtn } from 'mdbreact'
 import config from '../../../config.json'
-import gradient from 'gradient-color'
-import './CharacterHitPoints.css'
-import { FaHeartbeat, FaMinus, FaPlus} from 'react-icons/fa'
-
-const getProgressBarStyle = (percentage) => {
-    if (percentage > 100) percentage = 100
-    const colors = gradient([
-        '#930002',
-        '#E0C600',
-        '#009607'
-    ], 10)
-    return {
-        width: `${percentage}%`,
-        backgroundColor: colors[Math.floor(((percentage - 0.001) / 10) % 10)]
-    }
-}
+import CharacterHpBar from './CharacterHpBar'
+import { FaMinus, FaPlus } from 'react-icons/fa'
 
 class CharacterHitPoints extends Component {
     constructor(props) {
@@ -153,20 +139,27 @@ class CharacterHitPoints extends Component {
                         onCancel={this.cancelModal}
                         onConfirm={this.handleSubmit}
                         canCancel
-                        canConfirm>
-
+                        canConfirm
+                    >
                         <MDBCol>
                             <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                             <h2>{characterStats.name}</h2>
-                            <h4 className="pad-hit-points">{hpCurrent.hitpoints} / {hpCurrent.maxhitpoints}</h4>
+                            {/* <h4 className="pad-hit-points">{hpCurrent.hitpoints} / {hpCurrent.maxhitpoints}</h4> */}
+                            <CharacterHpBar
+                                hitpoints={hpCurrent.hitpoints}
+                                maxhitpoints={hpCurrent.maxhitpoints}
+                            />
                             {(hpCurrent.hitpoints !== hpNew.hitpoints || hpCurrent.maxhitpoints !== hpNew.maxhitpoints) && (
                                 <div>
                                     <h3>New HP</h3>
-                                    <h3 className="pad-hit-points">{hpNew.hitpoints} / {hpNew.maxhitpoints}</h3>
+                                    <CharacterHpBar
+                                        hitpoints={hpNew.hitpoints}
+                                        maxhitpoints={hpNew.maxhitpoints}
+                                    />
                                 </div>
                             )}
                             <MDBRow className="center-row-content">
-                                <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('hitpoints', false)}/>
+                                <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
                                 <MDBInput
                                     className="browser-default custom-select text-center"
                                     label="Hitpoints"
@@ -174,12 +167,12 @@ class CharacterHitPoints extends Component {
                                     onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
                                     value={addHitpoints.toString()}
                                 />
-                                <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('hitpoints')}/>
+                                <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('hitpoints')} />
                             </MDBRow>
                             <MDBRow className="center-row-content">
                                 {this.state.editMaxHP && (
                                     <React.Fragment>
-                                        <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)}/>
+                                        <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
                                         <MDBInput
                                             className="browser-default custom-select text-center"
                                             label="Max Hitpoints"
@@ -187,7 +180,7 @@ class CharacterHitPoints extends Component {
                                             onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
                                             value={addMaxhitpoints.toString()}
                                         />
-                                        <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')}/>
+                                        <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
                                     </React.Fragment>
                                 )}
                             </MDBRow>
@@ -203,17 +196,11 @@ class CharacterHitPoints extends Component {
                         </MDBCol>
                     </Modal>
                 )}
-                <div className='hp-column' onClick={this.openModal}>
-                    <div className='progress-bar-hitpoints'>
-                        <FaHeartbeat className='progress-bar-heartbeat'/> {`${hpCurrent.hitpoints} / ${hpCurrent.maxhitpoints}`}
-                    </div>
-                    <div className="progress-bar-container">
-                        <div className="progress-bar-background">
-                            <div style={getProgressBarStyle(100 * hpCurrent.hitpoints / hpCurrent.maxhitpoints)} className="progress-bar"></div>
-                        </div>
-
-                    </div>
-                </div>
+                <CharacterHpBar
+                    hitpoints={hpCurrent.hitpoints}
+                    maxhitpoints={hpCurrent.maxhitpoints}
+                    onClick={this.openModal}
+                />
             </React.Fragment>
         )
     }

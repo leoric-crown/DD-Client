@@ -59,7 +59,17 @@ export const deleteCharacter = (token, id) => {
 }
 
 const getCharacters = (token) => {
-  return fetch(`${api}/characters/user`, {
+  return fetch(`${api}/characters`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  }).then(res => res.json())
+}
+
+const getUserCharacters = (token) => {
+  return fetch(`${api}/characters/`, {
     method: 'GET',
     headers: {
       ...headers,
@@ -121,7 +131,6 @@ const getEncounters = (token) => {
 }
 
 export const deleteInitiative = (token, id) => {
-  console.log('api deleteinitiative')
   return fetch(`${api}/initiatives/${id}`, {
     method: 'DELETE',
     headers: {
@@ -142,14 +151,14 @@ export const createInitiative = (token, payload) => {
   }).then(res => res.json())
 }
 
-export const setNextTurn = (token, encounterId) => {
-  console.log('api setnextturn')
+export const setNextTurn = (token, encounterId, deletePrevious) => {
   return fetch(`${api}/initiatives/${encounterId}/nextTurn`, {
     method: 'POST',
     headers: {
       ...headers,
       'Authorization': `Bearer ${token}`
-    }
+    },
+    body: JSON.stringify({ deletePrevious })
   }).then(res => res.json())
 }
 
@@ -163,17 +172,7 @@ const getInitiatives = (token) => {
   }).then(res => res.json())
 }
 
-export function deleteActiveInitiative(token, encounterId, prevActiveId) {
-  return Promise.all([
-    setNextTurn(token, encounterId, null),
-    deleteInitiative(token, prevActiveId),
-  ])
-    .then(([nextTurnResponse, deleteResponse]) => {
-      return { nextTurnResponse, deleteResponse }
-    })
-}
-
-export const getInitialData = (userId, token) => {
+export const getInitialData = (user, token) => {
   return Promise.all([
     getCharacters(token),
     getEncounters(token),

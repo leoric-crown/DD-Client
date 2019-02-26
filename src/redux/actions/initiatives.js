@@ -59,36 +59,23 @@ export function updateInitiativeStamp(payload, id) {
     }
 }
 
-export function deleteActiveInitiative(token, encounterId, prevActiveId) {
+export function getNextTurn(token, encounterId, prevActive, deletePrevious = false) {
     return (dispatch) => {
-        return API.deleteActiveInitiative(token, encounterId, prevActiveId)
-            .then(({ nextTurnResponse, deleteResponse }) => {
-                if (nextTurnResponse.status.code === 200 &&
-                    deleteResponse.status.code === 200) {
-                    dispatch(setNextTurn(null, nextTurnResponse.activeInitiative))
-                    dispatch(removeInitiative(prevActiveId))
+        return API.setNextTurn(token, encounterId, deletePrevious)
+            .then(response => {
+                if (response.status.code === 200) {
+                    dispatch(setNextTurn(prevActive, response.activeInitiative, response.deleted))
                 }
-
             })
     }
 }
 
-export function getNextTurn(token, encounterId, prevActive) {
-    return (dispatch) => {
-        return API.setNextTurn(token, encounterId).then(response => {
-            if (response.status.code === 200) {
-                dispatch(setNextTurn(prevActive, response.activeInitiative))
-            }
-        })
-    }
-}
-
-export function setNextTurn(prevActive, newActive) {
+export function setNextTurn(prevActive, newActive, deleted) {
     return {
         type: SET_NEXT_TURN,
         prevActive,
-        newActive
-
+        newActive,
+        deleted
     }
 }
 
@@ -99,9 +86,10 @@ export function createInitiatives(initiatives) {
     }
 }
 
-export function receiveInitiatives(initiatives) {
+export function receiveInitiatives(initiatives, user) {
     return {
         type: RECEIVE_INITIATIVES,
-        initiatives
+        initiatives,
+        user
     }
 }

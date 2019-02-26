@@ -56,7 +56,7 @@ class InitiativeTracker extends Component {
         return (
             <div>
                 {
-                    this.props.User.authenticated && this.props.Encounters.list && this.props.Encounters.list.length > 0 && (
+                    this.props.User.authenticated && this.props.Encounters.list && (
                         <React.Fragment>
                             <MDBContainer style={styles} className="">
                                 <div className="characters-container">

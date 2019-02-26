@@ -78,10 +78,11 @@ export function setActiveEncounter(encounter, prevActive) {
     }
 }
 
-export function receiveEncounters(encounters) {
+export function receiveEncounters(encounters, user) {
     return {
         type: RECEIVE_ENCOUNTERS,
-        encounters
+        encounters,
+        user
     }
 }
 

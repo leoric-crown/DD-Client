@@ -53,10 +53,11 @@ export function updateCharacter(payload, id) {
   }
 }
 
-export function receiveCharacters(characters) {
+export function receiveCharacters(characters, user) {
   return {
     type: RECEIVE_CHARACTERS,
-    characters
+    characters,
+    user
   }
 }
 

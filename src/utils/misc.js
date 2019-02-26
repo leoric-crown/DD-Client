@@ -22,7 +22,7 @@ export function checkToken(token) {
     .then((authedUser) => {
       if (authedUser) {
         this.props.dispatch(setAuthedUser(authedUser))
-        this.props.dispatch(handleInitialData(authedUser._id, token))
+        this.props.dispatch(handleInitialData(authedUser, token))
         this.props.history.push({
           pathname: '/dashboard/characters'
         })
