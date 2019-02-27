@@ -32,12 +32,14 @@ class TurnTracker extends Component {
         }
     }
 
+    componentDidMount() {
+        this.refs.activeTurn.focus()
+    }
+
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.nextTurnClicked) {
-            this.setState({
-                nextTurnClicked: false
-            })
-        } else if (this.refs.activeTurn) {
+        const { newTurn } = this.props.Initiatives
+        if ((newTurn && newTurn !== prevProps.Initiatives.newTurn)
+            || this.state.encounter !== prevState.encounter) {
             this.refs.activeTurn.focus()
         }
         if (this.props.setEncounter !== prevProps.setEncounter) {
@@ -89,7 +91,7 @@ class TurnTracker extends Component {
             Initiatives: this.props.Initiatives,
             Encounters: this.props.Encounters,
             Characters: this.props.Characters,
-            setEncounter: this.props.setEncounter,
+            setEncounter: this.state.encounter,
             dispatch: this.props.dispatch
         }
         const { initiatives } = this.state

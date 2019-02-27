@@ -2,6 +2,7 @@ import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE, UPDATE_INIT
 
 const defaultState = {
     list: null,
+    newTurn: null
 }
 
 export default function Encounters(state = defaultState, action) {
@@ -45,6 +46,7 @@ export default function Encounters(state = defaultState, action) {
             }
             return {
                 ...state,
+                newTurn: action.newActive._id,
                 list: list.map(i => {
                     if (action.prevActive && i._id === action.prevActive._id) {
                         i.active = false

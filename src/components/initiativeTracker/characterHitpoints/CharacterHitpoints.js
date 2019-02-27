@@ -9,17 +9,8 @@ class CharacterHitPoints extends Component {
         const { hitpoints, maxhitpoints } = characterStats
         this.state = {
             updating: false,
-            addHitpoints: 0,
-            addMaxhitpoints: 0,
-            hpCurrent: {
-                hitpoints,
-                maxhitpoints
-            },
-            hpNew: {
-                hitpoints,
-                maxhitpoints
-            },
-            editMaxHP: false
+            hitpoints,
+            maxhitpoints
         }
     }
 
@@ -35,31 +26,32 @@ class CharacterHitPoints extends Component {
         })
     }
 
-    handleSubmit = (fieldsToUpdate, hpNew) => {
+    handleSubmit = (fieldsToUpdate, {hitpoints, maxhitpoints}) => {
         this.setState({
             updating: false,
-            hpCurrent: hpNew
+            hitpoints,
+            maxhitpoints
         })
         this.props.onSubmit(fieldsToUpdate)
     }
 
     render() {
         const { characterStats } = this.props
-        const { hpCurrent } = this.state
+        const { hitpoints, maxhitpoints } = this.state
         return (
             <React.Fragment>
                 {this.state.updating && (
                     <CharacterHpModifier
                         characterStats={characterStats}
-                        hitpoints={hpCurrent.hitpoints}
-                        maxhitpoints={hpCurrent.maxhitpoints}
+                        hitpoints={hitpoints}
+                        maxhitpoints={maxhitpoints}
                         onSubmit={this.handleSubmit}
                         onCancel={this.cancelModal}
                     />
                 )}
                 <CharacterHpBar
-                    hitpoints={hpCurrent.hitpoints}
-                    maxhitpoints={hpCurrent.maxhitpoints}
+                    hitpoints={hitpoints}
+                    maxhitpoints={maxhitpoints}
                     onClick={this.openModal}
                 />
             </React.Fragment>
