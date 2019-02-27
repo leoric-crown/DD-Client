@@ -1,16 +1,28 @@
 /*
   This will go on its own
 */
-
 .initiative-pic {
   height: 4.0rem;
 }
 
 .initiatives-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding-top: 1rem;
+}
+
+.initiatives-header {
+  position: sticky;
+  top: 6rem;
+  background: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 1rem;
+  margin: 1rem 0 1rem 0;
+  z-index: 1000;
+}
+
+.initiatives-table {
+  overflow: auto;
 }
 
 .initiative-column {
@@ -41,7 +53,6 @@
   justify-content: space-around;
   flex-grow: 2;
   flex-wrap: wrap;
-  /* width:20%; */
 }
 
 .stats-icons {
@@ -83,6 +94,7 @@
 
 .hp-column{
   display: flex;
+  position: relative;
   width: 100%;
   flex-direction: row;
   justify-content: center;
@@ -107,6 +119,7 @@ html, body, .root, .App {
   background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg") fixed;
   background-repeat: no-repeat;
   background-size: 100% auto;
+  font-size: 16px;
 }
 
 @media (min-width: 50px) and (max-width:1024px ) {
@@ -163,6 +176,11 @@ div.card-body.mx-4 > div {
   padding-left: 0rem !important;
 }
 
+.md-navbar-nav {
+  background: red;
+  width:50%;
+}
+
 .my-facebook-button-class {
     font-family: Helvetica,sans-serif;
     font-weight: 700;
@@ -178,8 +196,14 @@ div.card-body.mx-4 > div {
 }
 
 .characters-container {
+  z-index: 1020;
+  position: fixed;
+  padding-top: 1rem;
+  top: 3rem;
+  width: 100%;
   display: flex;
   justify-content: center;
+  background: #493E3A;
 }
 
 .subtitle {
@@ -242,11 +266,9 @@ div.card-body.mx-4 > div {
   font-variant: normal;
   font-weight: 700;
   line-height: 1rem;
-  /* white-space: nowrap; */
   overflow: hidden;
   width: 5rem;
   text-align: center;
-  /* text-overflow: ellipsis; */
 }
 
 .character-name-title {
