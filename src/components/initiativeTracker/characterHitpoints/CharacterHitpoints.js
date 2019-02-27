@@ -5,8 +5,7 @@ import CharacterHpModifier from './CharacterHpModifier';
 class CharacterHitPoints extends Component {
     constructor(props) {
         super(props)
-        const { characterStats } = this.props
-        const { hitpoints, maxhitpoints } = characterStats
+        const { hitpoints, maxhitpoints } = this.props.characterStats
         this.state = {
             updating: false,
             hitpoints,

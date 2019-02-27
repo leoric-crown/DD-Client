@@ -137,7 +137,6 @@ class CharacterHpModifier extends Component {
                     <MDBCol md="8">
                         <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                         <h2>{characterStats.name}</h2>
-                        {/* <h4 className="pad-hit-points">{hitpoints} / {maxhitpoints}</h4> */}
                         <CharacterHpBar
                             hitpoints={hitpoints}
                             maxhitpoints={maxhitpoints}
