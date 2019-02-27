@@ -129,7 +129,7 @@ class TurnTracker extends Component {
                                                 )
                                         }
                                         <div className="d-flex justify-content-center">
-                                            <div className='sticky-button'>
+                                            <div className='d-flex justify-content-center'>
                                                 {
                                                     initiatives.length > 1 && (
                                                         <MDBBtn

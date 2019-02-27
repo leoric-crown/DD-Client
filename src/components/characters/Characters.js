@@ -44,7 +44,7 @@ class Characters extends React.Component {
       <div>
         {this.props.User.authenticated &&
           characterList && (
-            <MDBContainer style={styles} className="justify-content-center">
+            <React.Fragment>
               <div className="characters-container">
                 <MDBRow>
                   <MDBCol md='12'>
@@ -52,66 +52,68 @@ class Characters extends React.Component {
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
                       <strong className='navigation-button'>
-                      My Characters
+                        My Characters
                       </strong>
-                  </MDBBtn>
+                    </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
                       <strong className='navigation-button'>
-                      Create Characters
+                        Create Characters
                       </strong>
-                  </MDBBtn>
+                    </MDBBtn>
                   </MDBCol>
-              </MDBRow>
-                
+                </MDBRow>
               </div>
-          <div className="page-heading">
-            <h1 className="page-title">
-              <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
-            </h1>
-          </div>
-          <br />
-              {this.state.activeButtonMyCharacters
-                ?
-                <div>
-                  {
-                    characterList.length > 0
-                      ?
-                      <ol className='my-characters'>
-                        {characterList.map((character) => (
-                          <li key={character._id}>
-                            <div className="individual-character">
-                              {(this.state.editing &&
-                                this.state.editing._id === character._id) ?  (
-                                <CharacterForm 
-                                  character={character}
-                                  done={() => this.setState({editing: false})}
-                                />) :
-                                <MyCharacters
-                                  character={character}
-                                  length={characterList.length}
-                                  onEdit={character => this.setState({editing: character})}
-                                />
-                              }
-                            </div>
-                          </li>
-                        ))}
-                      </ol>
-                      : 
-                      <div className="d-flex justify-content-center">
-                        <h3>No Characters just yet...</h3>
-                      </div>
-                  }
+              <MDBContainer style={styles} className="justify-content-center">
+                <div className="page-heading">
+                  <h1 className="page-title">
+                    <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
+                  </h1>
                 </div>
-                :
-                <div className="my-characters">
-                  <CharacterForm
-                    toggleButtonNavigation={this.toggleButtonNavigation}
-                  />
-                </div>
-              }
-            </MDBContainer>
+                <br />
+                {this.state.activeButtonMyCharacters
+                  ?
+                  <div>
+                    {
+                      characterList.length > 0
+                        ?
+                        <ol className='my-characters'>
+                          {characterList.map((character) => (
+                            <li key={character._id}>
+                              <div className="individual-character">
+                                {(this.state.editing &&
+                                  this.state.editing._id === character._id) ? (
+                                    <CharacterForm
+                                      character={character}
+                                      done={() => this.setState({ editing: false })}
+                                    />) :
+                                  <MyCharacters
+                                    character={character}
+                                    length={characterList.length}
+                                    onEdit={character => this.setState({ editing: character })}
+                                  />
+                                }
+                              </div>
+                            </li>
+                          ))}
+                        </ol>
+                        :
+                        <div className="d-flex justify-content-center">
+                          <h3>No Characters just yet...</h3>
+                        </div>
+                    }
+                  </div>
+                  :
+                  <div className="my-characters">
+                    <CharacterForm
+                      toggleButtonNavigation={this.toggleButtonNavigation}
+                    />
+                  </div>
+                }
+              </MDBContainer>
+            </React.Fragment>
+
           )}
       </div>
 

@@ -44,7 +44,7 @@ class Encounters extends React.Component {
       <div>
         {this.props.User.authenticated &&
           encounterList && (
-            <MDBContainer style={styles} className="justify-content-center">
+            <React.Fragment>
               <div className="characters-container">
                 <MDBRow>
                   <MDBCol md='12'>
@@ -52,64 +52,66 @@ class Encounters extends React.Component {
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
                       My Encounters
-              </MDBBtn>
+                    </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
                       Create Encounter
-            </MDBBtn>
+                      </MDBBtn>
                   </MDBCol>
                 </MDBRow>
                 <MDBIcon color="black" icon="hat-wizard" />
               </div>
-              <div className="page-heading">
-                <h1 className="page-title">
-                  <strong>{this.state.activeButtonMyEncounters ? 'Encounters' : 'Create Encounter'}</strong>
-                </h1>
-              </div>
-              <br />
-              {this.state.activeButtonMyEncounters
-                ?
-                <div>
-                  {
-                    encounterList.length > 0
-                      ?
-                      <ol className='my-characters'>
-                        {encounterList.map((encounter) => (
-                          <li key={encounter._id}>
-                            <div className="individual-character">
-                              {(this.state.editing &&
-                                this.state.editing._id === encounter._id) ? (
-                                  <EncounterForm 
-                                    encounter={encounter}
-                                    done={() => this.setState({editing: false})}
-                                  />
-                                ) :
+              <MDBContainer style={styles} className="justify-content-center">
+                <div className="page-heading">
+                  <h1 className="page-title">
+                    <strong>{this.state.activeButtonMyEncounters ? 'Encounters' : 'Create Encounter'}</strong>
+                  </h1>
+                </div>
+                <br />
+                {this.state.activeButtonMyEncounters
+                  ?
+                  <div>
+                    {
+                      encounterList.length > 0
+                        ?
+                        <ol className='my-characters'>
+                          {encounterList.map((encounter) => (
+                            <li key={encounter._id}>
+                              <div className="individual-character">
+                                {(this.state.editing &&
+                                  this.state.editing._id === encounter._id) ? (
+                                    <EncounterForm
+                                      encounter={encounter}
+                                      done={() => this.setState({ editing: false })}
+                                    />
+                                  ) :
                                   <MyEncounters
                                     encounter={encounter}
                                     length={encounterList.length}
                                     activeEncounter={this.props.Encounters.active}
-                                    onEdit={encounter => this.setState({editing: encounter})}
+                                    onEdit={encounter => this.setState({ editing: encounter })}
                                   />
-                              }
-                            </div>
-                          </li>
-                        ))}
-                      </ol>
-                      :
-                      <div className="d-flex justify-content-center">
-                        <h3>No Encounters just yet...</h3>
-                      </div>
-                  }
-                </div>
-                :
-                <div className="my-characters">
-                  <EncounterForm
-                    toggleButtonNavigation={this.toggleButtonNavigation}
-                  />
-                </div>
-              }
-            </MDBContainer>
+                                }
+                              </div>
+                            </li>
+                          ))}
+                        </ol>
+                        :
+                        <div className="d-flex justify-content-center">
+                          <h3>No Encounters just yet...</h3>
+                        </div>
+                    }
+                  </div>
+                  :
+                  <div className="my-characters">
+                    <EncounterForm
+                      toggleButtonNavigation={this.toggleButtonNavigation}
+                    />
+                  </div>
+                }
+              </MDBContainer>
+            </React.Fragment>
           )}
       </div>
 
