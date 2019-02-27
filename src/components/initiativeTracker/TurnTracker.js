@@ -33,8 +33,11 @@ class TurnTracker extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.refs.activeTurn)
-        if (this.refs.activeTurn) {
+        if (this.state.nextTurnClicked) {
+            this.setState({
+                nextTurnClicked: false
+            })
+        } else if (this.refs.activeTurn) {
             this.refs.activeTurn.focus()
         }
         if (this.props.setEncounter !== prevProps.setEncounter) {
@@ -82,7 +85,6 @@ class TurnTracker extends Component {
     }
 
     render() {
-        console.log('turntracker state', this.state)
         const InitiativeFormAttributes = {
             Initiatives: this.props.Initiatives,
             Encounters: this.props.Encounters,
@@ -99,7 +101,7 @@ class TurnTracker extends Component {
                             {this.state.modalOpen && (
                                 <MyMDBModal
                                     toggle={this.toggleModal}
-                                    isOpen={this.state.modalOpen}
+                                    isOpen={true}
                                     canConfirm={false}
                                     labels={{
                                         header: 'Initiative Roll',

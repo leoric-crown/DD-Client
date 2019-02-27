@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-// import CharacterForm from './CharacterForm'
-// import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../../utils/misc'
-import InitiativeForm from './InitiativeForm'
 import TurnTracker from './TurnTracker'
-import MyMDBModal from '../modal/MDBModal'
 
 const ACTIVE_ENCOUNTER = 'ACTIVE_ENCOUNTER'
 const ALL_ENCOUNTERS = 'ALL_ENCOUNTERS'
@@ -47,7 +43,6 @@ class InitiativeTracker extends Component {
         const TurnTrackerAttributes = {
             setEncounter: this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
         }
-        console.log(this.state)
         return (
             <div>
                 {
