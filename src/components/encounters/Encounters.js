@@ -44,7 +44,7 @@ class Encounters extends React.Component {
       <div>
         {this.props.User.authenticated &&
           encounterList && (
-            <MDBContainer style={styles} className="">
+            <MDBContainer style={styles} className="justify-content-center">
               <div className="characters-container">
                 <MDBRow>
                   <MDBCol md='12'>

@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import { MDBContainer, MDBCol, MDBBtn } from 'mdbreact'
 import EncounterSelect from '../encounters/EncounterSelect'
 import InitiativeRow from './InitiativeRow'
+import InitiativeForm from './InitiativeForm'
 
 import { getNextTurn } from '../../redux/actions/initiatives'
+import MyMDBModal from '../modal/MDBModal';
 
 class TurnTracker extends Component {
     constructor(props) {
@@ -73,14 +75,39 @@ class TurnTracker extends Component {
         )
     }
 
+    toggleModal = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        })
+    }
+
     render() {
         console.log('turntracker state', this.state)
+        const InitiativeFormAttributes = {
+            Initiatives: this.props.Initiatives,
+            Encounters: this.props.Encounters,
+            Characters: this.props.Characters,
+            setEncounter: this.props.setEncounter,
+            dispatch: this.props.dispatch
+        }
         const { initiatives } = this.state
         return (
             <div>
                 {
                     (initiatives) && (
                         <React.Fragment>
+                            {this.state.modalOpen && (
+                                <MyMDBModal
+                                    toggle={this.toggleModal}
+                                    isOpen={this.state.modalOpen}
+                                    canConfirm={false}
+                                    labels={{
+                                        header: 'Initiative Roll',
+                                        confirm: 'Insert Character'
+                                    }}>
+                                    <InitiativeForm {...InitiativeFormAttributes} />
+                                </MyMDBModal>
+                            )}
                             <MDBContainer className="d-flex justify-content-center">
                                 <MDBCol md="10">
                                     <div className="initiatives-header">
@@ -91,18 +118,20 @@ class TurnTracker extends Component {
                                                     <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiatives.length} Characters</h4>
                                                 </div>
                                             ) : (
-                                                    <EncounterSelect
-                                                        encounters={this.props.Encounters.list}
-                                                        value={this.state.encounter}
-                                                        onChange={value => this.setEncounter(value)}
-                                                        extra="trackerselect"
-                                                    />
+                                                    <div style={{ padding: '1rem' }}>
+                                                        <EncounterSelect
+                                                            encounters={this.props.Encounters.list}
+                                                            value={this.state.encounter}
+                                                            onChange={value => this.setEncounter(value)}
+                                                            extra="trackerselect"
+                                                        />
+                                                    </div>
                                                 )
                                         }
-                                        {
-                                            initiatives.length > 0 && (
-                                                <div className="d-flex justify-content-center">
-                                                    <div className='sticky-button'>
+                                        <div className="d-flex justify-content-center">
+                                            <div className='sticky-button'>
+                                                {
+                                                    initiatives.length > 1 && (
                                                         <MDBBtn
                                                             type="button"
                                                             color="black"
@@ -110,10 +139,17 @@ class TurnTracker extends Component {
                                                         >
                                                             {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
                                                         </MDBBtn>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
+                                                    )
+                                                }
+                                                <MDBBtn
+                                                    type="button"
+                                                    color="black"
+                                                    onClick={this.toggleModal}
+                                                >
+                                                    Add Characters
+                                                        </MDBBtn>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="initiatives-table">
                                         {this.state.encounter && initiatives && (

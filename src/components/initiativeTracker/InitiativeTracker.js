@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { checkToken } from '../../utils/misc'
 import InitiativeForm from './InitiativeForm'
 import TurnTracker from './TurnTracker'
+import MyMDBModal from '../modal/MDBModal'
 
 const ACTIVE_ENCOUNTER = 'ACTIVE_ENCOUNTER'
 const ALL_ENCOUNTERS = 'ALL_ENCOUNTERS'
@@ -43,62 +44,53 @@ class InitiativeTracker extends Component {
     }
 
     render() {
-        const InitiativeFormAttributes = {
-            Initiatives: this.props.Initiatives,
-            Encounters: this.props.Encounters,
-            Characters: this.props.Characters,
-            setEncounter: this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false,
-            dispatch: this.props.dispatch
-        }
         const TurnTrackerAttributes = {
             setEncounter: this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
         }
+        console.log(this.state)
         return (
             <div>
                 {
                     this.props.User.authenticated && this.props.Encounters.list && (
                         <React.Fragment>
-                            <MDBContainer style={styles} className="">
-                                <div className="characters-container">
-                                    <MDBRow>
-                                        <MDBCol md='12' className="mb-4">
-                                            <MDBBtn onClick={() => this.toggleButtonNavigation(ACTIVE_ENCOUNTER)} color="black">
-                                                <MDBIcon icon="magic" size="lg" />
-                                                &nbsp;
-                                                Active Encounter
+                            <div className="characters-container">
+                                <MDBRow>
+                                    <MDBCol md='12' >
+                                        <MDBBtn onClick={() => this.toggleButtonNavigation(ACTIVE_ENCOUNTER)} color="black">
+                                            <MDBIcon icon="magic" size="lg" />
+                                            &nbsp;
+                                            Active Encounter
                                         </MDBBtn>
-                                            <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
-                                                <MDBIcon icon="plus" size="lg" />
-                                                &nbsp;
-                                                All Encounters
+                                        <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
+                                            <MDBIcon icon="plus" size="lg" />
+                                            &nbsp;
+                                            All Encounters
                                         </MDBBtn>
-                                        </MDBCol>
-                                    </MDBRow>
-                                    <MDBIcon color="black" icon="hat-wizard" />
-                                </div>
-                            </MDBContainer>
-                            <InitiativeForm
-                                {...InitiativeFormAttributes}
-                            />
-                            {
-                                this.state.lastClicked === ACTIVE_ENCOUNTER ? (
-                                    this.props.Encounters.active ? (
+                                    </MDBCol>
+                                </MDBRow>
+                                <MDBIcon color="black" icon="hat-wizard" />
+                            </div>
+                            <MDBContainer style={styles} className="justify-content-center">
+                                {
+                                    this.state.lastClicked === ACTIVE_ENCOUNTER ? (
+                                        this.props.Encounters.active ? (
+                                            <TurnTracker
+                                                {...TurnTrackerAttributes}
+                                            />
+                                        ) : (
+                                                <div>
+                                                    <br />
+                                                    <h4 className='text-center'>No Active Encounter</h4>
+                                                </div>
+                                            )
+
+                                    ) :
                                         <TurnTracker
                                             {...TurnTrackerAttributes}
                                         />
-                                    ) : (
-                                            <div>
-                                                <br />
-                                                <h4 className='text-center'>No Active Encounter</h4>
-                                            </div>
-                                        )
 
-                                ) :
-                                    <TurnTracker
-                                        {...TurnTrackerAttributes}
-                                    />
-
-                            }
+                                }
+                            </MDBContainer>
                         </React.Fragment>
                     )}
             </div>
@@ -109,7 +101,7 @@ class InitiativeTracker extends Component {
 }
 
 let styles = {
-    marginTop: '5em',
+    marginTop: '8em',
 };
 
 function mapStateToProps({ User, Characters, Encounters, Initiatives }) {

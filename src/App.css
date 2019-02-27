@@ -13,8 +13,11 @@
 
 .initiatives-header {
   position: sticky;
-  top: 56px;
+  top: 6rem;
   background: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 1rem;
+  margin: 1rem 0 1rem 0;
   z-index: 1000;
 }
 
@@ -24,7 +27,7 @@
 
 .initiative-column {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   flex-grow: 1;
@@ -173,6 +176,11 @@ div.card-body.mx-4 > div {
   padding-left: 0rem !important;
 }
 
+.md-navbar-nav {
+  background: red;
+  width:50%;
+}
+
 .my-facebook-button-class {
     font-family: Helvetica,sans-serif;
     font-weight: 700;
@@ -188,8 +196,14 @@ div.card-body.mx-4 > div {
 }
 
 .characters-container {
+  z-index: 1020;
+  position: fixed;
+  padding-top: 1rem;
+  top: 3rem;
+  width: 100%;
   display: flex;
   justify-content: center;
+  background: darkcyan;
 }
 
 .subtitle {

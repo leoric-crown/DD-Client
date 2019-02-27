@@ -39,7 +39,7 @@ const EncounterSelect = (props) => {
         <div>
             {props.encounters &&
                 (
-                    <div>
+                    <div style={{paddingTop: '0.5rem'}}>
                         <label className="select-label">Encounter</label>
                         <Select
                             value={props.value ? getOptionFromId(props.encounters, props.value._id) : defaultOption}
