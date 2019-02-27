@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CharacterHitPoints from './characterHitpoints/CharacterHitpoints';
+import CharacterHitPoints from './characterHitPoints/CharacterHitpoints';
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
 import { deleteInitiative, patchInitiativeCharacter, getNextTurn } from '../../redux/actions/initiatives'

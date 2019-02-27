@@ -34,6 +34,11 @@
   width: 1.5rem;
 }
 
+.center-row-content {
+  display: flex;
+  align-items: center;
+}
+
 .initiative-actions {
   display: flex;
   flex-direction: column;

@@ -166,8 +166,8 @@ class InitiativeForm extends Component {
             <MDBContainer style={this.state.style}>
                 <MDBRow className="d-flex justify-content-center">
                     <MDBCol md="8">
-                        <MDBCard className="create-character">
-                            <MDBCardBody className="mx-4 d-row" >
+                        {/* <MDBCard className="create-character"> */}
+                            {/* <MDBCardBody className="mx-4 d-row" > */}
                                 <MDBIcon icon="khanda" />
                                 <MDBInput
                                     label="Initiative"
@@ -242,8 +242,8 @@ class InitiativeForm extends Component {
                                         Add to Encounter
                                     </MDBBtn>
                                 </div>
-                            </MDBCardBody>
-                        </MDBCard>
+                            {/* </MDBCardBody> */}
+                        {/* </MDBCard> */}
                     </MDBCol>
                 </MDBRow>
 
