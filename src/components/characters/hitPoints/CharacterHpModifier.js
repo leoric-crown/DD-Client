@@ -164,7 +164,7 @@ class CharacterHpModifier extends Component {
                         </div>
                         <MDBRow className="center-row-content">
                             {this.state.editMaxHP && (
-                                <React.Fragment>
+                                <div className="center-row-content">
                                     <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
                                     <MDBInput
                                         className="browser-default custom-select text-center"
@@ -174,7 +174,7 @@ class CharacterHpModifier extends Component {
                                         value={addMaxhitpoints.toString()}
                                     />
                                     <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
-                                </React.Fragment>
+                                </div>
                             )}
                         </MDBRow>
                         <MDBInput
