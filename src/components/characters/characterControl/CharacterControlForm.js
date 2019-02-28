@@ -4,6 +4,8 @@ import { FaArrowRight } from 'react-icons/fa'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
 import CharacterControlDisplay from './CharacterControlDisplay.js';
+import CharacterLevelSelect from '../form/CharacterLevelSelect.js';
+import CharacterAcSelect from '../form/CharacterAcSelect.js';
 
 class CharacterControlForm extends Component {
     constructor(props) {
@@ -58,7 +60,7 @@ class CharacterControlForm extends Component {
     render() {
         const { character } = this.props
         const { newCharacter } = this.state
-        const { armorclass } = newCharacter
+        const { armorclass, level } = newCharacter
         const { delta } = this.state
         return (
             <React.Fragment>
@@ -99,13 +101,16 @@ class CharacterControlForm extends Component {
                                     )}
                                 </div>
                                 <div className="dflex justify-content-center">
-                                    <MDBInput
-                                        className="browser-default custom-select text-center"
-                                        label="Armor Class"
-                                        containerClass="mb-0"
-                                        onChange={(e) => this.handleChange("armorclass", e.target.value)}
-                                        value={armorclass.toString()}
+                                    <br/>
+                                    <CharacterAcSelect
+                                        value={armorclass}
+                                        onChange={value => this.handleChange('armorclass', value)}
                                     />
+                                    <CharacterLevelSelect
+                                        value={level}
+                                        onChange={value => this.handleChange('level', value)}
+                                    />
+                                    <br/>
                                 </div>
                             </div>
                             <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>

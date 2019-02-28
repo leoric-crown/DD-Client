@@ -1,6 +1,6 @@
 import React from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-import CharacterForm from './CharacterForm'
+import CharacterForm from './form/CharacterForm'
 import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../../utils/misc'
