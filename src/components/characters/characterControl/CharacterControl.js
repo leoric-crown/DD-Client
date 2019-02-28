@@ -25,17 +25,12 @@ class CharacterControl extends Component {
     }
 
     handleSubmit = (fieldsToUpdate, newCharacter) => {
-        const { updating } = this.state
-        if (!updating) {
-            this.props.onSubmit(false)
-        } else {
-            this.setState({
-                updating: false,
-                character: newCharacter,
-                newCharacter
-            })
-            this.props.onSubmit(fieldsToUpdate)
-        } 
+        this.setState({
+            updating: false,
+            character: newCharacter,
+            newCharacter
+        })
+        this.props.onSubmit(fieldsToUpdate)
     }
 
     render() {

@@ -78,8 +78,6 @@ class CharacterControlForm extends Component {
                 >
                     <MDBContainer className="d-flex justify-content-center">
                         <MDBCol md="8">
-                            {/* <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
-                            <h2>{character.name}</h2> */}
                             <h3 className="text-center">{character.name}</h3>
                             <div className="text-center">
                                 <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />

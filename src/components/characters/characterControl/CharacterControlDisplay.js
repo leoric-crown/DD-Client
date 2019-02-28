@@ -1,10 +1,10 @@
 import React from 'react'
-import { FaShieldAlt } from 'react-icons/fa'
+import { FaShieldAlt, FaUserShield } from 'react-icons/fa'
 
 const CharacterControlDisplay = (props) => {
-    
+
     const { character } = props
-    const { armorclass } = character
+    const { armorclass, level } = character
     return (
         <React.Fragment>
             {
@@ -14,12 +14,20 @@ const CharacterControlDisplay = (props) => {
                             <FaShieldAlt className='stats-icons' />
                             <div>{armorclass}</div>
                         </div>
+                        <div title="Level" className="stat-with-icon">
+                            <FaUserShield className='stats-icons' />
+                            <div>{level}</div>
+                        </div>
                     </div>
                 ) : (
-                        <div className="character-control-display">
-                            <div title="Armor Class" className="stat-with-icon" onClick={props.onClick}>
+                        <div className="character-control-display" onClick={props.onClick}>
+                            <div title="Armor Class" className="stat-with-icon">
                                 <FaShieldAlt className='stats-icons' />
                                 <div>{armorclass}</div>
+                            </div>
+                            <div title="Level" className="stat-with-icon" onClick={props.onClick}>
+                                <FaUserShield className='stats-icons' />
+                                <div>{level}</div>
                             </div>
                         </div>
                     )
