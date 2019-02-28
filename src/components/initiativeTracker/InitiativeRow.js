@@ -56,7 +56,7 @@ class InitiativeRow extends Component {
     render() {
         const { initiative, character } = this.state
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
-        const { name, armorclass } = characterStats
+        const { name } = characterStats
         const style = {
             border: initiative.active ? '3px solid gold' : '',
             background: initiative.active ? 'lightgray' : ''

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBBtn, MDBInput, MDBCol, MDBRow } from 'mdbreact'
-import { FaPlus, FaMinus, FaArrowRight } from 'react-icons/fa'
+import { MDBContainer, MDBBtn, MDBInput, MDBCol } from 'mdbreact'
+import { FaArrowRight } from 'react-icons/fa'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
 import CharacterControlDisplay from './CharacterControlDisplay.js';

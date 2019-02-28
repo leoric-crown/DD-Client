@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { FaShieldAlt } from 'react-icons/fa'
 import CharacterControlForm from './CharacterControlForm';
 import CharacterControlDisplay from './CharacterControlDisplay';
 
