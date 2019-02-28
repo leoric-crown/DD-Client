@@ -49,7 +49,6 @@ class TurnTracker extends Component {
             })
         }
         if (this.props.Initiatives.list !== prevProps.Initiatives.list && this.state.encounter) {
-            console.log('different list!')
             const initiatives = this.props.Initiatives.list.filter(initiative => {
                 return initiative.encounter === this.state.encounter._id
             }).sort((a, b) => b.initiative - a.initiative)

@@ -2,9 +2,27 @@
   This will go on its own
 */
 
+.initiative-with-icon {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+  justify-content: center;
+  height: 3.375rem;
+  text-align: center;
+  font-family: MedievalSharp;
+  font-size: inherit;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 1rem;
+}
+
 .stat-with-icon {
   display: flex;
   flex-direction: column;
+  margin-left: 0.5rem;
+  justify-content: center;
+  height: 3.375rem;
   text-align: center;
   font-family: MedievalSharp;
   font-size: inherit;
@@ -75,7 +93,6 @@
 
 .stats-icons {
   color: darkred;
-  margin-top: -0.15rem;
 }
 
 .progress-bar-container {
@@ -107,6 +124,15 @@
   border-radius: 0.5rem;
   position: relative;
   height: 1.5rem;
+}
+
+.character-control-display {
+  display: flex;
+  position: relative;
+  width: 95%;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 

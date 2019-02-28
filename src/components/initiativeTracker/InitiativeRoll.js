@@ -42,9 +42,8 @@ class InitiativeRoll extends Component {
             newInitiative
         })
         if (newInitiative !== this.props.initiative.initiative) {
-            console.log('new initiative', newInitiative)
             this.props.onSubmit([
-                {propName: 'initiative', value: newInitiative}
+                { propName: 'initiative', value: newInitiative }
             ])
         } else this.props.onSubmit(false)
     }
@@ -74,11 +73,17 @@ class InitiativeRoll extends Component {
                                 <div className="text-center">
                                     <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                                     <h3>{characterStats.name}</h3>
-                                    <div title="Initiative Roll" onClick={this.openModal}><FaDiceD20 className='stats-icons' /> {initiative}</div>
+                                    <div title="Initiative Roll" onClick={this.openModal}>
+                                        <FaDiceD20 className='stats-icons' />
+                                        <div>{initiative}</div>
+                                    </div>
                                     {newInitiative !== initiative && (
                                         <div>
                                             <h3>New Roll</h3>
-                                            <div title="New Initiative Roll"><FaDiceD20 className='stats-icons' /> {newInitiative}</div>
+                                            <div title="New Initiative Roll">
+                                                <FaDiceD20 className='stats-icons' />
+                                                <div>{newInitiative}</div>
+                                            </div>
                                         </div>
                                     )}
                                     <MDBInput
@@ -93,7 +98,10 @@ class InitiativeRoll extends Component {
                         </MDBContainer>
                     </MyMDBModal>
                 )}
-                <div title="Initiative Roll" className="stat-with-icon" onClick={this.openModal}><FaDiceD20 className='stats-icons' size="2rem" /> {initiative}</div>
+                <div title="Initiative Roll" className="initiative-with-icon" onClick={this.openModal}>
+                    <FaDiceD20 className='stats-icons' size="2rem" />
+                    <div style = {{paddingTop: '0.3rem'}}>{initiative}</div>
+                </div>
             </React.Fragment>
         )
     }

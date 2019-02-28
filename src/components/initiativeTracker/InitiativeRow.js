@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CharacterHitPoints from '../characters/hitPoints/CharacterHitpoints';
+import CharacterControl from '../characters/characterControl/CharacterControl'
 import InitiativeRoll from './InitiativeRoll'
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
 import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiative } from '../../redux/actions/initiatives'
-import { FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
     constructor(props) {
         super(props)
-        const { initiative, character } = this.props
+        const { character, initiative } = this.props
         this.state = {
             character,
             initiative
@@ -28,9 +29,8 @@ class InitiativeRow extends Component {
         }
     }
 
-    handleHpChange = (fieldsToUpdate) => {
+    handleCharacterUpdate = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
-            console.log('fieldstoupdate', fieldsToUpdate)
             const { character, initiative } = this.state
             if (character.player) {
                 this.props.dispatch(
@@ -42,7 +42,6 @@ class InitiativeRow extends Component {
                     patchInitiativeCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, initiative.characterStamp.request.url)
                 )
             }
-
         }
     }
 
@@ -89,9 +88,12 @@ class InitiativeRow extends Component {
                             <CharacterHitPoints
                                 {...{ characterStats }}
                                 onClick={this.openModal}
-                                onSubmit={this.handleHpChange}
+                                onSubmit={this.handleCharacterUpdate}
                             />
-                            <div title="Armor Class"> <FaShieldAlt className='stats-icons' /> {armorclass} </div>
+                            <CharacterControl
+                                character={characterStats}
+                                onSubmit={this.handleCharacterUpdate}
+                            />
                         </div>
                         <div className='initiative-actions'>
                             <span title="Delete/Remove"><FaRegTrashAlt style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} /></span>

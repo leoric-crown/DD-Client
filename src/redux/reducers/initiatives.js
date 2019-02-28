@@ -50,7 +50,6 @@ export default function Encounters(state = defaultState, action) {
                 ...state,
                 list: state.list.map(initiative => {
                     if (initiative._id === action.id) {
-                        console.log('tying update')
                         action.payload.forEach(update => {
                             initiative[update.propName] = update.value
                         })
