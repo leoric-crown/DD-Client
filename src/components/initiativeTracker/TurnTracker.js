@@ -33,7 +33,7 @@ class TurnTracker extends Component {
     }
 
     componentDidMount() {
-        this.refs.activeTurn.focus()
+        if (this.refs.activeTurn) this.refs.activeTurn.focus()
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -49,6 +49,7 @@ class TurnTracker extends Component {
             })
         }
         if (this.props.Initiatives.list !== prevProps.Initiatives.list && this.state.encounter) {
+            console.log('different list!')
             const initiatives = this.props.Initiatives.list.filter(initiative => {
                 return initiative.encounter === this.state.encounter._id
             }).sort((a, b) => b.initiative - a.initiative)
@@ -104,6 +105,10 @@ class TurnTracker extends Component {
                                 <MyMDBModal
                                     toggle={this.toggleModal}
                                     isOpen={true}
+                                    fullHeight
+                                    centered
+                                    position="left"
+                                    backdrop={false}
                                     canConfirm={false}
                                     labels={{
                                         header: 'Initiative Roll',
@@ -169,6 +174,7 @@ class TurnTracker extends Component {
                                                             key={initiative._id}
                                                             initiative={initiative}
                                                             character={this.props.Characters.list.find(c => c._id === initiative.characterStamp._id)}
+                                                            encounter={this.state.encounter}
                                                         />
                                                     </div>
                                                 )

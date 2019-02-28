@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CharacterHitPoints from './characterHitPoints/CharacterHitpoints';
+import CharacterHitPoints from '../characters/hitPoints/CharacterHitpoints';
+import InitiativeRoll from './InitiativeRoll'
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
-import { deleteInitiative, patchInitiativeCharacter, getNextTurn } from '../../redux/actions/initiatives'
+import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiative } from '../../redux/actions/initiatives'
 import { FaDiceD20, FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
@@ -29,6 +30,7 @@ class InitiativeRow extends Component {
 
     handleHpChange = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
+            console.log('fieldstoupdate', fieldsToUpdate)
             const { character, initiative } = this.state
             if (character.player) {
                 this.props.dispatch(
@@ -41,6 +43,14 @@ class InitiativeRow extends Component {
                 )
             }
 
+        }
+    }
+
+    handleReRollInitiative = (fieldsToUpdate) => {
+        if (fieldsToUpdate) {
+            this.props.dispatch(
+                patchInitiative(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, this.state.initiative.request.url)
+            )
         }
     }
 
@@ -62,6 +72,14 @@ class InitiativeRow extends Component {
                         id={this.props.active ? 'active' : null}
                         ref={this.props.active ? 'activeTurn' : null}
                     >
+                        <div title="Initiative Roll">
+                            <InitiativeRoll
+                                {...{ characterStats }}
+                                initiative={initiative}
+                                encounter={this.props.encounter}
+                                onSubmit={this.handleReRollInitiative}
+                            />
+                        </div>
                         <div className='initiative-column' title={name}>
                             <img alt="character pic"
                                 className="rounded-circle z-depth-0 initiative-pic"
@@ -72,10 +90,8 @@ class InitiativeRow extends Component {
                             <CharacterHitPoints
                                 {...{ characterStats }}
                                 onClick={this.openModal}
-                                dispatch={this.props.dispatch}
                                 onSubmit={this.handleHpChange}
                             />
-                            <div title="Initiative Roll"><FaDiceD20 className='stats-icons' /> {initiative.initiative}</div>
                             <div title="Armor Class"> <FaShieldAlt className='stats-icons' /> {armorclass} </div>
                         </div>
                         <div className='initiative-actions'>

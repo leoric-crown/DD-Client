@@ -1,4 +1,11 @@
-import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE, UPDATE_INITIATIVE_STAMP, SET_NEXT_TURN } from '../actions/initiatives'
+import {
+    RECEIVE_INITIATIVES,
+    CREATE_INITIATIVES,
+    REMOVE_INITIATIVE,
+    UPDATE_INITIATIVE_STAMP,
+    UPDATE_INITIATIVE,
+    SET_NEXT_TURN
+} from '../actions/initiatives'
 
 const defaultState = {
     list: null,
@@ -38,10 +45,24 @@ export default function Encounters(state = defaultState, action) {
                     return initiative
                 })
             }
+        case UPDATE_INITIATIVE:
+            return {
+                ...state,
+                list: state.list.map(initiative => {
+                    if (initiative._id === action.id) {
+                        console.log('tying update')
+                        action.payload.forEach(update => {
+                            initiative[update.propName] = update.value
+                        })
+                        return initiative
+                    }
+                    return initiative
+                })
+            }
         case SET_NEXT_TURN:
             if (action.prevActive && action.prevActive._id === action.newActive._id) return { ...state }
             const list = [...state.list]
-            if(action.deleted) {
+            if (action.deleted) {
                 list.splice(list.map(i => i._id).indexOf(action.deleted), 1)
             }
             return {

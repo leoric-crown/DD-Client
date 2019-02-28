@@ -124,8 +124,9 @@ class CharacterHpModifier extends Component {
                 toggle={this.props.onCancel}
                 isOpen={true}
                 canConfirm
-                onConfirm={(this.handleSubmit)}
+                onConfirm={this.handleSubmit}
                 fullHeight
+                centered
                 position="right"
                 backdrop={false}
                 labels={{

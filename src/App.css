@@ -1,6 +1,19 @@
 /*
   This will go on its own
 */
+
+.stat-with-icon {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: MedievalSharp;
+  font-size: inherit;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 1rem;
+}
+
 .initiative-pic {
   height: 4.0rem;
 }
@@ -87,7 +100,7 @@
   border-radius: 0.5rem;
   position: relative;
   height: 1.5rem;
-  background-color: lightgray;
+  background-color: darkgray;
 }
 
 .progress-bar {

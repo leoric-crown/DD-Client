@@ -19,6 +19,14 @@ export function createInitiative(token, payload) {
 }
 
 export function patchInitiative(token, payload, url) {
+    return (dispatch) => {
+        return API.patchByUrl(token, payload, url)
+            .then(response => {
+                if(response.status.code === 200) {
+                    dispatch(updateInitiative(payload, response._id))
+                }
+            })
+    }
 
 }
 
@@ -48,6 +56,13 @@ export function removeInitiative(id) {
     return {
         type: REMOVE_INITIATIVE,
         id
+    }
+}
+export function updateInitiative(payload, id) {
+    return {
+        type: UPDATE_INITIATIVE,
+        id,
+        payload
     }
 }
 
