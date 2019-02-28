@@ -5,7 +5,7 @@ import InitiativeRoll from './InitiativeRoll'
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
 import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiative } from '../../redux/actions/initiatives'
-import { FaDiceD20, FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
+import { FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
     constructor(props) {
@@ -76,7 +76,6 @@ class InitiativeRow extends Component {
                             <InitiativeRoll
                                 {...{ characterStats }}
                                 initiative={initiative}
-                                encounter={this.props.encounter}
                                 onSubmit={this.handleReRollInitiative}
                             />
                         </div>

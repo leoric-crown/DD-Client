@@ -50,7 +50,7 @@ class InitiativeRoll extends Component {
     }
 
     render() {
-        const { encounter, characterStats } = this.props
+        const { characterStats } = this.props
         const { updating, initiative, newInitiative } = this.state
         return (
             <React.Fragment>
