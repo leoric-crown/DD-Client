@@ -17,24 +17,6 @@ import { validateAll } from 'indicative'
 import CharacterLevelSelect from './CharacterLevelSelect'
 import CharacterAcSelect from './CharacterAcSelect';
 
-const armorClassOptions = (() => {
-   const armorClasses = Array.from(Array(31).keys())
-   return armorClasses.map(armorClass => {
-      if (armorClass === 0)
-         return (
-            <option key={armorClass} value='' disabled>
-               {' '}
-               Choose Armor Class...{' '}
-            </option>
-         )
-      return (
-         <option key={armorClass} value={armorClass}>
-            {armorClass}
-         </option>
-      )
-   })
-})()
-
 class CharacterForm extends Component {
    constructor(props) {
       super(props)

@@ -58,3 +58,16 @@
     align-items: center;
     flex-grow: 1;
 }
+
+@media (min-width: 50px) and (max-width:1024px ) {
+    .turn-tracker-sticky-header {
+        width: 120%;
+        left: -30%;
+    }
+
+    .turn-tracker-content {
+        position: relative;
+        width: 120%;
+        left: -10%;
+    }
+}

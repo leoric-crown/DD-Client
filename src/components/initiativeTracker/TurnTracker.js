@@ -139,6 +139,7 @@ class TurnTracker extends Component {
                                         <div className="d-flex justify-content-center">
                                             <div className='d-flex justify-content-center'>
                                                 <MDBBtn
+                                                    className="shrink-button"
                                                     type="button"
                                                     color="black"
                                                     onClick={this.toggleModal}
@@ -148,6 +149,7 @@ class TurnTracker extends Component {
                                                 {
                                                     initiatives.length > 1 && (
                                                         <MDBBtn
+                                                            className="shrink-button"
                                                             type="button"
                                                             color={this.state.activeTurn ? 'unique' : 'black'}
                                                             onClick={() => this.nextTurn()}

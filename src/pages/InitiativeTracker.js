@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 import { connect } from 'react-redux'
-import { checkToken } from '../../utils/misc'
-import TurnTracker from './TurnTracker'
+import { checkToken } from '../utils/misc'
+import TurnTracker from '../components/initiativeTracker/TurnTracker'
 
 const ACTIVE_ENCOUNTER = 'Active Encounter'
 const ALL_ENCOUNTERS = 'All Encounters'

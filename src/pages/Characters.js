@@ -1,10 +1,10 @@
 import React from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-import CharacterForm from './form/CharacterForm'
-import MyCharacters from './MyCharacters'
+import CharacterForm from '../components/characters/form/CharacterForm'
+import MyCharacters from '../components/characters/MyCharacters'
 import { connect } from 'react-redux'
-import { checkToken } from '../../utils/misc'
-import '../../css/Cards.css'
+import { checkToken } from '../utils/misc'
+import '../css/Cards.css'
 
 class Characters extends React.Component {
    state = {
