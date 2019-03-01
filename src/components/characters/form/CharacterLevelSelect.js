@@ -35,7 +35,7 @@ const characterLevelSelect = (props) => {
     return (
         <div>
             {<span className="d-flex justify-content-space-evenly">
-                <FaUserShield size="2rem" color="darkred"/>
+                <FaUserShield size="2rem" color="darkred" style={{ paddingRight: '0.5rem' }}/>
                 <div style={{ width: '100%' }}>
                     <Select
                         value={getValueOption(props.value)}

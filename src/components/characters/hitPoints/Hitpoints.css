@@ -1,0 +1,44 @@
+.hp-bar{
+  display: flex;
+  position: relative;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+  
+.hp-bar-background {
+  width:100%;
+}
+
+.hp-bar-text {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: row;
+  font-weight: 450;
+  z-index: 999;
+}
+
+.hp-bar-hitpoints-icon {
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+  color: rgba(102, 0, 0, 1);
+}
+
+.hp-bar-background-color {
+  border-radius: 0.5rem;
+  position: relative;
+  height: 1.5rem;
+  background-color: darkgray;
+}
+
+.hp-bar-hitpoints {
+  border-radius: 0.5rem;
+  position: relative;
+  height: 1.5rem;
+}
+
+.hp-modifier-icons {
+  font-size: 1.5rem;
+  margin: 1.5rem 1rem 0.5rem 0.5rem
+}

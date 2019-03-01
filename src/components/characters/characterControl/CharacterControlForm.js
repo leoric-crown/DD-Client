@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBBtn, MDBInput, MDBCol } from 'mdbreact'
+import { MDBContainer, MDBBtn, MDBCol } from 'mdbreact'
 import { FaArrowRight } from 'react-icons/fa'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
@@ -80,9 +80,9 @@ class CharacterControlForm extends Component {
                 >
                     <MDBContainer className="d-flex justify-content-center">
                         <MDBCol md="8">
-                            <h3 className="text-center">{character.name}</h3>
+                            <h2 className="text-center">{character.name}</h2>
                             <div className="text-center">
-                                <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
+                                <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
                             </div>
                             <div>
                                 <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
@@ -92,7 +92,7 @@ class CharacterControlForm extends Component {
                                     />
                                     {delta && (
                                         <React.Fragment>
-                                            <span style={{marginTop: '0.8rem'}}><FaArrowRight /></span>
+                                            <div className="d-flex justify-content-center" style={{flexDirection: 'column'}}><FaArrowRight /></div>
                                             <CharacterControlDisplay
                                                 character={newCharacter}
                                                 form

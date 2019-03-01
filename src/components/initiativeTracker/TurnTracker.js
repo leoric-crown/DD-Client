@@ -4,9 +4,9 @@ import { MDBContainer, MDBCol, MDBBtn } from 'mdbreact'
 import EncounterSelect from '../encounters/EncounterSelect'
 import InitiativeRow from './InitiativeRow'
 import InitiativeForm from './InitiativeForm'
-
 import { getNextTurn } from '../../redux/actions/initiatives'
 import MyMDBModal from '../modal/MDBModal';
+import './TurnTracker.css'
 
 class TurnTracker extends Component {
     constructor(props) {
@@ -118,7 +118,7 @@ class TurnTracker extends Component {
                             )}
                             <MDBContainer className="d-flex justify-content-center">
                                 <MDBCol md="10">
-                                    <div className="initiatives-header">
+                                    <div className="turn-tracker-sticky-header">
                                         {
                                             this.state.fixedEncounter ? (
                                                 <div>
@@ -138,28 +138,28 @@ class TurnTracker extends Component {
                                         }
                                         <div className="d-flex justify-content-center">
                                             <div className='d-flex justify-content-center'>
-                                                {
-                                                    initiatives.length > 1 && (
-                                                        <MDBBtn
-                                                            type="button"
-                                                            color="black"
-                                                            onClick={() => this.nextTurn()}
-                                                        >
-                                                            {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
-                                                        </MDBBtn>
-                                                    )
-                                                }
                                                 <MDBBtn
                                                     type="button"
                                                     color="black"
                                                     onClick={this.toggleModal}
                                                 >
                                                     Add Characters
+                                                </MDBBtn>
+                                                {
+                                                    initiatives.length > 1 && (
+                                                        <MDBBtn
+                                                            type="button"
+                                                            color={this.state.activeTurn ? 'unique' : 'black'}
+                                                            onClick={() => this.nextTurn()}
+                                                        >
+                                                            {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
                                                         </MDBBtn>
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="initiatives-table">
+                                    <div className="turn-tracker-content">
                                         {this.state.encounter && initiatives && (
                                             initiatives.map(initiative => {
                                                 return (

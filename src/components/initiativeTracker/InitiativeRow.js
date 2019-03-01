@@ -66,7 +66,7 @@ class InitiativeRow extends Component {
                 {initiative && (
                     <div
                         key={initiative._id}
-                        className="initiatives-container"
+                        className="initiative-row-container"
                         style={style}
                         id={this.props.active ? 'active' : null}
                         ref={this.props.active ? 'activeTurn' : null}
@@ -78,13 +78,13 @@ class InitiativeRow extends Component {
                                 onSubmit={this.handleReRollInitiative}
                             />
                         </div>
-                        <div className='initiative-column' title={name}>
+                        <div className='initiative-row-column' title={name}>
                             <img alt="character pic"
-                                className="rounded-circle z-depth-0 initiative-pic"
+                                className="rounded-circle z-depth-0 initiative-row-pic"
                                 src={`${config.API}/${initiative.characterStamp['picUrl']}`} />
-                            <div className="character-name"> {name} </div>
+                            <div className="initiative-row-name"> {name} </div>
                         </div>
-                        <div className='stats-column' title="Character HP">
+                        <div className='initiative-row-character' title="Character HP">
                             <CharacterHitPoints
                                 {...{ characterStats }}
                                 onClick={this.openModal}
@@ -95,7 +95,7 @@ class InitiativeRow extends Component {
                                 onSubmit={this.handleCharacterUpdate}
                             />
                         </div>
-                        <div className='initiative-actions'>
+                        <div className='initiative-row-actions'>
                             <span title="Delete/Remove"><FaRegTrashAlt style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} /></span>
                         </div>
                     </div>

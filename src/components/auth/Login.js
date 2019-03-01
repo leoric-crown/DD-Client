@@ -143,7 +143,7 @@ class Login extends React.Component {
         </div>
         {(!this.props.User.authenticated ||
           !localStorage.getItem('DNDTOKEN')) && (
-          <MDBContainer className='centered'>
+          <MDBContainer className='login-signup'>
             <br />
             <br />
             <br />

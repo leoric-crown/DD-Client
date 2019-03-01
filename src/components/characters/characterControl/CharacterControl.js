@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CharacterControlForm from './CharacterControlForm';
 import CharacterControlDisplay from './CharacterControlDisplay';
+import './CharacterControl.css'
 
 class CharacterControl extends Component {
     constructor(props) {

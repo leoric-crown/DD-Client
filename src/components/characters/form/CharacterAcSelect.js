@@ -35,7 +35,7 @@ const characterAcSelect = (props) => {
     return (
         <div >
             {<span className="d-flex justify-content-space-evenly">
-                <FaShieldAlt size="2rem" color="darkred"/>
+                <FaShieldAlt size="2rem" color="darkred" style={{ paddingRight: '0.5rem' }}/>
                 <div style={{ width: '100%' }}>
                     <Select
                         value={getValueOption(props.value)}

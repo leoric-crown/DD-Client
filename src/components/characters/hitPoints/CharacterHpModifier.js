@@ -114,7 +114,7 @@ class CharacterHpModifier extends Component {
         })
     }
 
-    
+
 
     render() {
         const { characterStats, hitpoints, maxhitpoints } = this.props
@@ -136,56 +136,55 @@ class CharacterHpModifier extends Component {
             >
                 <MDBContainer className="d-flex justify-content-center">
                     <MDBCol md="8">
-                        <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
-                        <h2>{characterStats.name}</h2>
-                        <CharacterHpBar
-                            hitpoints={hitpoints}
-                            maxhitpoints={maxhitpoints}
-                        />
-                        {(hitpoints !== hpNew.hitpoints || maxhitpoints !== hpNew.maxhitpoints) && (
-                            <div>
-                                <h3>New HP</h3>
-                                <CharacterHpBar
-                                    hitpoints={hpNew.hitpoints}
-                                    maxhitpoints={hpNew.maxhitpoints}
-                                />
-                            </div>
-                        )}
-                        <div className="center-row-content">
-                            <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
-                            <MDBInput
-                                className="browser-default custom-select text-center"
-                                label="Hitpoints"
-                                containerClass="mb-0"
-                                onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
-                                value={addHitpoints.toString()}
+                        <div className="text-center">
+                            <h2>{characterStats.name}</h2>
+                            <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
+                            <CharacterHpBar
+                                hitpoints={hitpoints}
+                                maxhitpoints={maxhitpoints}
                             />
-                            <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('hitpoints')} />
-                        </div>
-                        <MDBRow className="center-row-content">
+                            {(hitpoints !== hpNew.hitpoints || maxhitpoints !== hpNew.maxhitpoints) && (
+                                <div>
+                                    <h3>New HP</h3>
+                                    <CharacterHpBar
+                                        hitpoints={hpNew.hitpoints}
+                                        maxhitpoints={hpNew.maxhitpoints}
+                                    />
+                                </div>
+                            )}
+                            <div className="d-flex" style={{ alignItems: 'center' }}>
+                                <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
+                                <MDBInput
+                                    className="text-center"
+                                    label="Hitpoints"
+                                    containerClass="mb-0"
+                                    onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
+                                    value={addHitpoints.toString()}
+                                />
+                                <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('hitpoints')} />
+                            </div>
                             {this.state.editMaxHP && (
-                                <div className="center-row-content">
-                                    <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
+                                <div className="d-flex" style={{ alignItems: 'center' }}>
+                                    <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
                                     <MDBInput
-                                        className="browser-default custom-select text-center"
+                                        className="text-center"
                                         label="Max Hitpoints"
                                         containerClass="mb-0"
                                         onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
                                         value={addMaxhitpoints.toString()}
                                     />
-                                    <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
+                                    <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
                                 </div>
                             )}
-                        </MDBRow>
-                        <MDBInput
-                            label="Max HP"
-                            className="mycheckbox"
-                            type="checkbox"
-                            id="checkbox"
-                            onChange={(e) => this.handleChange('editMaxHP', e.target.checked)}
-                            value={this.state.editMaxHP ? "true" : "false"}
-                        />
-                        <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>
+                            <MDBInput
+                                label="Max HP"
+                                type="checkbox"
+                                id="checkbox"
+                                onChange={(e) => this.handleChange('editMaxHP', e.target.checked)}
+                                value={this.state.editMaxHP ? "true" : "false"}
+                            />
+                            <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>
+                        </div>
                     </MDBCol>
                 </MDBContainer>
             </MyMDBModal>

@@ -107,7 +107,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <MDBContainer className='centered'>
+      <MDBContainer className='login-signup'>
         <MDBRow className='d-flex justify-content-center'>
           <MDBCol md='6'>
             <MDBCard>

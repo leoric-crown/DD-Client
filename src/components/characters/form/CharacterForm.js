@@ -17,24 +17,6 @@ import { validateAll } from 'indicative'
 import CharacterLevelSelect from './CharacterLevelSelect'
 import CharacterAcSelect from './CharacterAcSelect';
 
-// const levelOptions = (() => {
-//    const levels = Array.from(Array(21).keys())
-//    return levels.map(level => {
-//       if (level === 0)
-//          return (
-//             <option key={level} value='' disabled>
-//                {' '}
-//                Choose level...{' '}
-//             </option>
-//          )
-//       return (
-//          <option key={level} value={level}>
-//             {level}
-//          </option>
-//       )
-//    })
-// })()
-
 const armorClassOptions = (() => {
    const armorClasses = Array.from(Array(31).keys())
    return armorClasses.map(armorClass => {
@@ -75,14 +57,8 @@ class CharacterForm extends Component {
          url: '',
          characterPic: null,
          player: updating ? player : false,
-         armorClassOptions,
-         style: {},
          errors: {}
       }
-   }
-
-   validateInput = () => {
-      //TODO make sure we validate hitpoints <= maxhitpoints (this is only relevant when state.updating)
    }
 
    handleKeyDown = event => {
@@ -218,13 +194,10 @@ class CharacterForm extends Component {
       } = this.state
       const { toggleButtonNavigation } = this.props
       return (
-         <MDBContainer style={this.state.style} className=''>
+         <MDBContainer>
             <MDBRow className='d-flex justify-content-center'>
                <MDBCol md='8'>
-                  <MDBCard
-                     style={{ backgroundColor: 'transparent' }}
-                     className='create-character'
-                  >
+                  <MDBCard>
                      <MDBCardBody className='mx-4 d-row'>
                         <div className='text-center'>
                            <h3 className='mb-5'>
@@ -275,7 +248,6 @@ class CharacterForm extends Component {
                         />
                         {this.state.updating && this.state.updating.player && (
                            <MDBInput
-                              className='browser-default custom-select'
                               label='Hitpoints'
                               containerClass='mb-0'
                               onChange={e =>
@@ -286,7 +258,6 @@ class CharacterForm extends Component {
                            />
                         )}
                         <MDBInput
-                           className='browser-default custom-select'
                            label='Max Hitpoints'
                            containerClass='mb-0'
                            onChange={e =>
@@ -303,7 +274,6 @@ class CharacterForm extends Component {
                         )}
                         <MDBInput
                            label='Player Character'
-                           className='mycheckbox'
                            type='checkbox'
                            id='checkbox'
                            onChange={e => 

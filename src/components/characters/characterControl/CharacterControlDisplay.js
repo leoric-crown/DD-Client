@@ -10,23 +10,23 @@ const CharacterControlDisplay = (props) => {
             {
                 props.form ? (
                     <div className="text-center">
-                        <div title="Armor Class" className="stat-with-icon">
-                            <FaShieldAlt className='stats-icons' />
+                        <div title="Armor Class" className="character-control-stat-icon">
+                            <FaShieldAlt test color="darkred" />
                             <div>{armorclass}</div>
                         </div>
-                        <div title="Level" className="stat-with-icon">
-                            <FaUserShield className='stats-icons' />
+                        <div title="Level" className="character-control-stat-icon">
+                            <FaUserShield test color="darkred" />
                             <div>{level}</div>
                         </div>
                     </div>
                 ) : (
                     <div className="character-control-display" onClick={props.onClick}>
-                        <div title="Armor Class" className="stat-with-icon">
-                            <FaShieldAlt className='stats-icons' />
+                        <div title="Armor Class" className="character-control-stat-icon">
+                            <FaShieldAlt test color="darkred" />
                             <div>{armorclass}</div>
                         </div>
-                        <div title="Level" className="stat-with-icon" onClick={props.onClick}>
-                            <FaUserShield className='stats-icons' />
+                        <div title="Level" className="character-control-stat-icon" onClick={props.onClick}>
+                            <FaUserShield test color="darkred" />
                             <div>{level}</div>
                         </div>
                     </div>

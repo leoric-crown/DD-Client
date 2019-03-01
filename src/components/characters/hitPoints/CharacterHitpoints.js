@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CharacterHpBar from './CharacterHpBar'
 import CharacterHpModifier from './CharacterHpModifier';
+import './Hitpoints.css'
 
 class CharacterHitPoints extends Component {
     constructor(props) {
