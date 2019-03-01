@@ -11,22 +11,22 @@ const CharacterControlDisplay = (props) => {
                 props.form ? (
                     <div className="text-center">
                         <div title="Armor Class" className="character-control-stat-icon">
-                            <FaShieldAlt test color="darkred" />
+                            <FaShieldAlt color="darkred" />
                             <div>{armorclass}</div>
                         </div>
                         <div title="Level" className="character-control-stat-icon">
-                            <FaUserShield test color="darkred" />
+                            <FaUserShield color="darkred" />
                             <div>{level}</div>
                         </div>
                     </div>
                 ) : (
                     <div className="character-control-display" onClick={props.onClick}>
                         <div title="Armor Class" className="character-control-stat-icon">
-                            <FaShieldAlt test color="darkred" />
+                            <FaShieldAlt color="darkred" />
                             <div>{armorclass}</div>
                         </div>
                         <div title="Level" className="character-control-stat-icon" onClick={props.onClick}>
-                            <FaUserShield test color="darkred" />
+                            <FaUserShield color="darkred" />
                             <div>{level}</div>
                         </div>
                     </div>

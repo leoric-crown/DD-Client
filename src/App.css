@@ -1,18 +1,3 @@
-.initiative-roll-display {
-  display: flex;
-  flex-direction: column;
-  margin-left: 0.5rem;
-  justify-content: center;
-  height: 3.375rem;
-  text-align: center;
-  font-family: MedievalSharp;
-  font-size: inherit;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 1rem;
-}
-
 /* General Forms CSS is here */
 
 .select-label {
@@ -121,5 +106,10 @@ html, body, .root, .App {
 
   .app-logo {
     width: 200px;
+  }
+
+  .page-with-secondary-nav {
+    margin-left: 0;
+    margin-right: 0;
   }
 }

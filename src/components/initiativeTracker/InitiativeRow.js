@@ -71,7 +71,7 @@ class InitiativeRow extends Component {
                         id={this.props.active ? 'active' : null}
                         ref={this.props.active ? 'activeTurn' : null}
                     >
-                        <div title="Initiative Roll">
+                        <div title="Initiative Roll" className="initiative-row-roll">
                             <InitiativeRoll
                                 {...{ characterStats }}
                                 initiative={initiative}

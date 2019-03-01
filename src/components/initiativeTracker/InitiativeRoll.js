@@ -74,14 +74,14 @@ class InitiativeRoll extends Component {
                                     <h2>{characterStats.name}</h2>
                                     <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                                     <div title="Initiative Roll" onClick={this.openModal}>
-                                        <FaDiceD20 test color="darkred" />
+                                        <FaDiceD20 color="darkred" />
                                         <div>{initiative}</div>
                                     </div>
                                     {newInitiative !== initiative && (
                                         <div>
                                             <h3>New Roll</h3>
                                             <div title="New Initiative Roll">
-                                                <FaDiceD20 test color="darkred" />
+                                                <FaDiceD20 color="darkred" />
                                                 <div>{newInitiative}</div>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@ class InitiativeRoll extends Component {
                     </MyMDBModal>
                 )}
                 <div title="Initiative Roll" className="initiative-roll-display" onClick={this.openModal}>
-                    <FaDiceD20 test color="darkred" size="2rem" />
+                    <FaDiceD20 color="darkred" size="2rem" />
                     <div style = {{paddingTop: '0.3rem'}}>{initiative}</div>
                 </div>
             </React.Fragment>
