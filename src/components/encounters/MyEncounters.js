@@ -17,7 +17,7 @@ class MyEncounters extends Component {
   }
 
   handleSetActive = () => {
-    this.props.dispatch(changeActiveEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id, this.props.activeEncounter))
+    this.props.dispatch(changeActiveEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id, this.props.activeEncounter._id))
   }
 
   render() {

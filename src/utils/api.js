@@ -17,7 +17,9 @@ const request = (method, body, token = false) => {
       appId
     }
   }
+
   if (body) request.body = body
+
   return request
 }
 
@@ -41,11 +43,11 @@ export const postCharacter = (token, payload) => {
   Object.entries(payload).forEach(keyValue => {
     data.append(keyValue[0], keyValue[1])
   })
-  data.append('appId', appId)
   return fetch(`${api}/characters`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      appid: appId
     },
     body: data
   }).then(res => res.json())
@@ -72,6 +74,7 @@ const getCharacters = (token) => {
 // }
 
 export const postEncounter = (token, payload) => {
+  console.log(request('POST', JSON.stringify(payload), token))
   return fetch(`${api}/encounters`, request('POST', JSON.stringify(payload), token))
     .then(res => res.json())
 }
@@ -82,8 +85,10 @@ export const patchByUrl = (token, payload, url) => {
     .then(res => res.json())
 }
 
-export const changeActiveEncounter = (token, id) => {
-  return fetch(`${api}/encounters/${id}/setActive`, request('POST', false, token))
+export const changeActiveEncounter = (token, {id, prevActiveId}) => {
+  return fetch(`${api}/encounters/${id}/setActive`,
+                request('POST', JSON.stringify({id, prevActiveId}),
+                token))
     .then(res => res.json())
 }
 

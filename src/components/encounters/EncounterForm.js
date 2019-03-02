@@ -96,9 +96,6 @@ class EncounterForm extends Component {
     } else {
       this.handleCancel()
     }
-    if (this.state.status !== 'Active' && updating.status === 'Active') {
-      this.props.dispatch(clearActiveEncounter())
-    }
   }
 
   handleCreate = () => {
@@ -129,6 +126,7 @@ class EncounterForm extends Component {
         this.props.toggleButtonNavigation('Submit_Encounter')
       })
       .catch(errors => {
+        console.log(errors)
         const formattedErrors = {}
         errors.forEach(error => (formattedErrors[error.field] = error.message))
         this.setState({

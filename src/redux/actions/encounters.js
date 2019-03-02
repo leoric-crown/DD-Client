@@ -39,12 +39,12 @@ export function deleteEncounter(token, id) {
     }
 }
 
-export function changeActiveEncounter(token, id, prevActive) {
+export function changeActiveEncounter(token, id, prevActiveId) {
     return (dispatch) => {
-        return API.changeActiveEncounter(token, id)
+        return API.changeActiveEncounter(token, {id, prevActiveId})
             .then(response => {
                 if(response.status.code === 200) {
-                    dispatch(setActiveEncounter(response.activeEncounter, prevActive))
+                    dispatch(setActiveEncounter(response.activeEncounter, prevActiveId))
                 }
             })
     }
@@ -70,11 +70,11 @@ export function updateEncounter(payload, id) {
         payload
     }
 }
-export function setActiveEncounter(encounter, prevActive) {
+export function setActiveEncounter(encounter, prevActiveId) {
     return {
         type: SET_ACTIVE_ENCOUNTER,
         active: encounter,
-        prevActive
+        prevActiveId
     }
 }
 

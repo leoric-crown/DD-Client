@@ -51,7 +51,7 @@ export default function Encounters(state = defaultState, action) {
             case action.active._id:
               encounter.status = 'Active'
               return encounter
-            case action.prevActive._id:
+            case action.prevActiveId:
               encounter.status = 'Concluded'
               return encounter
             default:
@@ -63,6 +63,15 @@ export default function Encounters(state = defaultState, action) {
     case CLEAR_ACTIVE_ENCOUNTER:
       return {
         ...state,
+        list: state.list.map(encounter => {
+          switch(encounter.status) {
+            case 'Active':
+              encounter.status = 'Concluded'
+              return encounter
+            default:
+              return encounter
+          }
+        }),
         active: false
       }
     default:
