@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
-import { createInitiative } from '../../redux/actions/initiatives'
+import { postInitiative } from '../../redux/actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
 import CharacterSelect from '../characters/CharacterSelect'
 
@@ -98,7 +98,7 @@ class InitiativeForm extends Component {
          prefix
       }
 
-      this.props.dispatch(createInitiative(localStorage.getItem('DNDTOKEN'), payload))
+      this.props.dispatch(postInitiative(localStorage.getItem('DNDTOKEN'), payload))
       if (character.player) {
          const addedCharacter = characterOptions.find(c => c._id === character)
          const index = characterOptions.indexOf(addedCharacter)

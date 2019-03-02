@@ -1,4 +1,4 @@
-import { RECEIVE_CHARACTERS, CREATE_CHARACTERS, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../actions/characters'
+import { RECEIVE_CHARACTERS, CREATE_CHARACTER, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../actions/characters'
 
 const defaultState = {
   list: null,
@@ -12,7 +12,7 @@ export default function Characters(state = defaultState, action) {
         ...state,
         list: action.characters
       }
-    case CREATE_CHARACTERS:
+    case CREATE_CHARACTER:
     return {
       ...state,
       list: [...state.list, action.character]

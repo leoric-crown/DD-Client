@@ -1,6 +1,6 @@
 import {
     RECEIVE_INITIATIVES,
-    CREATE_INITIATIVES,
+    CREATE_INITIATIVE,
     REMOVE_INITIATIVE,
     UPDATE_INITIATIVE_STAMP,
     UPDATE_INITIATIVE,
@@ -20,7 +20,7 @@ export default function Encounters(state = defaultState, action) {
                 list: action.initiatives,
                 count: action.count
             }
-        case CREATE_INITIATIVES:
+        case CREATE_INITIATIVE:
             return {
                 ...state,
                 list: [...state.list, ...action.initiatives]

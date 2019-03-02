@@ -11,7 +11,7 @@ import {
    MDBAlert
 } from 'mdbreact'
 import { connect } from 'react-redux'
-import { createCharacter, patchCharacter } from '../../../redux/actions/characters'
+import { postCharacter, patchCharacter } from '../../../redux/actions/characters'
 import validator from 'validator'
 import { validateAll } from 'indicative'
 import CharacterLevelSelect from './CharacterLevelSelect'
@@ -98,7 +98,7 @@ class CharacterForm extends Component {
             }
 
             this.props.dispatch(
-               createCharacter(localStorage.getItem('DNDTOKEN'), payload)
+               postCharacter(localStorage.getItem('DNDTOKEN'), payload)
             )
             toggleCharacterNavigation('Submit_Character')
          })

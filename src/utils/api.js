@@ -34,7 +34,7 @@ export const fbLogin = (accessToken) =>
     },
   }).then(res => res.json())
 
-export const createCharacter = (token, payload) => {
+export const postCharacter = (token, payload) => {
   let data = new FormData()
   Object.entries(payload).forEach(keyValue => {
     data.append(keyValue[0], keyValue[1])
@@ -68,17 +68,17 @@ const getCharacters = (token) => {
   }).then(res => res.json())
 }
 
-const getUserCharacters = (token) => {
-  return fetch(`${api}/characters/`, {
-    method: 'GET',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
-}
+// const getUserCharacters = (token) => {
+//   return fetch(`${api}/characters/`, {
+//     method: 'GET',
+//     headers: {
+//       ...headers,
+//       'Authorization': `Bearer ${token}`
+//     }
+//   }).then(res => res.json())
+// }
 
-export const createEncounter = (token, payload) => {
+export const postEncounter = (token, payload) => {
   return fetch(`${api}/encounters`, {
     method: 'POST',
     headers: {
@@ -140,7 +140,7 @@ export const deleteInitiative = (token, id) => {
   }).then(res => res.json())
 }
 
-export const createInitiative = (token, payload) => {
+export const postInitiative = (token, payload) => {
   return fetch(`${api}/initiatives`, {
     method: 'POST',
     headers: {

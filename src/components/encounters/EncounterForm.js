@@ -12,7 +12,7 @@ import {
 } from 'mdbreact'
 import { connect } from 'react-redux'
 import {
-  createEncounter,
+  postEncounter,
   patchEncounter,
   clearActiveEncounter
 } from '../../redux/actions/encounters'
@@ -124,7 +124,7 @@ class EncounterForm extends Component {
         }
 
         this.props.dispatch(
-          createEncounter(localStorage.getItem('DNDTOKEN'), payload)
+          postEncounter(localStorage.getItem('DNDTOKEN'), payload)
         )
         this.props.toggleButtonNavigation('Submit_Encounter')
       })

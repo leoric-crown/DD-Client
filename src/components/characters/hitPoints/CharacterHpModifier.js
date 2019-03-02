@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBBtn, MDBInput, MDBCol, MDBRow } from 'mdbreact'
+import { MDBContainer, MDBBtn, MDBInput, MDBCol } from 'mdbreact'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 import CharacterHpBar from './CharacterHpBar'
 import config from '../../../config.json'

@@ -1,4 +1,4 @@
-import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTERS, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER, CLEAR_ACTIVE_ENCOUNTER } from '../actions/encounters'
+import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTER, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER, CLEAR_ACTIVE_ENCOUNTER } from '../actions/encounters'
 
 const defaultState = {
   list: null,
@@ -17,7 +17,7 @@ export default function Encounters(state = defaultState, action) {
         list: action.encounters,
         active: active.length > 0 ? active.pop() : false
       }
-    case CREATE_ENCOUNTERS:
+    case CREATE_ENCOUNTER:
       return {
         ...state,
         list: [...state.list, action.encounter]

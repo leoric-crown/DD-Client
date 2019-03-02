@@ -33,9 +33,9 @@ class TurnTracker extends Component {
     }
 
     componentDidMount() {
-        console.log(document.getElementById('activeTurn').top)
         if (this.refs.activeTurn) {
-            window.scrollTo(0, document.getElementById('activeTurn').offsetTop + document.getElementById('activeTurn').offsetHeight)
+            const el = document.getElementById('activeTurn')
+            window.scrollTo(0, el.offsetTop + el.offsetHeight)
         }
     }
 
@@ -43,7 +43,8 @@ class TurnTracker extends Component {
         const { newTurn } = this.props.Initiatives
         if ((newTurn && newTurn !== prevProps.Initiatives.newTurn)
             || this.state.encounter !== prevState.encounter) {
-            window.scrollTo(0, document.getElementById('activeTurn').offsetTop + document.getElementById('activeTurn').offsetHeight)
+            const el = document.getElementById('activeTurn')
+            if (el) window.scrollTo(0, el.offsetTop + el.offsetHeight)
         }
         if (this.props.setEncounter !== prevProps.setEncounter) {
             this.setState({
