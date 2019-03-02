@@ -112,8 +112,8 @@ export const setNextTurn = (token, encounterId, deletePrevious) => {
 }
 
 const getInitiatives = (token) => {
-  return fetch(`${api}/initiatives`, request('GET', false, token)).
-    then(res => res.json())
+  return fetch(`${api}/initiatives`, request('GET', false, token))
+    .then(res => res.json())
 }
 
 export const getInitialData = (user, token) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon, MDBInput } from 'mdbreact'
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 import CharacterForm from '../components/characters/form/CharacterForm'
 import MyCharacters from '../components/characters/MyCharacters'
 import { connect } from 'react-redux'
@@ -9,17 +9,10 @@ import '../css/Cards.css'
 class Characters extends React.Component {
    constructor(props) {
       super(props)
-      // const socket = new WebSocket('ws://localhost:5000/ws/echo')
-      // socket.addEventListener('message', event => this.setState({
-      //    displayMessage: 'message from server ' + event.data
-      // }))
-
-
       this.state = {
       activeButtonMyCharacters: true,
       editing: false,
       lastClicked: 'Characters',
-      // socket,
       message: '',
       displayMessage: 'will receive here',
       }
@@ -52,17 +45,7 @@ class Characters extends React.Component {
          }
       }
    }
-
-   handleKeyDown = event => {
-      switch (event.key) {
-        case 'Enter':
-            // this.state.socket.send(this.state.message)
-            break
-         default:
-            break
-      }
-    }
-
+   
    render() {
       const characterList = this.props.Characters.list
       return (
