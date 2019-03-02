@@ -4,9 +4,9 @@ import { MDBContainer, MDBCol, MDBBtn } from 'mdbreact'
 import EncounterSelect from '../encounters/EncounterSelect'
 import InitiativeRow from './InitiativeRow'
 import InitiativeForm from './InitiativeForm'
-
 import { getNextTurn } from '../../redux/actions/initiatives'
 import MyMDBModal from '../modal/MDBModal';
+import './TurnTracker.css'
 
 class TurnTracker extends Component {
     constructor(props) {
@@ -32,10 +32,19 @@ class TurnTracker extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log(this.refs.activeTurn)
+    componentDidMount() {
         if (this.refs.activeTurn) {
-            this.refs.activeTurn.focus()
+            const el = document.getElementById('activeTurn')
+            window.scrollTo(0, el.offsetTop + el.offsetHeight)
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const { newTurn } = this.props.Initiatives
+        if ((newTurn && newTurn !== prevProps.Initiatives.newTurn)
+            || this.state.encounter !== prevState.encounter) {
+            const el = document.getElementById('activeTurn')
+            if (el) window.scrollTo(0, el.offsetTop + el.offsetHeight)
         }
         if (this.props.setEncounter !== prevProps.setEncounter) {
             this.setState({
@@ -82,12 +91,11 @@ class TurnTracker extends Component {
     }
 
     render() {
-        console.log('turntracker state', this.state)
         const InitiativeFormAttributes = {
             Initiatives: this.props.Initiatives,
             Encounters: this.props.Encounters,
             Characters: this.props.Characters,
-            setEncounter: this.props.setEncounter,
+            setEncounter: this.state.encounter,
             dispatch: this.props.dispatch
         }
         const { initiatives } = this.state
@@ -99,7 +107,11 @@ class TurnTracker extends Component {
                             {this.state.modalOpen && (
                                 <MyMDBModal
                                     toggle={this.toggleModal}
-                                    isOpen={this.state.modalOpen}
+                                    isOpen={true}
+                                    fullHeight
+                                    centered
+                                    position="left"
+                                    backdrop={false}
                                     canConfirm={false}
                                     labels={{
                                         header: 'Initiative Roll',
@@ -109,55 +121,60 @@ class TurnTracker extends Component {
                                 </MyMDBModal>
                             )}
                             <MDBContainer className="d-flex justify-content-center">
-                                <MDBCol md="10">
-                                    <div className="initiatives-header">
-                                        {
-                                            this.state.fixedEncounter ? (
-                                                <div>
-                                                    <br />
-                                                    <h4 className='text-center'>Active Encounter: {this.state.encounter.name}, {initiatives.length} Characters</h4>
-                                                </div>
-                                            ) : (
-                                                    <div style={{ padding: '1rem' }}>
-                                                        <EncounterSelect
-                                                            encounters={this.props.Encounters.list}
-                                                            value={this.state.encounter}
-                                                            onChange={value => this.setEncounter(value)}
-                                                            extra="trackerselect"
-                                                        />
+                                <MDBCol md="12">
+                                    <div className="turn-tracker-sticky-header">
+                                        <div className="turn-tracker-sticky-header-content">
+                                            {
+                                                this.state.fixedEncounter ? (
+                                                    <div style={{ paddingTop: '2rem' }}>
+                                                        <h3 className="turn-tracker-sticky-header-content-text">Active Encounter: {this.state.encounter.name}</h3>
+                                                        <h4 className="turn-tracker-sticky-header-content-text">{initiatives.length} Characters</h4>
                                                     </div>
-                                                )
-                                        }
-                                        <div className="d-flex justify-content-center">
-                                            <div className='d-flex justify-content-center'>
-                                                {
-                                                    initiatives.length > 1 && (
-                                                        <MDBBtn
-                                                            type="button"
-                                                            color="black"
-                                                            onClick={() => this.nextTurn()}
-                                                        >
-                                                            {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
-                                                        </MDBBtn>
+                                                ) : (
+                                                        <div style={{ padding: '1rem 1rem 0rem 1rem' }}>
+                                                            <EncounterSelect
+                                                                encounters={this.props.Encounters.list}
+                                                                value={this.state.encounter}
+                                                                onChange={value => this.setEncounter(value)}
+                                                                extra="trackerselect"
+                                                            />
+                                                        </div>
                                                     )
-                                                }
-                                                <MDBBtn
-                                                    type="button"
-                                                    color="black"
-                                                    onClick={this.toggleModal}
-                                                >
-                                                    Add Characters
-                                                        </MDBBtn>
+                                            }
+                                            <div className="d-flex justify-content-center">
+                                                <div className='d-flex justify-content-center'>
+                                                    <MDBBtn
+                                                        className="shrink-button"
+                                                        type="button"
+                                                        color="black"
+                                                        onClick={this.toggleModal}
+                                                    >
+                                                        Add Characters
+                                                </MDBBtn>
+                                                    {
+                                                        initiatives.length > 1 && (
+                                                            <MDBBtn
+                                                                className="shrink-button"
+                                                                type="button"
+                                                                color={this.state.activeTurn ? 'unique' : 'black'}
+                                                                onClick={() => this.nextTurn()}
+                                                            >
+                                                                {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
+                                                            </MDBBtn>
+                                                        )
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="initiatives-table">
+                                    <div className="turn-tracker-content">
                                         {this.state.encounter && initiatives && (
                                             initiatives.map(initiative => {
                                                 return (
                                                     <div
                                                         tabIndex={initiative.active ? '1' : null}
                                                         key={initiative._id}
+                                                        id={initiative.active ? 'activeTurn' : null}
                                                         ref={initiative.active ? 'activeTurn' : null}
                                                     >
                                                         <InitiativeRow
@@ -165,6 +182,7 @@ class TurnTracker extends Component {
                                                             key={initiative._id}
                                                             initiative={initiative}
                                                             character={this.props.Characters.list.find(c => c._id === initiative.characterStamp._id)}
+                                                            encounter={this.state.encounter}
                                                         />
                                                     </div>
                                                 )

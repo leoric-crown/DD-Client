@@ -1,4 +1,5 @@
-import config from '../config.json';
+import config from '../config.json'
+import { appId } from '../utils/id'
 
 const api = config.API
 
@@ -7,38 +8,40 @@ const headers = {
   'Content-Type': 'application/json'
 }
 
+const request = (method, body, token = false) => {
+  const request = {
+    method,
+    headers: !token ? headers : {
+      ...headers,
+      'Authorization': `Bearer ${token}`,
+      appId
+    }
+  }
+  if (body) request.body = body
+  return request
+}
+
 export const login = (payload) =>
-  fetch(`${api}/users/login`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
+  fetch(`${api}/users/login`, request('POST', JSON.stringify(payload)))
+    .then(res => res.json())
     .catch(e => console.log(e))
 
 export const signup = (payload) =>
-  fetch(`${api}/users/signup`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(payload)
-  })
+  fetch(`${api}/users/signup`, request('POST', JSON.stringify(payload)))
     .then(res => res.json())
     .then(data => data)
     .catch(e => console.log(e))
 
 export const fbLogin = (accessToken) =>
-  fetch(`${api}/users/auth/facebook`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${accessToken}`
-    },
-  }).then(res => res.json())
+  fetch(`${api}/users/auth/facebook`, request('POST', false, accessToken))
+    .then(res => res.json())
 
-export const createCharacter = (token, payload) => {
+export const postCharacter = (token, payload) => {
   let data = new FormData()
   Object.entries(payload).forEach(keyValue => {
     data.append(keyValue[0], keyValue[1])
   })
+  data.append('appId', appId)
   return fetch(`${api}/characters`, {
     method: 'POST',
     headers: {
@@ -49,13 +52,8 @@ export const createCharacter = (token, payload) => {
 }
 
 export const deleteCharacter = (token, id) => {
-  return fetch(`${api}/characters/${id}`, {
-    method: 'DELETE',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/characters/${id}`, request('DELETE', false, token))
+    .then(res => res.json())
 }
 
 const getCharacters = (token) => {
@@ -68,108 +66,54 @@ const getCharacters = (token) => {
   }).then(res => res.json())
 }
 
-const getUserCharacters = (token) => {
-  return fetch(`${api}/characters/`, {
-    method: 'GET',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
-}
+// const getUserCharacters = (token) => {
+//   return fetch(`${api}/characters/`, request('GET', false, token))
+//     .then(res => res.json())
+// }
 
-export const createEncounter = (token, payload) => {
-  return fetch(`${api}/encounters`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
+export const postEncounter = (token, payload) => {
+  return fetch(`${api}/encounters`, request('POST', JSON.stringify(payload), token))
+    .then(res => res.json())
 }
 
 export const patchByUrl = (token, payload, url) => {
-  return fetch(url, {
-    method: 'PATCH',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
+  console.log(payload)
+  return fetch(url, request('PATCH', JSON.stringify(payload), token))
+    .then(res => res.json())
 }
 
 export const changeActiveEncounter = (token, id) => {
-  return fetch(`${api}/encounters/${id}/setActive`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/encounters/${id}/setActive`, request('POST', false, token))
+    .then(res => res.json())
 }
 
 export const deleteEncounter = (token, id) => {
-  return fetch(`${api}/encounters/${id}`, {
-    method: 'DELETE',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/encounters/${id}`, request('DELETE', false, token)).then(res => res.json())
 }
 
 const getEncounters = (token) => {
-  return fetch(`${api}/encounters`, {
-    method: 'GET',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/encounters`, request('GET', false, token))
+    .then(res => res.json())
 }
 
 export const deleteInitiative = (token, id) => {
-  return fetch(`${api}/initiatives/${id}`, {
-    method: 'DELETE',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/initiatives/${id}`, request('DELETE', false, token))
+    .then(res => res.json())
 }
 
-export const createInitiative = (token, payload) => {
-  return fetch(`${api}/initiatives`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(payload)
-  }).then(res => res.json())
+export const postInitiative = (token, payload) => {
+  return fetch(`${api}/initiatives`, request('POST', JSON.stringify(payload), token))
+    .then(res => res.json())
 }
 
 export const setNextTurn = (token, encounterId, deletePrevious) => {
-  return fetch(`${api}/initiatives/${encounterId}/nextTurn`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify({ deletePrevious })
-  }).then(res => res.json())
+  return fetch(`${api}/initiatives/${encounterId}/nextTurn`, request('POST', JSON.stringify({ deletePrevious }), token))
+    .then(res => res.json())
 }
 
 const getInitiatives = (token) => {
-  return fetch(`${api}/initiatives`, {
-    method: 'GET',
-    headers: {
-      ...headers,
-      'Authorization': `Bearer ${token}`
-    }
-  }).then(res => res.json())
+  return fetch(`${api}/initiatives`, request('GET', false, token))
+    .then(res => res.json())
 }
 
 export const getInitialData = (user, token) => {
@@ -187,14 +131,10 @@ export const getInitialData = (user, token) => {
 }
 
 export const verifyToken = (token) =>
-  fetch(`${api}/users/verifyToken`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-  }).then(res => {
-    if (res.status === 401) {
-      throw new Error("Token Invalid")
-    }
-    return res.json()
-  })
+  fetch(`${api}/users/verifyToken`, request('POST', false, token))
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error("Token Invalid")
+      }
+      return res.json()
+    })

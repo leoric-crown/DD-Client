@@ -1,16 +1,15 @@
 import * as API from '../../utils/api'
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
-export const CREATE_CHARACTERS = 'CREATE_CHARACTERS'
+export const CREATE_CHARACTER = 'CREATE_CHARACTER'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
-export const DELETE_CHARACTER = 'DELETE_CHARACTER'
 export const REMOVE_CHARACTER = 'REMOVE_CHARACTER'
 
 
-export function createCharacter(token, payload) {
+export function postCharacter(token, payload) {
   return (dispatch) => {
-    return API.createCharacter(token, payload)
+    return API.postCharacter(token, payload)
       .then((response) => {
-        dispatch(createCharacters(response.createdCharacter))
+        dispatch(createCharacter(response.createdCharacter))
       })
   }
 }
@@ -61,9 +60,9 @@ export function receiveCharacters(characters, user) {
   }
 }
 
-export function createCharacters(character) {
+export function createCharacter(character) {
   return {
-    type: CREATE_CHARACTERS,
+    type: CREATE_CHARACTER,
     character
   }
 }

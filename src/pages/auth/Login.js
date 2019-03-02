@@ -143,7 +143,7 @@ class Login extends React.Component {
         </div>
         {(!this.props.User.authenticated ||
           !localStorage.getItem('DNDTOKEN')) && (
-          <MDBContainer className='centered'>
+          <MDBContainer className='login-signup'>
             <br />
             <br />
             <br />
@@ -154,6 +154,7 @@ class Login extends React.Component {
                   <MDBCardBody className='mx-4'>
                     <img
                       alt='DnD Turn Tracker Logo'
+                      style={{width: '100%'}}
                       src='http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1'
                     />
                     <div className='text-center'>

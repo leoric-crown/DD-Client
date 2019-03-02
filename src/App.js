@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Signup from './components/auth/Signup'
-import Login from './components/auth/Login'
+import Signup from './pages/auth/Signup'
+import Login from './pages/auth/Login'
 import Nav from './components/nav'
-import Characters from './components/characters/Characters'
-import Encounters from './components/encounters/Encounters'
-import InitiativeTracker from './components/initiativeTracker/InitiativeTracker';
+import Characters from './pages/Characters'
+import Encounters from './pages/Encounters'
+import InitiativeTracker from './pages/InitiativeTracker';
 import { Route, Switch } from 'react-router-dom'
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";

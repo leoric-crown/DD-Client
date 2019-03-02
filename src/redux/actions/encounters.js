@@ -1,6 +1,6 @@
 import * as API from '../../utils/api'
 export const RECEIVE_ENCOUNTERS = 'RECEIVE_ENCOUNTERS'
-export const CREATE_ENCOUNTERS = 'CREATE_ENCOUNTERS'
+export const CREATE_ENCOUNTER = 'CREATE_ENCOUNTER'
 export const UPDATE_ENCOUNTER = 'UPDATE_ENCOUNTER'
 export const DELETE_ENCOUNTER = 'DELETE_ENCOUNTER'
 export const REMOVE_ENCOUNTER = 'REMOVE_ENCOUNTER'
@@ -8,11 +8,11 @@ export const SET_ACTIVE_ENCOUNTER = 'SET_ACTIVE_ENCOUNTER'
 export const CLEAR_ACTIVE_ENCOUNTER = 'CLEAR_ACTIVE_ENCOUNTER'
 
 
-export function createEncounter(token, payload) {
+export function postEncounter(token, payload) {
     return (dispatch) => {
-        return API.createEncounter(token, payload)
+        return API.postEncounter(token, payload)
             .then((response) => {
-                dispatch(createEncounters(response.createdEncounter))
+                dispatch(createEncounter(response.createdEncounter))
             })
     }
 }
@@ -86,9 +86,9 @@ export function receiveEncounters(encounters, user) {
     }
 }
 
-export function createEncounters(encounter) {
+export function createEncounter(encounter) {
     return {
-        type: CREATE_ENCOUNTERS,
+        type: CREATE_ENCOUNTER,
         encounter
     }
 }

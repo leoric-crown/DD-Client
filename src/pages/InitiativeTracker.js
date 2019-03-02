@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-// import CharacterForm from './CharacterForm'
-// import MyCharacters from './MyCharacters'
 import { connect } from 'react-redux'
-import { checkToken } from '../../utils/misc'
-import InitiativeForm from './InitiativeForm'
-import TurnTracker from './TurnTracker'
-import MyMDBModal from '../modal/MDBModal'
+import { checkToken } from '../utils/misc'
+import TurnTracker from '../components/initiativeTracker/TurnTracker'
 
-const ACTIVE_ENCOUNTER = 'ACTIVE_ENCOUNTER'
-const ALL_ENCOUNTERS = 'ALL_ENCOUNTERS'
+const ACTIVE_ENCOUNTER = 'Active Encounter'
+const ALL_ENCOUNTERS = 'All Encounters'
 
 class InitiativeTracker extends Component {
     constructor(props) {
@@ -47,30 +43,38 @@ class InitiativeTracker extends Component {
         const TurnTrackerAttributes = {
             setEncounter: this.state.lastClicked === ACTIVE_ENCOUNTER ? this.props.Encounters.active : false
         }
-        console.log(this.state)
         return (
             <div>
                 {
                     this.props.User.authenticated && this.props.Encounters.list && (
                         <React.Fragment>
-                            <div className="characters-container">
+                            <div className="secondary-nav">
                                 <MDBRow>
                                     <MDBCol md='12' >
                                         <MDBBtn onClick={() => this.toggleButtonNavigation(ACTIVE_ENCOUNTER)} color="black">
                                             <MDBIcon icon="magic" size="lg" />
                                             &nbsp;
-                                            Active Encounter
+                                            <strong className='secondary-nav-button'>
+                                                Active Encounter
+                                            </strong>
                                         </MDBBtn>
                                         <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
                                             <MDBIcon icon="plus" size="lg" />
                                             &nbsp;
-                                            All Encounters
+                                            <strong className='secondary-nav-button'>
+                                                All Encounters
+                                            </strong>
                                         </MDBBtn>
                                     </MDBCol>
                                 </MDBRow>
                                 <MDBIcon color="black" icon="hat-wizard" />
                             </div>
-                            <MDBContainer style={styles} className="justify-content-center">
+                            <MDBContainer className="page-with-secondary-nav">
+                                <div className="page-heading">
+                                    <h1 className="page-title">
+                                        <strong>Turn Tracker</strong>
+                                    </h1>
+                                </div>
                                 {
                                     this.state.lastClicked === ACTIVE_ENCOUNTER ? (
                                         this.props.Encounters.active ? (
@@ -90,6 +94,7 @@ class InitiativeTracker extends Component {
                                         />
 
                                 }
+
                             </MDBContainer>
                         </React.Fragment>
                     )}
@@ -99,10 +104,6 @@ class InitiativeTracker extends Component {
         )
     }
 }
-
-let styles = {
-    marginTop: '8em',
-};
 
 function mapStateToProps({ User, Characters, Encounters, Initiatives }) {
     return {

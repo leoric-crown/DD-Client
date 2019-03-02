@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CharacterHitPoints from './characterHitpoints/CharacterHitpoints';
+import CharacterHitPoints from '../characters/hitPoints/CharacterHitpoints';
+import CharacterControl from '../characters/characterControl/CharacterControl'
+import InitiativeRoll from './InitiativeRoll'
 import config from '../../config.json'
 import { patchCharacter } from '../../redux/actions/characters'
-import { deleteInitiative, patchInitiativeCharacter, getNextTurn } from '../../redux/actions/initiatives'
-import { FaDiceD20, FaShieldAlt, FaRegTrashAlt } from 'react-icons/fa'
+import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiative } from '../../redux/actions/initiatives'
+import { FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
     constructor(props) {
         super(props)
-        const { initiative, character } = this.props
+        const { character, initiative } = this.props
         this.state = {
             character,
             initiative
@@ -27,7 +29,7 @@ class InitiativeRow extends Component {
         }
     }
 
-    handleHpChange = (fieldsToUpdate) => {
+    handleCharacterUpdate = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
             const { character, initiative } = this.state
             if (character.player) {
@@ -40,14 +42,21 @@ class InitiativeRow extends Component {
                     patchInitiativeCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, initiative.characterStamp.request.url)
                 )
             }
+        }
+    }
 
+    handleReRollInitiative = (fieldsToUpdate) => {
+        if (fieldsToUpdate) {
+            this.props.dispatch(
+                patchInitiative(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, this.state.initiative.request.url)
+            )
         }
     }
 
     render() {
         const { initiative, character } = this.state
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
-        const { name, armorclass } = characterStats
+        const { name } = characterStats
         const style = {
             border: initiative.active ? '3px solid gold' : '',
             background: initiative.active ? 'lightgray' : ''
@@ -57,28 +66,36 @@ class InitiativeRow extends Component {
                 {initiative && (
                     <div
                         key={initiative._id}
-                        className="initiatives-container"
+                        className="initiative-row-container"
                         style={style}
                         id={this.props.active ? 'active' : null}
                         ref={this.props.active ? 'activeTurn' : null}
                     >
-                        <div className='initiative-column' title={name}>
-                            <img alt="character pic"
-                                className="rounded-circle z-depth-0 initiative-pic"
-                                src={`${config.API}/${initiative.characterStamp['picUrl']}`} />
-                            <div className="character-name"> {name} </div>
+                        <div title="Initiative Roll" className="initiative-row-roll">
+                            <InitiativeRoll
+                                {...{ characterStats }}
+                                initiative={initiative}
+                                onSubmit={this.handleReRollInitiative}
+                            />
                         </div>
-                        <div className='stats-column' title="Character HP">
+                        <div className='initiative-row-column' title={name}>
+                            <img alt="character pic"
+                                className="rounded-circle z-depth-0 initiative-row-pic"
+                                src={`${config.API}/${initiative.characterStamp['picUrl']}`} />
+                            <div className="initiative-row-name"> {name} </div>
+                        </div>
+                        <div className='initiative-row-character' title="Character HP">
                             <CharacterHitPoints
                                 {...{ characterStats }}
                                 onClick={this.openModal}
-                                dispatch={this.props.dispatch}
-                                onSubmit={this.handleHpChange}
+                                onSubmit={this.handleCharacterUpdate}
                             />
-                            <div title="Initiative Roll"><FaDiceD20 className='stats-icons' /> {initiative.initiative}</div>
-                            <div title="Armor Class"> <FaShieldAlt className='stats-icons' /> {armorclass} </div>
+                            <CharacterControl
+                                character={characterStats}
+                                onSubmit={this.handleCharacterUpdate}
+                            />
                         </div>
-                        <div className='initiative-actions'>
+                        <div className='initiative-row-actions'>
                             <span title="Delete/Remove"><FaRegTrashAlt style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} /></span>
                         </div>
                     </div>

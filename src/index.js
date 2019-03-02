@@ -8,9 +8,14 @@ import { createStore, compose } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './redux/reducers'
 import middleware from './middleware'
+import { webSocketInit } from './redux/actions/webSockets'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(middleware))
+const store = createStore(
+  reducer, 
+  composeEnhancers(middleware)
+)
+webSocketInit(store)
 
 ReactDOM.render(
   <Provider store={store}>

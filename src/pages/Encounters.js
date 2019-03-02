@@ -1,9 +1,10 @@
 import React from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
-import EncounterForm from './EncounterForm'
-import MyEncounters from './MyEncounters'
+import EncounterForm from '../components/encounters/EncounterForm'
+import MyEncounters from '../components/encounters/MyEncounters'
 import { connect } from 'react-redux'
-import { checkToken } from '../../utils/misc'
+import { checkToken } from '../utils/misc'
+import '../css/Cards.css'
 
 class Encounters extends React.Component {
   state = {
@@ -45,40 +46,43 @@ class Encounters extends React.Component {
         {this.props.User.authenticated &&
           encounterList && (
             <React.Fragment>
-              <div className="characters-container">
+              <div className="secondary-nav">
                 <MDBRow>
                   <MDBCol md='12'>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
                       <MDBIcon icon="magic" size="lg" />
                       &nbsp;
-                      My Encounters
+                      <strong className='secondary-nav-button'>
+                        My Encounters
+                      </strong>
                     </MDBBtn>
                     <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
                       <MDBIcon icon="plus" size="lg" />
                       &nbsp;
-                      Create Encounter
-                      </MDBBtn>
+                      <strong className='secondary-nav-button'>
+                        Create Encounter
+                      </strong>
+                    </MDBBtn>
                   </MDBCol>
                 </MDBRow>
                 <MDBIcon color="black" icon="hat-wizard" />
               </div>
-              <MDBContainer style={styles} className="justify-content-center">
+              <MDBContainer className="page-with-secondary-nav">
                 <div className="page-heading">
                   <h1 className="page-title">
                     <strong>{this.state.activeButtonMyEncounters ? 'Encounters' : 'Create Encounter'}</strong>
                   </h1>
                 </div>
-                <br />
                 {this.state.activeButtonMyEncounters
                   ?
                   <div>
                     {
                       encounterList.length > 0
                         ?
-                        <ol className='my-characters'>
+                        <ol className='card-list'>
                           {encounterList.map((encounter) => (
                             <li key={encounter._id}>
-                              <div className="individual-character">
+                              <div className="card-item">
                                 {(this.state.editing &&
                                   this.state.editing._id === encounter._id) ? (
                                     <EncounterForm
@@ -104,7 +108,7 @@ class Encounters extends React.Component {
                     }
                   </div>
                   :
-                  <div className="my-characters">
+                  <div>
                     <EncounterForm
                       toggleButtonNavigation={this.toggleButtonNavigation}
                     />
@@ -119,10 +123,6 @@ class Encounters extends React.Component {
     )
   }
 }
-
-let styles = {
-  marginTop: '5em',
-};
 
 function mapStateToProps({ User, Encounters }) {
   return {

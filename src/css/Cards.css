@@ -1,0 +1,74 @@
+.card-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .card-item {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card-top {
+    display: flex;
+    width:25vh;
+    justify-content: space-between;
+  }
+  
+  .card-title {
+    font-family: MedievalSharp;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 2.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .card-actions-item {
+    cursor: pointer;
+    padding-bottom: 1rem;
+  }
+  
+  .card-pic {
+    width: 10rem;
+    height: 10rem;
+  }
+  
+  .card-item-fields {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  
+  .card-item-fields-label {
+    font-family: MedievalSharp;
+    font-size: 1.3rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 1.5rem;
+  }
+  
+  .card-star {
+    color: gold;
+    font-size: 2.8rem;
+  }

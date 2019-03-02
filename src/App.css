@@ -1,150 +1,4 @@
-/*
-  This will go on its own
-*/
-.initiative-pic {
-  height: 4.0rem;
-}
-
-.initiatives-container {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.initiatives-header {
-  position: sticky;
-  top: 6rem;
-  background: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 1rem;
-  margin: 1rem 0 1rem 0;
-  z-index: 1000;
-}
-
-.initiatives-table {
-  overflow: auto;
-}
-
-.initiative-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  flex-grow: 1;
-  width: 1.5rem;
-}
-
-.initiative-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.character-hitpoints {
-  font-size: 1.5rem;
-  margin: 1.5rem 1rem 0.5rem 0.5rem
-}
-
-.stats-column {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  flex-grow: 2;
-  flex-wrap: wrap;
-}
-
-.stats-icons {
-  color: darkred;
-  margin-top: -0.15rem;
-}
-
-.progress-bar-container {
-  width:100%;
-}
-.progress-bar-heartbeat {
-  margin-top: 0.25rem;
-  margin-right: 0.25rem;
-  color: rgba(102, 0, 0, 1);
-}
-
-.progress-bar-hitpoints {
-  position: absolute;
-  display: inline-flex;
-  flex-direction: row;
-  font-weight: 450;
-  text-shadow: -1px 0 lightgray, 0 1px lightgray, 1px 0 lightgray, 0 -1px lightgray;
-  z-index: 999;
-}
-
-.progress-bar-background {
-  border-radius: 0.5rem;
-  position: relative;
-  height: 1.5rem;
-  background-color: lightgray;
-}
-
-.progress-bar {
-  border-radius: 0.5rem;
-  position: relative;
-  height: 1.5rem;
-}
-
-
-.hp-column{
-  display: flex;
-  position: relative;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.pad-icon {
-  padding: 0.25rem;
-}
-
-/*
-  --------------------------------------------
-*/
-
-
-
-
-
-@import url('https://fonts.googleapis.com/css?family=MedievalSharp');
-
-html, body, .root, .App {
-  background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg") fixed;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  font-size: 16px;
-}
-
-@media (min-width: 50px) and (max-width:1024px ) {
-  .navigation-button {
-    font-size: 7px;
-  }
-
-  .app-logo {
-    width: 200px;
-  }
-}
-
-.centered {
-  position:absolute;
-  top:50%;
-  left:50%;
-  padding:15px;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-}
-
-div.card-body.mx-4 > div {
-  color: #EC2127
-}
+/* General Forms CSS is here */
 
 .select-label {
   color:#757575;
@@ -176,26 +30,14 @@ div.card-body.mx-4 > div {
   padding-left: 0rem !important;
 }
 
-.md-navbar-nav {
-  background: red;
-  width:50%;
+/* General App CSS*/
+
+.flash-message {
+  text-align: center;
+  color: black !important;
 }
 
-.my-facebook-button-class {
-    font-family: Helvetica,sans-serif;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    text-decoration: none;
-    transition: background-color .3s,border-color .3s;
-    background-color: #4c69ba;
-    border: calc(.06887vw + .67769px) solid #4c69ba;
-    padding: calc(-0.65565vw + 13.38843px) calc(.34435vw + 18.38843px);
-}
-
-.characters-container {
+.secondary-nav {
   z-index: 1020;
   position: fixed;
   padding-top: 1rem;
@@ -206,107 +48,14 @@ div.card-body.mx-4 > div {
   background: #493E3A;
 }
 
-.subtitle {
-  display: flex;
-  justify-content: flex-start;
+.page-with-secondary-nav {
+  margin-top: 7.625rem;
 }
 
-.my-characters {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.individual-character {
-    padding: 1rem;
-    text-align: left;
-}
-
-.character-pic {
-  width: 10rem;
-  height: 10rem;
-}
-
-.character-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-top {
-  display: flex;
-  width:25vh;
-  justify-content: space-between;
-}
-
-.card-actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.star {
-  color: gold;
-  font-size: 2.8rem;
-}
-
-.card-actions-item {
-  cursor: pointer;
-  padding-bottom: 1rem;
-}
-
-.character-name {
-  font-family: MedievalSharp;
-  font-size: inherit;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 1rem;
-  overflow: hidden;
-  width: 5rem;
-  text-align: center;
-}
-
-.character-name-title {
-  font-family: MedievalSharp;
-  font-size: 2.5rem;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 2.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.character-stats {
-  font-family: MedievalSharp;
-  font-size: 1.3rem;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 1.5rem;
-}
-
-.characters-grid {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.flash-message {
-  text-align: center;
-  color: black !important;
-}
-
-.character-specs-inner {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
+.page-heading {
+  border-bottom: 3px solid darkred;
+  margin-left:10%;
+  margin-right:10%;
 }
 
 .page-title {
@@ -314,9 +63,53 @@ div.card-body.mx-4 > div {
   justify-content: center;
 }
 
-.page-heading {
-  border-bottom: 3px solid red;
-  padding-bottom: 8px;
-  margin-left:10%;
-  margin-right:10%;
+.login-signup {
+  position:absolute;
+  top:50%;
+  left:50%;
+  padding:15px;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.my-facebook-button-class {
+  font-family: Helvetica,sans-serif;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  transition: background-color .3s,border-color .3s;
+  background-color: #4c69ba;
+  border: calc(.06887vw + .67769px) solid #4c69ba;
+  padding: calc(-0.65565vw + 13.38843px) calc(.34435vw + 18.38843px);
+}
+
+@import url('https://fonts.googleapis.com/css?family=MedievalSharp');
+
+html, body, .root, .App {
+  background: url("https://media-waterdeep.cursecdn.com/attachments/1/614/builder1k.jpg") fixed;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  font-size: 1rem;
+}
+
+@media (min-width: 50px) and (max-width:1024px ) {
+  .shrink-button {
+    font-size: 0.55rem!important;
+  }
+  .secondary-nav-button {
+    font-size: 0.55rem;
+  }
+
+  .app-logo {
+    width: 200px;
+  }
+
+  .page-with-secondary-nav {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
