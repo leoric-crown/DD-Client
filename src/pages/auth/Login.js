@@ -11,11 +11,9 @@ import {
   MDBAlert,
   MDBIcon
 } from "mdbreact";
-import * as API from "../../utils/api";
 import FacebookLogin from "react-facebook-login";
 import config from "../../config.json";
-import { setAuthedUser } from "../../redux/actions/authedUser";
-import { handleInitialData, handleLogin } from "../../redux/actions/shared";
+import { handleLogin, handleFBLogin } from "../../redux/actions/shared";
 import { connect } from "react-redux";
 import { checkToken } from "../../utils/misc";
 import { validateAll } from "indicative";
@@ -25,7 +23,6 @@ class Login extends React.Component {
   state = {
     email: "",
     password: "",
-    authError: false,
     flashMessage: false,
     message: "",
     errors: {}
@@ -61,7 +58,7 @@ class Login extends React.Component {
 
   handleLogin = () => {
     // We clear previous errors to avoid confusion
-    this.props.dispatch(clearErrors())
+    this.props.dispatch(clearErrors());
 
     const data = this.state;
     const rules = {
@@ -82,12 +79,12 @@ class Login extends React.Component {
         });
         this.props.dispatch(handleLogin(this.state))
           .then(() => {
-            if(this.props.Errors.authSuccess) {
+            if (this.props.Errors.authSuccess) {
               this.props.history.push({
                 pathname: "/dashboard/characters"
               });
             }
-        });
+          });
       })
       .catch(errors => {
         const formattedErrors = {};
@@ -109,20 +106,15 @@ class Login extends React.Component {
   };
 
   handleFBLogin = res => {
-    API.fbLogin(res.accessToken)
-      .then(res => {
-        if (res.status.code === 200) {
-          localStorage.setItem("DNDTOKEN", res.jwt);
-          this.props.dispatch(setAuthedUser(res));
-          this.props.dispatch(handleInitialData(res, res.jwt));
-          // this.props.dispatch(handleInitialData(res.userId, res.jwt))
+    this.props.dispatch(handleFBLogin(res.accessToken))
+      .then(() => {
+        if (this.props.Errors.authSuccess) {
           this.props.history.push({
-            pathname: "/dashboard/characters"
-          });
+            pathname: '/dashboard/characters'
+          })
         }
       })
-      .catch(err => console.warn(err));
-  };
+  }
 
   render() {
     return (
