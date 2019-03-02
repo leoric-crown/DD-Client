@@ -327,9 +327,4 @@ function mapStateToProps({ User }) {
    }
 }
 
-// TODO: Move all these inline css to sepate file
-// const formHeaderStyle = {
-//   color: 'black'
-// }
-
 export default connect(mapStateToProps)(CharacterForm)

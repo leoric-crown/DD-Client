@@ -39,6 +39,10 @@ export default function Characters(state = defaultState, action) {
           return character._id !== action.id
         })
       }
+    case 'test_websocket':
+      return { 
+        ...state
+      }
     default:
       return { ...state}
   }

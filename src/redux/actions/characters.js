@@ -6,7 +6,6 @@ export const REMOVE_CHARACTER = 'REMOVE_CHARACTER'
 
 
 export function postCharacter(token, payload) {
-  console.log('postCharacter action')
   return (dispatch) => {
     return API.postCharacter(token, payload)
       .then((response) => {

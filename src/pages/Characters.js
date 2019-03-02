@@ -53,13 +53,6 @@ class Characters extends React.Component {
       }
    }
 
-   handleInputChange = (input) => {
-      console.log('input', input.value)
-      this.setState({
-         message: input.value
-      })
-   }
-
    handleKeyDown = event => {
       switch (event.key) {
         case 'Enter':
@@ -71,7 +64,6 @@ class Characters extends React.Component {
     }
 
    render() {
-      console.log(this.state)
       const characterList = this.props.Characters.list
       return (
          <div>
@@ -99,16 +91,6 @@ class Characters extends React.Component {
                         </MDBRow>
                      </div>
                      <MDBContainer className="page-with-secondary-nav">
-                        
-                        <MDBInput
-                        style={{background:'white'}}
-                           label='Message'
-                           onChange={e => this.handleInputChange(e.target)}
-                           onKeyDown={e => this.handleKeyDown(e)}
-                           value={this.state.message}
-                        />
-                        <div style={{background:'white'}}>{this.state.displayMessage}</div>
-
                         <div className="page-heading">
                            <h1 className="page-title">
                               <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
