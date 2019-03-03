@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   MDBContainer,
   MDBRow,
@@ -10,123 +10,110 @@ import {
   MDBModalFooter,
   MDBAlert,
   MDBIcon
-} from 'mdbreact'
-import * as API from '../../utils/api'
-import FacebookLogin from 'react-facebook-login'
-import config from '../../config.json'
-import { setAuthedUser } from '../../redux/actions/authedUser'
-import { handleInitialData } from '../../redux/actions/shared'
-import { connect } from 'react-redux'
-import { checkToken } from '../../utils/misc'
-import { validateAll } from 'indicative'
-
+} from 'mdbreact';
+import FacebookLogin from 'react-facebook-login';
+import config from '../../config.json';
+import { handleLogin, handleFBLogin } from '../../redux/actions/shared';
+import { connect } from 'react-redux';
+import { checkToken } from '../../utils/misc';
+import { validateAll } from 'indicative';
+import { clearErrors } from '../../redux/actions/errors';
 
 class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    authError: false,
     flashMessage: false,
     message: '',
     errors: {}
-  }
+  };
 
   setMessage = () => {
     if (this.props.User.message) {
       this.setState({
         flashMessage: true,
         message: this.props.User.message
-      })
+      });
     }
-  }
+  };
 
   componentWillMount() {
-    const token = localStorage.getItem('DNDTOKEN')
-    if (token) checkToken.bind(this)(token)
+    const token = localStorage.getItem('DNDTOKEN');
+    if (token) checkToken.bind(this)(token);
   }
 
   componentWillReceiveProps() {
-    this.setMessage()
+    this.setMessage();
   }
 
   componentDidMount() {
-    this.setMessage()
+    this.setMessage();
   }
 
   handleInputChange = (type, value) => {
     this.setState({
       [type]: value
-    })
-  }
+    });
+  };
 
   handleLogin = () => {
-    const data = this.state
+    // We clear previous errors to avoid confusion
+    this.props.dispatch(clearErrors());
 
+    const data = this.state;
     const rules = {
       email: 'required|email',
       password: 'required|string'
-    }
+    };
 
     const messages = {
       required: 'Please fill in the {{ field }} field',
       'email.email': 'Please type a valid email'
-    }
+    };
 
     validateAll(data, rules, messages)
       .then(() => {
         // We set errors to empty object to clear previous errors
         this.setState({
-          errors:{}
-        })
-        API.login(this.state).then(res => {
-          if (res.status.code === 200) {
-            localStorage.setItem('DNDTOKEN', res.jwt)
-
-            this.props.dispatch(setAuthedUser(res))
-            this.props.dispatch(handleInitialData(res, res.jwt))
-            this.props.history.push({
-              pathname: '/dashboard/characters'
-            })
-          } else {
-            this.setState({
-              authError: true
-            })
-          }
-        })
+          errors: {}
+        });
+        this.props.dispatch(handleLogin(this.state))
+          .then(() => {
+            if (this.props.Errors.authSuccess) {
+              this.props.history.push({
+                pathname: '/dashboard/characters'
+              });
+            }
+          });
       })
       .catch(errors => {
-        const formattedErrors = {}
-        errors.forEach(error => (formattedErrors[error.field] = error.message))
+        const formattedErrors = {};
+        errors.forEach(error => (formattedErrors[error.field] = error.message));
         this.setState({
           errors: formattedErrors
-        })
-      })
-  }
+        });
+      });
+  };
 
   handleKeyDown = event => {
     switch (event.key) {
       case 'Enter':
-        this.handleLogin()
-        break
+        this.handleLogin();
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
   handleFBLogin = res => {
-    API.fbLogin(res.accessToken)
-      .then(res => {
-        if (res.status.code === 200) {
-          localStorage.setItem('DNDTOKEN', res.jwt)
-          this.props.dispatch(setAuthedUser(res))
-          this.props.dispatch(handleInitialData(res, res.jwt))
-          // this.props.dispatch(handleInitialData(res.userId, res.jwt))
+    this.props.dispatch(handleFBLogin(res.accessToken))
+      .then(() => {
+        if (this.props.Errors.authSuccess) {
           this.props.history.push({
             pathname: '/dashboard/characters'
           })
         }
       })
-      .catch(err => console.warn(err))
   }
 
   render() {
@@ -154,7 +141,7 @@ class Login extends React.Component {
                   <MDBCardBody className='mx-4'>
                     <img
                       alt='DnD Turn Tracker Logo'
-                      style={{width: '100%'}}
+                      style={{ width: '100%' }}
                       src='http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1'
                     />
                     <div className='text-center'>
@@ -162,10 +149,10 @@ class Login extends React.Component {
                         <strong>Turn Tracker</strong>
                       </h3>
                     </div>
-                    {this.state.authError && (
+                    {this.props.Errors.authErrorMessage && (
                       <MDBAlert color='danger'>
                         <MDBIcon icon='warning' />
-                        &nbsp;&nbsp;&nbsp;Error Logging in
+                        &nbsp;&nbsp;&nbsp;Incorrect email or password
                       </MDBAlert>
                     )}
                     <MDBInput
@@ -242,14 +229,15 @@ class Login extends React.Component {
           </MDBContainer>
         )}
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps({ User }) {
+function mapStateToProps({ User, Errors }) {
   return {
-    User
-  }
+    User,
+    Errors
+  };
 }
 
-export default connect(mapStateToProps)(Login)
+export default connect(mapStateToProps)(Login);

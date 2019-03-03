@@ -10,11 +10,10 @@ import {
   MDBAlert,
   MDBIcon
 } from 'mdbreact'
-import * as API from '../../utils/api'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../../redux/actions/shared'
-import { setAuthedUser } from '../../redux/actions/authedUser'
+import {  handleSignUp } from '../../redux/actions/shared'
 import { validateAll } from 'indicative'
+import { clearErrors } from '../../redux/actions/errors';
 
 const defaultUserPic =
   'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'
@@ -45,6 +44,7 @@ class Signup extends React.Component {
   }
 
   handleLogin = () => {
+    this.props.dispatch(clearErrors());
     const data = this.state
 
     const rules = {
@@ -66,34 +66,13 @@ class Signup extends React.Component {
           email: this.state.email,
           password: this.state.password
         }
-        API.signup(payload)
-          .then(res => {
-            // We set errors to empty object to clear previous errors
-            this.setState({
-              errors:{}
-            })
-            if (res.status.code !== 200) {
-              this.setState({
-                serverError: true,
-                serverErrorMessage: res.status.message
+        this.props.dispatch(handleSignUp(payload, defaultUserPic))
+          .then(() => {
+            if (this.props.Errors.signUpSuccess) {
+              this.props.history.push({
+                pathname: '/dashboard/characters'
               })
-              return
             }
-
-            const authedUserData = {
-              email: res.email,
-              photoURL: !res.photoURL ? defaultUserPic : res.photoURL,
-              isDM: res.isDM,
-              userId: res.userId
-            }
-            this.props.dispatch(setAuthedUser(authedUserData))
-            this.props.dispatch(handleInitialData(authedUserData, res.jwt))
-            this.props.history.push({
-              pathname: '/dashboard/characters'
-            })
-          })
-          .catch(e => {
-            alert('Whoops something went wrong... \n\nPlease try again later')
           })
       })
       .catch(errors => {
@@ -126,10 +105,10 @@ class Signup extends React.Component {
                     <strong>&nbsp;Signup</strong>
                   </h3>
                 </div>
-                {this.state.serverError && (
+                {this.props.Errors.signUpErrorMessage && (
                   <MDBAlert color='danger'>
                     <MDBIcon icon='warning' />
-                    &nbsp;&nbsp;&nbsp;{this.state.serverErrorMessage}
+                    &nbsp;&nbsp;&nbsp;{this.props.Errors.signUpErrorMessage}
                   </MDBAlert>
                 )}
                 <MDBInput
@@ -204,9 +183,10 @@ class Signup extends React.Component {
   }
 }
 
-function mapStateToProps({ User }) {
+function mapStateToProps({ User, Errors }) {
   return {
-    User
+    User,
+    Errors
   }
 }
 
