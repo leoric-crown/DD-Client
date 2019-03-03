@@ -23,18 +23,24 @@ export default function Encounters(state = defaultState, action) {
         list: [...state.list, action.encounter]
       }
     case UPDATE_ENCOUNTER:
+      let resetActive = false
+      const list = state.list.map(encounter => {
+        if (encounter._id === action.id) {
+          action.payload.forEach(update => {
+            if (state.active._id === action.id && 
+                update.propName === 'status' &&
+                update.value !== 'Active') resetActive = true
+              encounter[update.propName] = update.value
+          })
+          return encounter
+        }
+        return encounter
+      })
       return {
         ...state,
-        list: state.list.map(encounter => {
-          if (encounter._id === action.id) {
-            action.payload.forEach(update => {
-              encounter[update.propName] = update.value
-            })
-            return encounter
-          }
-          return encounter
-        }),
-        editing: false
+        list,
+        editing: false,
+        active: resetActive ? false : state.active
       }
     case REMOVE_ENCOUNTER:
       return {
@@ -47,7 +53,7 @@ export default function Encounters(state = defaultState, action) {
       return {
         ...state,
         list: state.list.map(encounter => {
-          switch(encounter._id) {
+          switch (encounter._id) {
             case action.active._id:
               encounter.status = 'Active'
               return encounter
@@ -64,7 +70,7 @@ export default function Encounters(state = defaultState, action) {
       return {
         ...state,
         list: state.list.map(encounter => {
-          switch(encounter.status) {
+          switch (encounter.status) {
             case 'Active':
               encounter.status = 'Concluded'
               return encounter
