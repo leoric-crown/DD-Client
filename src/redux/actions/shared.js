@@ -1,9 +1,9 @@
-import * as API from "../../utils/api"
-import { receiveCharacters } from "./characters"
-import { receiveEncounters } from "./encounters"
-import { receiveInitiatives } from "./initiatives"
-import { setAuthedUser } from "./authedUser"
-import { setAuthStatus, setSignUpStatus } from "./errors"
+import * as API from '../../utils/api'
+import { receiveCharacters } from './characters'
+import { receiveEncounters } from './encounters'
+import { receiveInitiatives } from './initiatives'
+import { setAuthedUser } from './authedUser'
+import { setAuthStatus, setSignUpStatus } from './errors'
 
 export function handleSignUp(payload, defaultUserPic) {
   return dispatch => {
@@ -17,7 +17,7 @@ export function handleSignUp(payload, defaultUserPic) {
             isDM: res.isDM,
             userId: res.userId
           }
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthedUser(authedUserData))
           dispatch(setSignUpStatus(null, true))
           dispatch(handleInitialData(authedUserData, res.jwt))
@@ -26,7 +26,7 @@ export function handleSignUp(payload, defaultUserPic) {
         }
       })
       .catch(e => {
-        alert("Whoops something went wrong... \n\nPlease try again later")
+        alert('Whoops something went wrong... \n\nPlease try again later')
       })
   }
 }
@@ -36,7 +36,7 @@ export function handleFBLogin(accessToken) {
     return API.fbLogin(accessToken)
       .then(res => {
         if (res.status.code === 200) {
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
           dispatch(setAuthedUser(res))
           dispatch(handleInitialData(res, res.jwt))
@@ -45,7 +45,7 @@ export function handleFBLogin(accessToken) {
         }
       })
       .catch(err =>
-        alert("Oops something went wrong...\nPlease try again later")
+        alert('Oops something went wrong...\nPlease try again later')
       )
   }
 }
@@ -55,7 +55,7 @@ export function handleLogin({ email, password }) {
     return API.login({ email, password })
       .then(res => {
         if (res.status.code === 200) {
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
           dispatch(setAuthedUser(res))
           dispatch(handleInitialData(res, res.jwt))
@@ -65,7 +65,7 @@ export function handleLogin({ email, password }) {
         }
       })
       .catch(() =>
-        alert("Oops something went wrong...\nPlease try again later")
+        alert('Oops something went wrong...\nPlease try again later')
       )
   }
 }
