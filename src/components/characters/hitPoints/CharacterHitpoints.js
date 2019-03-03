@@ -4,14 +4,8 @@ import CharacterHpModifier from './CharacterHpModifier';
 import './Hitpoints.css'
 
 class CharacterHitPoints extends Component {
-    constructor(props) {
-        super(props)
-        const { hitpoints, maxhitpoints } = this.props.characterStats
-        this.state = {
-            updating: false,
-            hitpoints,
-            maxhitpoints
-        }
+    state = {
+        updating: false
     }
 
     cancelModal = () => {
@@ -26,18 +20,16 @@ class CharacterHitPoints extends Component {
         })
     }
 
-    handleSubmit = (fieldsToUpdate, {hitpoints, maxhitpoints}) => {
+    handleSubmit = (fieldsToUpdate) => {
         this.setState({
-            updating: false,
-            hitpoints,
-            maxhitpoints
+            updating: false
         })
         this.props.onSubmit(fieldsToUpdate)
     }
 
     render() {
         const { characterStats } = this.props
-        const { hitpoints, maxhitpoints } = this.state
+        const { hitpoints, maxhitpoints } = characterStats
         return (
             <React.Fragment>
                 {this.state.updating && (

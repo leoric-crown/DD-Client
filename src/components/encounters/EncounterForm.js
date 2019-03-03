@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { postEncounter, patchEncounter } from '../../redux/actions/encounters'
+import { validateAll } from 'indicative'
 import {
   MDBContainer,
   MDBRow,
@@ -10,13 +13,6 @@ import {
   MDBIcon,
   MDBAlert
 } from 'mdbreact'
-import { connect } from 'react-redux'
-import {
-  postEncounter,
-  patchEncounter,
-  clearActiveEncounter
-} from '../../redux/actions/encounters'
-import { validateAll } from 'indicative'
 
 const statusOptions = [
   <option key='Preparing' value='Preparing'>
@@ -95,9 +91,6 @@ class EncounterForm extends Component {
       )
     } else {
       this.handleCancel()
-    }
-    if (this.state.status !== 'Active' && updating.status === 'Active') {
-      this.props.dispatch(clearActiveEncounter())
     }
   }
 

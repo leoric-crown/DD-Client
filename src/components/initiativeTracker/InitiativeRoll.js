@@ -9,20 +9,21 @@ class InitiativeRoll extends Component {
         super(props)
         this.state = {
             updating: false,
-            initiative: this.props.initiative.initiative,
             newInitiative: this.props.initiative.initiative
         }
     }
 
     cancelModal = () => {
         this.setState({
-            updating: false
+            updating: false,
+            newInitiative: this.props.initiative.initiative
         })
     }
 
     openModal = () => {
         this.setState({
-            updating: true
+            updating: true,
+            newInitiative: this.props.initiative.initiative
         })
     }
 
@@ -37,9 +38,7 @@ class InitiativeRoll extends Component {
     handleSubmit = () => {
         const { newInitiative } = this.state
         this.setState({
-            updating: false,
-            initiative: newInitiative,
-            newInitiative
+            updating: false
         })
         if (newInitiative !== this.props.initiative.initiative) {
             this.props.onSubmit([
@@ -50,7 +49,8 @@ class InitiativeRoll extends Component {
 
     render() {
         const { characterStats } = this.props
-        const { updating, initiative, newInitiative } = this.state
+        const { updating, newInitiative } = this.state
+        const { initiative } = this.props.initiative
         return (
             <React.Fragment>
                 {updating && (

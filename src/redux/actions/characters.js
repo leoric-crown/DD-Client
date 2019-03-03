@@ -1,8 +1,14 @@
 import * as API from '../../utils/api'
+
 export const RECEIVE_CHARACTERS = 'RECEIVE_CHARACTERS'
 export const CREATE_CHARACTER = 'CREATE_CHARACTER'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
 export const REMOVE_CHARACTER = 'REMOVE_CHARACTER'
+export const characterWsActions = [
+  CREATE_CHARACTER,
+  UPDATE_CHARACTER,
+  REMOVE_CHARACTER
+]
 
 
 export function postCharacter(token, payload) {

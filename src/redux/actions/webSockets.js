@@ -1,13 +1,25 @@
-import { CREATE_CHARACTER, UPDATE_CHARACTER, REMOVE_CHARACTER} from './characters'
 import io from 'socket.io-client'
+import config from '../../config.json'
 import { appId } from '../../utils/id'
-const messageTypes = [CREATE_CHARACTER, UPDATE_CHARACTER, REMOVE_CHARACTER]
-const socket = io('ws://localhost:5000')
+import { characterWsActions } from './characters'
+import { encounterWsActions} from './encounters'
+import { initiativeWsActions} from './initiatives'
+const socketHost = config.WS
+
+const messageTypes = [
+    ...characterWsActions,
+    ...encounterWsActions,
+    ...initiativeWsActions
+]
+const socket = io(socketHost)
 
 export const webSocketInit = store => {
     messageTypes.forEach(type => {
         socket.on(type, payload => {
-            if(payload.appId !== appId) store.dispatch({ type, ...payload })
+            console.log('receiving: ', type, payload)
+            if(store.getState().User.authenticated && (!payload.appId || payload.appId !== appId)) {
+                store.dispatch({ type, ...payload })
+            }
         })
     })
 }

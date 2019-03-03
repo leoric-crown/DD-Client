@@ -6,8 +6,14 @@ export const UPDATE_INITIATIVE = 'UPDATE_INITIATIVE'
 export const DELETE_INITIATIVE = 'DELETE_INITIATIVE'
 export const REMOVE_INITIATIVE = 'REMOVE_INITIATIVE'
 export const SET_NEXT_TURN = 'SET_NEXT_TURN'
-export const SET_ENCOUNTER = 'SET_ENCOUNTER'
 export const UPDATE_INITIATIVE_STAMP = 'UPDATE_INITIATIVE_STAMP'
+export const initiativeWsActions = [
+    CREATE_INITIATIVE,
+    UPDATE_INITIATIVE,
+    REMOVE_INITIATIVE,
+    SET_NEXT_TURN,
+    UPDATE_INITIATIVE_STAMP
+]
 
 export function postInitiative(token, payload) {
     return (dispatch) => {
