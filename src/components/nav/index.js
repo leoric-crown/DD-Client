@@ -27,9 +27,7 @@ class Navbars extends React.Component {
 
   constructor(props) {
     super(props);
-    const selected = navRoutes.find(navRoute => {
-      return navRoute.route === this.props.location.pathname
-    })
+    const selected = this.props.location.pathname
     this.state = {
       open: false,
       isWideEnough: false,
@@ -66,7 +64,7 @@ class Navbars extends React.Component {
 
   handleNavClick = (newSelected) => {
     this.setState({
-      selected: newSelected.label,
+      selected: newSelected.route,
       open: false
     })
   }
@@ -74,7 +72,7 @@ class Navbars extends React.Component {
   getNavItems = () => {
     return navRoutes.map(item => {
       return (
-        <MDBNavItem key={item.label} active={item.label === this.state.selected}>
+        <MDBNavItem key={item.label} active={item.route === this.state.selected}>
           <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item)}>{item.label}</MDBNavLink>
         </MDBNavItem>
       )
@@ -92,6 +90,7 @@ class Navbars extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div>
         {this.props.User.authenticated && (
