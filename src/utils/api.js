@@ -1,6 +1,5 @@
 import config from '../config.json'
 import { appId } from '../utils/id'
-
 const api = config.API
 
 const headers = {

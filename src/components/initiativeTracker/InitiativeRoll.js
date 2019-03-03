@@ -38,9 +38,7 @@ class InitiativeRoll extends Component {
     handleSubmit = () => {
         const { newInitiative } = this.state
         this.setState({
-            updating: false,
-            // initiative: newInitiative,
-            // newInitiative
+            updating: false
         })
         if (newInitiative !== this.props.initiative.initiative) {
             this.props.onSubmit([

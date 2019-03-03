@@ -4,13 +4,14 @@ import { appId } from '../../utils/id'
 import { characterWsActions } from './characters'
 import { encounterWsActions} from './encounters'
 import { initiativeWsActions} from './initiatives'
+const socketHost = config.WS
 
 const messageTypes = [
     ...characterWsActions,
     ...encounterWsActions,
     ...initiativeWsActions
 ]
-const socket = io(config.WS)
+const socket = io(socketHost)
 
 export const webSocketInit = store => {
     messageTypes.forEach(type => {

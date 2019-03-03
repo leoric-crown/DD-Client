@@ -20,9 +20,10 @@ class TurnTracker extends Component {
             encounter = this.props.Encounters.list[0]
         }
 
-        const initiatives = this.props.Initiatives.list.filter(initiative => {
-            return initiative.encounter === encounter._id
-        }).sort((a, b) => b.initiative - a.initiative).sort((a, b) => a._id - b._id)
+        const initiatives = this.props.Initiatives.list
+            .filter(initiative => {
+                return initiative.encounter === encounter._id
+            }).sort((a, b) => b.initiative - a.initiative).sort((a, b) => a._id - b._id)
         const characters = this.props.Characters.list
             .filter(character => {
                 const ids = initiatives.map(i => {
@@ -63,10 +64,17 @@ class TurnTracker extends Component {
         if ((this.props.Characters.list !== prevProps.Characters.list ||
             this.props.Initiatives.list !== prevProps.Initiatives.list) &&
             this.state.encounter) {
-            const initiatives = this.props.Initiatives.list.filter(initiative => {
-                return initiative.encounter === this.state.encounter._id
-            }).sort((a, b) => b.initiative - a.initiative)
+            const initiatives = this.props.Initiatives.list
+                .filter(initiative => {
+                    return initiative.encounter === this.state.encounter._id
+                }).sort((a, b) => b.initiative - a.initiative)
             const characters = this.props.Characters.list
+                .filter(character => {
+                    const ids = initiatives.map(i => {
+                        return i.character._id
+                    })
+                    return ids.includes(character._id)
+                })
             const activeTurn = initiatives.find(i => i.active)
             this.setState({
                 initiatives,
