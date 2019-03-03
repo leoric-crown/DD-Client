@@ -1,24 +1,38 @@
 import * as API from '../../utils/api'
 
 export const RECEIVE_INITIATIVES = 'RECEIVE_INITIATIVES'
-export const CREATE_INITIATIVES = 'CREATE_INITIATIVES'
+export const CREATE_INITIATIVE = 'CREATE_INITIATIVE'
 export const UPDATE_INITIATIVE = 'UPDATE_INITIATIVE'
 export const DELETE_INITIATIVE = 'DELETE_INITIATIVE'
 export const REMOVE_INITIATIVE = 'REMOVE_INITIATIVE'
 export const SET_NEXT_TURN = 'SET_NEXT_TURN'
-export const SET_ENCOUNTER = 'SET_ENCOUNTER'
 export const UPDATE_INITIATIVE_STAMP = 'UPDATE_INITIATIVE_STAMP'
+export const initiativeWsActions = [
+    CREATE_INITIATIVE,
+    UPDATE_INITIATIVE,
+    REMOVE_INITIATIVE,
+    SET_NEXT_TURN,
+    UPDATE_INITIATIVE_STAMP
+]
 
-export function createInitiative(token, payload) {
+export function postInitiative(token, payload) {
     return (dispatch) => {
-        return API.createInitiative(token, payload)
+        return API.postInitiative(token, payload)
             .then(response => {
-                dispatch(createInitiatives(response.createdInitiatives))
+                dispatch(createInitiative(response.createdInitiatives))
             })
     }
 }
 
 export function patchInitiative(token, payload, url) {
+    return (dispatch) => {
+        return API.patchByUrl(token, payload, url)
+            .then(response => {
+                if(response.status.code === 200) {
+                    dispatch(updateInitiative(payload, response._id))
+                }
+            })
+    }
 
 }
 
@@ -50,6 +64,13 @@ export function removeInitiative(id) {
         id
     }
 }
+export function updateInitiative(payload, id) {
+    return {
+        type: UPDATE_INITIATIVE,
+        id,
+        payload
+    }
+}
 
 export function updateInitiativeStamp(payload, id) {
     return {
@@ -79,9 +100,9 @@ export function setNextTurn(prevActive, newActive, deleted) {
     }
 }
 
-export function createInitiatives(initiatives) {
+export function createInitiative(initiatives) {
     return {
-        type: CREATE_INITIATIVES,
+        type: CREATE_INITIATIVE,
         initiatives
     }
 }

@@ -1,7 +1,15 @@
-import { RECEIVE_INITIATIVES, CREATE_INITIATIVES, REMOVE_INITIATIVE, UPDATE_INITIATIVE_STAMP, SET_NEXT_TURN } from '../actions/initiatives'
+import {
+    RECEIVE_INITIATIVES,
+    CREATE_INITIATIVE,
+    REMOVE_INITIATIVE,
+    UPDATE_INITIATIVE_STAMP,
+    UPDATE_INITIATIVE,
+    SET_NEXT_TURN
+} from '../actions/initiatives'
 
 const defaultState = {
     list: null,
+    newTurn: null
 }
 
 export default function Encounters(state = defaultState, action) {
@@ -12,7 +20,7 @@ export default function Encounters(state = defaultState, action) {
                 list: action.initiatives,
                 count: action.count
             }
-        case CREATE_INITIATIVES:
+        case CREATE_INITIATIVE:
             return {
                 ...state,
                 list: [...state.list, ...action.initiatives]
@@ -37,14 +45,28 @@ export default function Encounters(state = defaultState, action) {
                     return initiative
                 })
             }
+        case UPDATE_INITIATIVE:
+            return {
+                ...state,
+                list: state.list.map(initiative => {
+                    if (initiative._id === action.id) {
+                        action.payload.forEach(update => {
+                            initiative[update.propName] = update.value
+                        })
+                        return initiative
+                    }
+                    return initiative
+                })
+            }
         case SET_NEXT_TURN:
-            if (action.prevActive && action.prevActive._id === action.newActive._id) return { ...state }
+            if (action.prevActive && action.prevActive === action.newActive._id) return { ...state }
             const list = [...state.list]
-            if(action.deleted) {
+            if (action.deleted) {
                 list.splice(list.map(i => i._id).indexOf(action.deleted), 1)
             }
             return {
                 ...state,
+                newTurn: action.newActive._id,
                 list: list.map(i => {
                     if (action.prevActive && i._id === action.prevActive._id) {
                         i.active = false

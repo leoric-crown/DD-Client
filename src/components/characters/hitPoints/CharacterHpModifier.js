@@ -1,41 +1,23 @@
 import React, { Component } from 'react'
-import Modal from '../../modal/Modal'
-import { MDBInput, MDBRow, MDBCol, MDBBtn } from 'mdbreact'
-import config from '../../../config.json'
+import { MDBContainer, MDBBtn, MDBInput, MDBCol } from 'mdbreact'
+import { FaPlus, FaMinus } from 'react-icons/fa'
 import CharacterHpBar from './CharacterHpBar'
-import { FaMinus, FaPlus } from 'react-icons/fa'
+import config from '../../../config.json'
+import MyMDBModal from '../../modal/MDBModal'
 
-class CharacterHitPoints extends Component {
+class CharacterHpModifier extends Component {
     constructor(props) {
         super(props)
-        const { characterStats } = this.props
-        const { hitpoints, maxhitpoints } = characterStats
+        const { hitpoints, maxhitpoints } = this.props
         this.state = {
-            updating: false,
             addHitpoints: 0,
             addMaxhitpoints: 0,
-            hpCurrent: {
-                hitpoints,
-                maxhitpoints
-            },
             hpNew: {
                 hitpoints,
                 maxhitpoints
             },
             editMaxHP: false
         }
-    }
-
-    cancelModal = () => {
-        this.setState({
-            updating: false
-        })
-    }
-
-    openModal = () => {
-        this.setState({
-            updating: true
-        })
     }
 
     handleChange = (type, value) => {
@@ -49,7 +31,7 @@ class CharacterHitPoints extends Component {
             case 'editMaxHP':
                 newState.hpNew = {
                     hitpoints: this.state.hpNew.hitpoints,
-                    maxhitpoints: this.state.hpCurrent.maxhitpoints
+                    maxhitpoints: this.props.maxhitpoints
                 }
                 break
             default:
@@ -94,7 +76,7 @@ class CharacterHitPoints extends Component {
                 hitpoints = 0
             }
             if (maxhitpoints < 0) {
-                maxhitpoints = this.state.hpCurrent.maxhitpoints
+                maxhitpoints = this.state.maxhitpoints
             }
 
             this.setState({
@@ -110,7 +92,12 @@ class CharacterHitPoints extends Component {
     }
 
     handleSubmit = () => {
-        const { hpCurrent, hpNew } = this.state
+        const { hpNew } = this.state
+        const { hitpoints, maxhitpoints } = this.props
+        const hpCurrent = {
+            hitpoints,
+            maxhitpoints
+        }
 
         const fieldsToUpdate = Object.entries(hpNew).filter(([propName, value]) => {
             return (hpCurrent[propName] !== value)
@@ -122,34 +109,41 @@ class CharacterHitPoints extends Component {
         })
         this.props.onSubmit(fieldsToUpdate.length > 0 ? fieldsToUpdate : false)
         this.setState({
-            updating: false,
             hpCurrent: hpNew,
             hpNew
         })
     }
 
+
+
     render() {
-        const { characterStats } = this.props
-        const { hpCurrent, hpNew, addHitpoints, addMaxhitpoints } = this.state
+        const { characterStats, hitpoints, maxhitpoints } = this.props
+        const { hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (
-            <React.Fragment>
-                {this.state.updating && (
-                    <Modal
-                        title="Modify Character HP"
-                        onCancel={this.cancelModal}
-                        onConfirm={this.handleSubmit}
-                        canCancel
-                        canConfirm
-                    >
-                        <MDBCol>
-                            <img className="character-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
+            <MyMDBModal
+                toggle={this.props.onCancel}
+                isOpen={true}
+                canConfirm
+                onConfirm={this.handleSubmit}
+                fullHeight
+                centered
+                position="right"
+                backdrop={false}
+                labels={{
+                    header: 'Hitpoint Modifier',
+                    confirm: 'Save Changes'
+                }}
+            >
+                <MDBContainer className="d-flex justify-content-center">
+                    <MDBCol md="8">
+                        <div className="text-center">
                             <h2>{characterStats.name}</h2>
-                            {/* <h4 className="pad-hit-points">{hpCurrent.hitpoints} / {hpCurrent.maxhitpoints}</h4> */}
+                            <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                             <CharacterHpBar
-                                hitpoints={hpCurrent.hitpoints}
-                                maxhitpoints={hpCurrent.maxhitpoints}
+                                hitpoints={hitpoints}
+                                maxhitpoints={maxhitpoints}
                             />
-                            {(hpCurrent.hitpoints !== hpNew.hitpoints || hpCurrent.maxhitpoints !== hpNew.maxhitpoints) && (
+                            {(hitpoints !== hpNew.hitpoints || maxhitpoints !== hpNew.maxhitpoints) && (
                                 <div>
                                     <h3>New HP</h3>
                                     <CharacterHpBar
@@ -158,51 +152,45 @@ class CharacterHitPoints extends Component {
                                     />
                                 </div>
                             )}
-                            <MDBRow className="center-row-content">
-                                <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
+                            <div className="d-flex" style={{ alignItems: 'center' }}>
+                                <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
                                 <MDBInput
-                                    className="browser-default custom-select text-center"
+                                    className="text-center"
                                     label="Hitpoints"
                                     containerClass="mb-0"
                                     onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
                                     value={addHitpoints.toString()}
                                 />
-                                <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('hitpoints')} />
-                            </MDBRow>
-                            <MDBRow className="center-row-content">
-                                {this.state.editMaxHP && (
-                                    <React.Fragment>
-                                        <FaMinus className="character-hitpoints" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
-                                        <MDBInput
-                                            className="browser-default custom-select text-center"
-                                            label="Max Hitpoints"
-                                            containerClass="mb-0"
-                                            onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
-                                            value={addMaxhitpoints.toString()}
-                                        />
-                                        <FaPlus className="character-hitpoints" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
-                                    </React.Fragment>
-                                )}
-                            </MDBRow>
+                                <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('hitpoints')} />
+                            </div>
+                            {this.state.editMaxHP && (
+                                <div className="d-flex" style={{ alignItems: 'center' }}>
+                                    <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
+                                    <MDBInput
+                                        className="text-center"
+                                        label="Max Hitpoints"
+                                        containerClass="mb-0"
+                                        onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
+                                        value={addMaxhitpoints.toString()}
+                                    />
+                                    <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
+                                </div>
+                            )}
                             <MDBInput
                                 label="Max HP"
-                                className="mycheckbox"
                                 type="checkbox"
                                 id="checkbox"
                                 onChange={(e) => this.handleChange('editMaxHP', e.target.checked)}
                                 value={this.state.editMaxHP ? "true" : "false"}
                             />
                             <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>
-                        </MDBCol>
-                    </Modal>
-                )}
-                <CharacterHpBar
-                    hitpoints={hpCurrent.hitpoints}
-                    maxhitpoints={hpCurrent.maxhitpoints}
-                    onClick={this.openModal}
-                />
-            </React.Fragment>
+                        </div>
+                    </MDBCol>
+                </MDBContainer>
+            </MyMDBModal>
+
         )
     }
 }
-export default CharacterHitPoints
+
+export default CharacterHpModifier

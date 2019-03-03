@@ -17,13 +17,13 @@ const getProgressBarStyle = (percentage) => {
 
 const CharacterHpBar = props => {
     return (
-        <div className='hp-column' onClick={props.onClick}>
-            <div className='progress-bar-hitpoints'>
-                <FaHeartbeat className='progress-bar-heartbeat' /> {`${props.hitpoints} / ${props.maxhitpoints}`}
+        <div className='hp-bar' onClick={props.onClick}>
+            <div className='hp-bar-text'>
+                <FaHeartbeat className='hp-bar-hitpoints-icon' /> {`${props.hitpoints} / ${props.maxhitpoints}`}
             </div>
-            <div className="progress-bar-container">
-                <div className="progress-bar-background">
-                    <div style={getProgressBarStyle(100 * props.hitpoints / props.maxhitpoints)} className="progress-bar"></div>
+            <div className="hp-bar-background">
+                <div className="hp-bar-background-color">
+                    <div style={getProgressBarStyle(100 * props.hitpoints / props.maxhitpoints)} className="hp-bar-hitpoints"></div>
                 </div>
 
             </div>

@@ -1,4 +1,4 @@
-import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTERS, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER, CLEAR_ACTIVE_ENCOUNTER } from '../actions/encounters'
+import { RECEIVE_ENCOUNTERS, CREATE_ENCOUNTER, UPDATE_ENCOUNTER, REMOVE_ENCOUNTER, SET_ACTIVE_ENCOUNTER, CLEAR_ACTIVE_ENCOUNTER } from '../actions/encounters'
 
 const defaultState = {
   list: null,
@@ -17,7 +17,7 @@ export default function Encounters(state = defaultState, action) {
         list: action.encounters,
         active: active.length > 0 ? active.pop() : false
       }
-    case CREATE_ENCOUNTERS:
+    case CREATE_ENCOUNTER:
       return {
         ...state,
         list: [...state.list, action.encounter]
@@ -51,7 +51,7 @@ export default function Encounters(state = defaultState, action) {
             case action.active._id:
               encounter.status = 'Active'
               return encounter
-            case action.prevActive._id:
+            case action.prevActiveId:
               encounter.status = 'Concluded'
               return encounter
             default:
@@ -63,6 +63,15 @@ export default function Encounters(state = defaultState, action) {
     case CLEAR_ACTIVE_ENCOUNTER:
       return {
         ...state,
+        list: state.list.map(encounter => {
+          switch(encounter.status) {
+            case 'Active':
+              encounter.status = 'Concluded'
+              return encounter
+            default:
+              return encounter
+          }
+        }),
         active: false
       }
     default:
