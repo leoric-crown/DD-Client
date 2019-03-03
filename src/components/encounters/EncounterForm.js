@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { postEncounter, patchEncounter } from '../../redux/actions/encounters'
+import { validateAll } from 'indicative'
 import {
   MDBContainer,
   MDBRow,
@@ -10,13 +13,6 @@ import {
   MDBIcon,
   MDBAlert
 } from 'mdbreact'
-import { connect } from 'react-redux'
-import {
-  postEncounter,
-  patchEncounter,
-  clearActiveEncounter
-} from '../../redux/actions/encounters'
-import { validateAll } from 'indicative'
 
 const statusOptions = [
   <option key='Preparing' value='Preparing'>
@@ -126,7 +122,6 @@ class EncounterForm extends Component {
         this.props.toggleButtonNavigation('Submit_Encounter')
       })
       .catch(errors => {
-        console.log(errors)
         const formattedErrors = {}
         errors.forEach(error => (formattedErrors[error.field] = error.message))
         this.setState({

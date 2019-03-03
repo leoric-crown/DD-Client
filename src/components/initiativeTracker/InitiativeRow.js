@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import CharacterHitPoints from '../characters/hitPoints/CharacterHitpoints';
 import CharacterControl from '../characters/characterControl/CharacterControl'
 import InitiativeRoll from './InitiativeRoll'
@@ -9,17 +8,8 @@ import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiativ
 import { FaRegTrashAlt } from 'react-icons/fa'
 
 class InitiativeRow extends Component {
-    constructor(props) {
-        super(props)
-        const { character, initiative } = this.props
-        this.state = {
-            character,
-            initiative
-        }
-    }
-
     handleDelete(initiative) {
-        if (this.props.active) {
+        if (this.props.active && this.props.totalRows > 1) {
             this.props.dispatch(getNextTurn(localStorage.getItem('DNDTOKEN'),
                 initiative.encounter,
                 initiative._id,
@@ -31,7 +21,7 @@ class InitiativeRow extends Component {
 
     handleCharacterUpdate = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
-            const { character, initiative } = this.state
+            const { character, initiative } = this.props
             if (character.player) {
                 this.props.dispatch(
                     patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, character.request.url)
@@ -48,13 +38,13 @@ class InitiativeRow extends Component {
     handleReRollInitiative = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
             this.props.dispatch(
-                patchInitiative(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, this.state.initiative.request.url)
+                patchInitiative(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, this.props.initiative.request.url)
             )
         }
     }
 
     render() {
-        const { initiative, character } = this.state
+        const { initiative, character } = this.props
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
         const { name } = characterStats
         const style = {
@@ -96,7 +86,9 @@ class InitiativeRow extends Component {
                             />
                         </div>
                         <div className='initiative-row-actions'>
-                            <span title="Delete/Remove"><FaRegTrashAlt style={{ cursor: 'pointer' }} onClick={() => this.handleDelete(initiative)} /></span>
+                            <span title="Delete/Remove" onClick={() => this.handleDelete(initiative)}>
+                                <FaRegTrashAlt style={{ cursor: 'pointer' }} />
+                            </span>
                         </div>
                     </div>
                 )}
@@ -105,4 +97,4 @@ class InitiativeRow extends Component {
     }
 }
 
-export default connect()(InitiativeRow)
+export default InitiativeRow

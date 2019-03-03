@@ -74,13 +74,11 @@ const getCharacters = (token) => {
 // }
 
 export const postEncounter = (token, payload) => {
-  console.log(request('POST', JSON.stringify(payload), token))
   return fetch(`${api}/encounters`, request('POST', JSON.stringify(payload), token))
     .then(res => res.json())
 }
 
 export const patchByUrl = (token, payload, url) => {
-  console.log(payload)
   return fetch(url, request('PATCH', JSON.stringify(payload), token))
     .then(res => res.json())
 }

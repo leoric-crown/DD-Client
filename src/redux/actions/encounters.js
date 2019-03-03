@@ -1,4 +1,5 @@
 import * as API from '../../utils/api'
+
 export const RECEIVE_ENCOUNTERS = 'RECEIVE_ENCOUNTERS'
 export const CREATE_ENCOUNTER = 'CREATE_ENCOUNTER'
 export const UPDATE_ENCOUNTER = 'UPDATE_ENCOUNTER'
@@ -6,6 +7,13 @@ export const DELETE_ENCOUNTER = 'DELETE_ENCOUNTER'
 export const REMOVE_ENCOUNTER = 'REMOVE_ENCOUNTER'
 export const SET_ACTIVE_ENCOUNTER = 'SET_ACTIVE_ENCOUNTER'
 export const CLEAR_ACTIVE_ENCOUNTER = 'CLEAR_ACTIVE_ENCOUNTER'
+export const encounterWsActions = [
+    CREATE_ENCOUNTER,
+    UPDATE_ENCOUNTER,
+    REMOVE_ENCOUNTER,
+    SET_ACTIVE_ENCOUNTER,
+    CLEAR_ACTIVE_ENCOUNTER
+]
 
 
 export function postEncounter(token, payload) {
@@ -41,9 +49,9 @@ export function deleteEncounter(token, id) {
 
 export function changeActiveEncounter(token, id, prevActiveId) {
     return (dispatch) => {
-        return API.changeActiveEncounter(token, {id, prevActiveId})
+        return API.changeActiveEncounter(token, { id, prevActiveId })
             .then(response => {
-                if(response.status.code === 200) {
+                if (response.status.code === 200) {
                     dispatch(setActiveEncounter(response.activeEncounter, prevActiveId))
                 }
             })

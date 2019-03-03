@@ -107,7 +107,7 @@ class CharacterHpModifier extends Component {
                 value
             }
         })
-        this.props.onSubmit(fieldsToUpdate.length > 0 ? fieldsToUpdate : false, hpNew)
+        this.props.onSubmit(fieldsToUpdate.length > 0 ? fieldsToUpdate : false)
         this.setState({
             hpCurrent: hpNew,
             hpNew
