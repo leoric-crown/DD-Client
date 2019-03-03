@@ -1,9 +1,21 @@
 import React from 'react';
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink } from 'mdbreact'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../redux/actions/authedUser'
 import { withRouter } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBNavItem,
+  MDBNavLink,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem
+} from 'mdbreact'
 
 const navRoutes = [
   { label: 'Characters', route: '/characters' },
@@ -15,21 +27,19 @@ class Navbars extends React.Component {
 
   constructor(props) {
     super(props);
-    // let selected = navRoutes[0].label
-    // navRoutes.forEach(navRoute => {
-    //   if (this.props.location.pathname === navRoute.route) {
-    //     selected = navRoute.label
-    //   }
-    // })  
     const selected = navRoutes.find(navRoute => {
       return navRoute.route === this.props.location.pathname
-    }).label
+    })
     this.state = {
       open: false,
       isWideEnough: false,
-      selected
+      selected: selected || '/'
     };
     this.onClick = this.onClick.bind(this);
+    this.userNavRoutes = [
+      { label: 'My Account', route: '/user', handler: this.handleNavClick },
+      { label: 'Logout', route: '/', handler: this.handleLogout}
+    ]
   }
 
   onClick() {
@@ -38,11 +48,12 @@ class Navbars extends React.Component {
     });
   }
 
-  handleLogout = () => {
+  handleLogout = (item) => {
+    console.log()
     localStorage.removeItem('DNDTOKEN')
     this.props.dispatch(logoutUser('You have logged out'))
     this.props.history.push({
-      pathname: '/'
+      pathname: item.route
     })
   }
 
@@ -55,7 +66,7 @@ class Navbars extends React.Component {
 
   handleNavClick = (newSelected) => {
     this.setState({
-      selected: newSelected,
+      selected: newSelected.label,
       open: false
     })
   }
@@ -64,8 +75,18 @@ class Navbars extends React.Component {
     return navRoutes.map(item => {
       return (
         <MDBNavItem key={item.label} active={item.label === this.state.selected}>
-          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item.label)}>{item.label}</MDBNavLink>
+          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item)}>{item.label}</MDBNavLink>
         </MDBNavItem>
+      )
+    })
+  }
+
+  getUserNavItems = () => {
+    return this.userNavRoutes.map(item => {
+      return (
+        <MDBDropdownItem key={item.label}>
+          <MDBNavLink to={item.route} onClick={() => item.handler(item)}><span className="black-text">{item.label}</span></MDBNavLink>
+        </MDBDropdownItem>
       )
     })
   }
@@ -86,22 +107,19 @@ class Navbars extends React.Component {
                     {this.getNavItems()}
                   </MDBNavbarNav>
                   <MDBNavbarNav right>
-                    <NavItem>
-                      <NavLink className="" to="#">Welcome {this.props.User.email}</NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <Dropdown>
-                        <DropdownToggle className="dopdown-toggle" nav>
+                    <MDBNavItem>
+                      <MDBNavLink className="" to="#">Welcome {this.props.User.email}</MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBDropdown>
+                        <MDBDropdownToggle nav>
                           <img src={this.props.User.photoURL} className="rounded-circle z-depth-0" style={{ height: "35px", padding: 0 }} alt="" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-default" right>
-                          <DropdownItem>My account</DropdownItem>
-                          <DropdownItem onClick={this.handleLogout}>
-                            Logout
-                        </DropdownItem>
-                        </DropdownMenu>
-                      </Dropdown>
-                    </NavItem>
+                        </MDBDropdownToggle>
+                        <MDBDropdownMenu className="dropdown-default" right>
+                          {this.getUserNavItems()}
+                        </MDBDropdownMenu>
+                      </MDBDropdown>
+                    </MDBNavItem>
                   </MDBNavbarNav>
                 </MDBCollapse>
               </MDBNavbar>
