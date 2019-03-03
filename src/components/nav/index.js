@@ -31,12 +31,12 @@ class Navbars extends React.Component {
     this.state = {
       open: false,
       isWideEnough: false,
-      selected: selected || '/'
+      selected
     };
     this.onClick = this.onClick.bind(this);
     this.userNavRoutes = [
-      { label: 'My Account', route: '/user', handler: this.handleNavClick },
-      { label: 'Logout', route: '/', handler: this.handleLogout}
+      { label: 'My Account', route: '/user' },
+      { label: 'Logout', route: '/', handler: this.handleLogout }
     ]
   }
 
@@ -73,7 +73,9 @@ class Navbars extends React.Component {
     return navRoutes.map(item => {
       return (
         <MDBNavItem key={item.label} active={item.route === this.state.selected}>
-          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item)}>{item.label}</MDBNavLink>
+          <MDBNavLink to={item.route} onClick={() => this.handleNavClick(item)}>
+            {item.label}
+          </MDBNavLink>
         </MDBNavItem>
       )
     })
@@ -83,7 +85,11 @@ class Navbars extends React.Component {
     return this.userNavRoutes.map(item => {
       return (
         <MDBDropdownItem key={item.label}>
-          <MDBNavLink to={item.route} onClick={() => item.handler(item)}><span className="black-text">{item.label}</span></MDBNavLink>
+          <MDBNavLink to={item.route} onClick={() => item.handler ? this.handleNavClick(item) : item.handler(item)}>
+            <span className="black-text">
+              {item.label}
+            </span>
+          </MDBNavLink>
         </MDBDropdownItem>
       )
     })
