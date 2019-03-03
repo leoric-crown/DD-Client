@@ -6,23 +6,31 @@ import { withRouter } from 'react-router-dom'
 import onClickOutside from 'react-onclickoutside'
 
 const navRoutes = [
-  { label: 'Characters', route: '/dashboard/characters' },
-  { label: 'Encounters', route: '/dashboard/encounters' },
-  { label: 'Initiative Tracker', route: '/dashboard/initiativeTracker' }
+  { label: 'Characters', route: '/characters' },
+  { label: 'Encounters', route: '/encounters' },
+  { label: 'Initiative Tracker', route: '/initiativeTracker' }
 ]
 
 class Navbars extends React.Component {
 
   constructor(props) {
     super(props);
+    // let selected = navRoutes[0].label
+    // navRoutes.forEach(navRoute => {
+    //   if (this.props.location.pathname === navRoute.route) {
+    //     selected = navRoute.label
+    //   }
+    // })  
+    const selected = navRoutes.find(navRoute => {
+      return navRoute.route === this.props.location.pathname
+    }).label
     this.state = {
       open: false,
       isWideEnough: false,
-      selected: navRoutes[0].label
+      selected
     };
     this.onClick = this.onClick.bind(this);
   }
-
 
   onClick() {
     this.setState({
@@ -39,7 +47,7 @@ class Navbars extends React.Component {
   }
 
   handleClickOutside = () => {
-    if(this.state.open) 
+    if (this.state.open)
       this.setState({
         open: false
       })

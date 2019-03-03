@@ -17,14 +17,14 @@ const verifyToken = (token) => {
   })
 }
 
-export function checkToken(token) {
+export function checkToken(token, pathname) {
   verifyToken(token)
     .then((authedUser) => {
       if (authedUser) {
         this.props.dispatch(setAuthedUser(authedUser))
         this.props.dispatch(handleInitialData(authedUser, token))
         this.props.history.push({
-          pathname: '/dashboard/characters'
+          pathname: pathname ? pathname : '/characters'
         })
       } else {
         localStorage.removeItem('DNDTOKEN')

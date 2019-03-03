@@ -37,7 +37,7 @@ class Characters extends React.Component {
       if (!this.props.User.authenticated) {
          const token = localStorage.getItem('DNDTOKEN')
          if (token) {
-            checkToken.bind(this)(token)
+            checkToken.bind(this)(token, '/characters')
          } else {
             this.props.history.push({
                pathname: '/'

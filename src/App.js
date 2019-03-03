@@ -22,9 +22,9 @@ class App extends Component {
           <Route path='/' exact component={Login} />
           <Route path='/signup' exact component={Signup} />
           <Route exact path='/dashboard' component={Characters} />
-          <Route path='/dashboard/characters' component={Characters} />
-          <Route exact path='/dashboard/encounters' component={Encounters} />
-          <Route exact path='/dashboard/initiativeTracker' component={InitiativeTracker} />
+          <Route path='/characters' component={Characters} />
+          <Route exact path='/encounters' component={Encounters} />
+          <Route exact path='/initiativeTracker' component={InitiativeTracker} />
         </Switch>
       </div>
     );

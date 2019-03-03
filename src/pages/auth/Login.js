@@ -81,7 +81,7 @@ class Login extends React.Component {
           .then(() => {
             if (this.props.Errors.authSuccess) {
               this.props.history.push({
-                pathname: '/dashboard/characters'
+                pathname: '/characters'
               });
             }
           });
@@ -110,7 +110,7 @@ class Login extends React.Component {
       .then(() => {
         if (this.props.Errors.authSuccess) {
           this.props.history.push({
-            pathname: '/dashboard/characters'
+            pathname: '/characters'
           })
         }
       })

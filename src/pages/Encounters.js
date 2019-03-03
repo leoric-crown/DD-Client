@@ -30,7 +30,7 @@ class Encounters extends React.Component {
     if (!this.props.User.authenticated) {
       const token = localStorage.getItem('DNDTOKEN')
       if (token) {
-        checkToken.bind(this)(token)
+        checkToken.bind(this)(token, '/encounters')
       } else {
         this.props.history.push({
           pathname: '/'

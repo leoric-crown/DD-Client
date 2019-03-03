@@ -30,7 +30,7 @@ class InitiativeTracker extends Component {
         if (!this.props.User.authenticated) {
             const token = localStorage.getItem('DNDTOKEN')
             if (token) {
-                checkToken.bind(this)(token)
+                checkToken.bind(this)(token, '/initiativeTracker')
             } else {
                 this.props.history.push({
                     pathname: '/'
@@ -46,7 +46,7 @@ class InitiativeTracker extends Component {
         return (
             <div>
                 {
-                    this.props.User.authenticated && this.props.Encounters.list && (
+                    this.props.User.authenticated && this.props.Encounters.list && this.props.Initiatives.list && (
                         <React.Fragment>
                             <div className="secondary-nav">
                                 <MDBRow>

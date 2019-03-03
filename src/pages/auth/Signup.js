@@ -70,7 +70,7 @@ class Signup extends React.Component {
           .then(() => {
             if (this.props.Errors.signUpSuccess) {
               this.props.history.push({
-                pathname: '/dashboard/characters'
+                pathname: '/characters'
               })
             }
           })
