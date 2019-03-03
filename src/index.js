@@ -15,6 +15,7 @@ const store = createStore(
   reducer, 
   composeEnhancers(middleware)
 )
+
 webSocketInit(store)
 
 ReactDOM.render(
