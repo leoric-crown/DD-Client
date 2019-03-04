@@ -13,6 +13,9 @@ class MyEncounters extends Component {
   }
 
   handleDelete = () => {
+    /* TODO: (DM ONLY) Warn the DM if there are any Initiatives in that Encounter
+              if DM chooses to delete anyway, get rid of all Initiative documents related to Encounter
+    */
     this.props.dispatch(deleteEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id))
   }
 
@@ -57,7 +60,7 @@ class MyEncounters extends Component {
               </div>
             ) : (
                 <div className="card-actions">
-                  <FaStar className="card-star"/>
+                  <FaStar className="card-star" />
                 </div>
               )
 
