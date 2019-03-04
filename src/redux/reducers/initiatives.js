@@ -12,7 +12,7 @@ const defaultState = {
     newTurn: null
 }
 
-export default function Encounters(state = defaultState, action) {
+export default function Initiatives(state = defaultState, action) {
     switch (action.type) {
         case RECEIVE_INITIATIVES:
             return {
