@@ -1,7 +1,8 @@
 import React from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
+import { MDBContainer } from 'mdbreact'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import UserForm from '../components/user/UserForm'
 import '../css/Cards.css'
 
 class UserControl extends React.Component {
@@ -25,7 +26,7 @@ class UserControl extends React.Component {
    render() {
       return (
          <div>
-            {true && (
+            {this.props.User.authenticated && (
                <React.Fragment>
                   <MDBContainer className="page-with-secondary-nav">
                      <div className="page-heading">
@@ -33,7 +34,10 @@ class UserControl extends React.Component {
                            <strong>My User Account</strong>
                         </h1>
                      </div>
-                     <div> User Form/Control goes here</div>
+                     <UserForm
+                        user={this.props.User}
+                        dispatch={this.props.dispatch}
+                     />
                   </MDBContainer>
                </React.Fragment>
             )}

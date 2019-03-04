@@ -20,8 +20,10 @@ const defaultUserPic =
 
 class Signup extends React.Component {
   state = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    password: '',
     serverError: false,
     serverErrorMessage: '',
     errors: {}
@@ -48,7 +50,8 @@ class Signup extends React.Component {
     const data = this.state
 
     const rules = {
-      name: 'required|string',
+      firstName: 'required|string',
+      lastName: 'string',
       email: 'required|email',
       password: 'required|string|min:3|confirmed'
     }
@@ -62,10 +65,7 @@ class Signup extends React.Component {
 
     validateAll(data, rules, messages)
       .then(() => {
-        const payload = {
-          email: this.state.email,
-          password: this.state.password
-        }
+        const { errors, serverError, serverErrorMessage, ...payload } = this.state
         this.props.dispatch(handleSignUp(payload, defaultUserPic))
           .then(() => {
             if (this.props.Errors.signUpSuccess) {
@@ -112,18 +112,33 @@ class Signup extends React.Component {
                   </MDBAlert>
                 )}
                 <MDBInput
-                  label='Your name'
+                  label='(First) Name'
                   icon='user'
                   color='black'
                   group
                   containerClass='mb-0'
                   required={true}
-                  getValue={e => this.handleInputChange('name', e)}
+                  getValue={e => this.handleInputChange('firstName', e)}
                 />
-                {this.state.errors.name && (
+                {this.state.errors.firstName && (
                   <MDBAlert color='danger'>
                     <MDBIcon icon='warning' />
-                    &nbsp;&nbsp;&nbsp;{this.state.errors.name}
+                    &nbsp;&nbsp;&nbsp;{this.state.errors.firstName}
+                  </MDBAlert>
+                )}
+                <MDBInput
+                  label='(Last) Name (optional)'
+                  icon='user'
+                  color='black'
+                  group
+                  containerClass='mb-0'
+                  required={false}
+                  getValue={e => this.handleInputChange('lastName', e)}
+                />
+                {this.state.errors.lastName && (
+                  <MDBAlert color='danger'>
+                    <MDBIcon icon='warning' />
+                    &nbsp;&nbsp;&nbsp;{this.state.errors.lastName}
                   </MDBAlert>
                 )}
                 <MDBInput

@@ -6,8 +6,10 @@ const verifyToken = (token) => {
   return new Promise((resolve, reject) => {
     API.verifyToken(localStorage.getItem('DNDTOKEN'))
       .then((res) => {
+
         if (res.status) {
-          resolve(res.user)
+          const { __v, status, ...user } = res
+          resolve(user)
         } else {
           reject()
         }
@@ -19,10 +21,10 @@ const verifyToken = (token) => {
 
 export function checkToken(token, pathname) {
   verifyToken(token)
-    .then((authedUser) => {
-      if (authedUser) {
-        this.props.dispatch(setAuthedUser(authedUser))
-        this.props.dispatch(handleInitialData(authedUser, token))
+    .then((user) => {
+      if (user) {
+        this.props.dispatch(setAuthedUser(user))
+        this.props.dispatch(handleInitialData(user, token))
         this.props.history.push({
           pathname: pathname ? pathname : '/characters'
         })

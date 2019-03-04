@@ -91,7 +91,7 @@ class CharacterForm extends Component {
                armorclass: this.state.armorclass,
                player: this.state.player,
                maxhitpoints: this.state.maxhitpoints,
-               user: this.props.User.userId,
+               user: this.props.User._id,
                characterPic: this.state.characterPic
                   ? this.state.characterPic
                   : picUrl

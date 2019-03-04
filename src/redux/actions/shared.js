@@ -11,16 +11,11 @@ export function handleSignUp(payload, defaultUserPic) {
       .then(res => {
         // We set errors to empty object to clear previous errors
         if (res.status.code === 200) {
-          const authedUserData = {
-            email: res.email,
-            photoURL: !res.photoURL ? defaultUserPic : res.photoURL,
-            isDM: res.isDM,
-            userId: res.userId
-          }
+          const { jwt, status, ...authedUser } = res
           localStorage.setItem('DNDTOKEN', res.jwt)
-          dispatch(setAuthedUser(authedUserData))
+          dispatch(setAuthedUser(authedUser))
           dispatch(setSignUpStatus(null, true))
-          dispatch(handleInitialData(authedUserData, res.jwt))
+          dispatch(handleInitialData(authedUser, res.jwt))
         } else {
           dispatch(setSignUpStatus(res.status.message, false))
         }
@@ -36,16 +31,18 @@ export function handleFBLogin(accessToken) {
     return API.fbLogin(accessToken)
       .then(res => {
         if (res.status.code === 200) {
+          const { __v, jwt, status, id, ...authedUser } = res
           localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
-          dispatch(setAuthedUser(res))
+          dispatch(setAuthedUser(authedUser))
           dispatch(handleInitialData(res, res.jwt))
         } else {
           dispatch(setAuthStatus(res.status.message, false))
         }
       })
-      .catch(err =>
-        alert('Oops something went wrong...\nPlease try again later')
+      .catch(err => {
+          alert('Oops something went wrong...\nPlease try again later')
+        }
       )
   }
 }
@@ -55,9 +52,10 @@ export function handleLogin({ email, password }) {
     return API.login({ email, password })
       .then(res => {
         if (res.status.code === 200) {
+          const { jwt, status, ...authedUser } = res
           localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
-          dispatch(setAuthedUser(res))
+          dispatch(setAuthedUser(authedUser))
           dispatch(handleInitialData(res, res.jwt))
         } else {
           // Authentication failed

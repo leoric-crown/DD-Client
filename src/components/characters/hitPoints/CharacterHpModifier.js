@@ -181,7 +181,7 @@ class CharacterHpModifier extends Component {
                                 type="checkbox"
                                 id="checkbox"
                                 onChange={(e) => this.handleChange('editMaxHP', e.target.checked)}
-                                value={this.state.editMaxHP ? "true" : "false"}
+                                checked={this.state.editMaxHP}
                             />
                             <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>
                         </div>

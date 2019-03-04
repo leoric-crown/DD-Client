@@ -78,6 +78,7 @@ export const postEncounter = (token, payload) => {
 }
 
 export const patchByUrl = (token, payload, url) => {
+  console.log('patchbyurl', payload)
   return fetch(url, request('PATCH', JSON.stringify(payload), token))
     .then(res => res.json())
 }

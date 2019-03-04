@@ -47,11 +47,10 @@ class Navbars extends React.Component {
   }
 
   handleLogout = (item) => {
-    console.log()
     localStorage.removeItem('DNDTOKEN')
     this.props.dispatch(logoutUser('You have logged out'))
     this.props.history.push({
-      pathname: item.route
+      pathname: '/'
     })
   }
 
@@ -85,7 +84,7 @@ class Navbars extends React.Component {
     return this.userNavRoutes.map(item => {
       return (
         <MDBDropdownItem key={item.label}>
-          <MDBNavLink to={item.route} onClick={() => item.handler ? this.handleNavClick(item) : item.handler(item)}>
+          <MDBNavLink to={item.route} onClick={() => item.handler ? item.handler(item) : this.handleNavClick(item)}>
             <span className="black-text">
               {item.label}
             </span>
@@ -96,7 +95,6 @@ class Navbars extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div>
         {this.props.User.authenticated && (

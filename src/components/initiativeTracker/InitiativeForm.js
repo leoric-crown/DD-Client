@@ -163,7 +163,7 @@ class InitiativeForm extends Component {
 
    render() {
       return (
-         <MDBContainer style={this.state.style}>
+         <MDBContainer>
             <MDBRow className="d-flex justify-content-center">
                <MDBCol md="8">
                   <MDBIcon icon="khanda" />
@@ -203,7 +203,7 @@ class InitiativeForm extends Component {
                            type="checkbox"
                            id="checkbox"
                            onChange={(e) => this.handleChange('multiple', e.target.checked)}
-                           value={this.state.multiple ? "true" : "false"}
+                           checked={this.state.multiple}
                         />
                      ) : <div><br /></div>
                   }
