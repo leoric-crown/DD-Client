@@ -20,9 +20,9 @@ class App extends Component {
           <Nav />
         </Switch>
         <Switch>
-          <Route path='/' exact component={Login} />
-          <Route path='/signup' exact component={Signup} />
-          <Route path='/characters' component={Characters} />
+          <Route exact path='/' component={Login} />
+          <Route exact path='/signup' component={Signup} />
+          <Route exact path='/characters' component={Characters} />
           <Route exact path='/encounters' component={Encounters} />
           <Route exact path='/initiativeTracker' component={InitiativeTracker} />
           <Route exact path='/user' component={UserControl} />

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact'
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBAlert, MDBIcon } from 'mdbreact'
 import { patchUser } from '../../redux/actions/authedUser';
 import { withRouter } from 'react-router-dom'
+import { validateAll } from 'indicative'
 
 class UserForm extends Component {
    constructor(props) {
@@ -12,7 +13,8 @@ class UserForm extends Component {
             firstName,
             lastName,
             isDM
-         }
+         },
+         errors: {}
       }
    }
 
@@ -27,7 +29,6 @@ class UserForm extends Component {
    }
 
    handleInputChange = (type, value) => {
-      console.log('handleinputchange', type, value)
       const { updating } = this.state
       updating[type] = value
       this.setState({
@@ -39,46 +40,53 @@ class UserForm extends Component {
       const { updating } = this.state
       const { user } = this.props
 
-      const fieldsToUpdate = Object.entries(updating).filter(([propName, value]) => {
-         console.log('propName: '+propName, user[propName], value)
-         return (user[propName] !== value)
-      }).map(([propName, value]) => {
-         return {
-            propName,
-            value
-         }
-      })
-      if (fieldsToUpdate.length > 0) {
-         this.props.dispatch(
-            patchUser(
-               localStorage.getItem('DNDTOKEN'),
-               fieldsToUpdate,
-               this.props.user.request.url
-            )
-         )
-         this.props.history.push({
-            pathname: '/'
-         })
-      } else {
-         const { firstName, lastName, isDM } = this.props.user
-         this.setState({
-            updating: {
-               firstName,
-               lastName,
-               isDM
+      const rules = {
+         firstName: 'required|string'
+      }
+      const messages = {
+         'firstName.required': 'The First Name field is required'
+      }
+
+      validateAll(updating, rules, messages)
+         .then(() => {
+            this.setState({
+               errors: {}
+            })
+
+            const fieldsToUpdate = Object.entries(updating).filter(([propName, value]) => {
+               return (user[propName] !== value)
+            }).map(([propName, value]) => {
+               return {
+                  propName,
+                  value
+               }
+            })
+            if (fieldsToUpdate.length > 0) {
+               this.props.dispatch(
+                  patchUser(
+                     localStorage.getItem('DNDTOKEN'),
+                     fieldsToUpdate,
+                     this.props.user.request.url
+                  )
+               )
+               this.props.history.goBack()
             }
          })
-      }
+         .catch(errors => {
+            const formattedErrors = {}
+            errors.forEach(error => (formattedErrors[error.field] = error.message))
+            this.setState({
+               errors: formattedErrors
+            })
+            return
+         })
    }
 
    handleClose = () => {
-      this.props.history.push({
-         pathname: '/'
-      })
+      this.props.history.goBack()
    }
 
    render() {
-      console.log(this.state, this.props)
       const { user } = this.props
       return (
          <MDBContainer>
@@ -96,6 +104,12 @@ class UserForm extends Component {
                      onKeyDown={this.handleKeyDown}
                      value={this.state.updating.firstName}
                   />
+                  {this.state.errors.firstName && (
+                     <MDBAlert color='danger'>
+                        <MDBIcon icon='warning' />
+                        &nbsp;&nbsp;&nbsp;{this.state.errors.firstName}
+                     </MDBAlert>
+                  )}
                   <MDBInput
                      label="Last Name"
                      required={true}
@@ -121,7 +135,7 @@ class UserForm extends Component {
                      >
                         Save Changes
                      </MDBBtn>
-                     <br/>
+                     <br />
                      <MDBBtn
                         type='button'
                         rounded

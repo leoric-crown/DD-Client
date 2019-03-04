@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { FaDiceD20 } from 'react-icons/fa'
-import { MDBContainer, MDBCol, MDBInput } from 'mdbreact'
+import { MDBContainer, MDBCol, MDBInput, MDBAlert, MDBIcon } from 'mdbreact'
 import config from '../../config.json'
 import MyMDBModal from '../modal/MDBModal';
+import { validateAll } from 'indicative'
 
 class InitiativeRoll extends Component {
     constructor(props) {
         super(props)
         this.state = {
             updating: false,
-            newInitiative: this.props.initiative.initiative
+            newInitiative: this.props.initiative.initiative,
+            errors: {}
         }
     }
 
@@ -28,8 +30,6 @@ class InitiativeRoll extends Component {
     }
 
     handleChange = (newInitiative) => {
-        newInitiative = parseInt(newInitiative)
-        if (isNaN(newInitiative)) newInitiative = this.props.initiative.initiative
         this.setState({
             newInitiative
         })
@@ -37,14 +37,34 @@ class InitiativeRoll extends Component {
 
     handleSubmit = () => {
         const { newInitiative } = this.state
-        this.setState({
-            updating: false
-        })
-        if (newInitiative !== this.props.initiative.initiative) {
-            this.props.onSubmit([
-                { propName: 'initiative', value: newInitiative }
-            ])
-        } else this.props.onSubmit(false)
+
+        const rules = {
+            newInitiative: 'number'
+        }
+        const messages = {
+            number: 'Please input a number value'
+        }
+
+        validateAll({ newInitiative }, rules, messages)
+            .then(() => {
+                this.setState({
+                    updating: false
+                })
+                if (newInitiative !== this.props.initiative.initiative) {
+                    this.props.onSubmit([
+                        { propName: 'initiative', value: newInitiative }
+                    ])
+                } else this.props.onSubmit(false)
+            })
+            .catch(errors => {
+                const formattedErrors = {}
+                errors.forEach(error => (formattedErrors[error.field] = error.message))
+                this.setState({
+                    newInitiative: this.props.initiative.initiative,
+                    errors: formattedErrors
+                })
+                return
+            })
     }
 
     render() {
@@ -93,6 +113,12 @@ class InitiativeRoll extends Component {
                                         onChange={e => this.handleChange(e.target.value)}
                                         value={newInitiative.toString()}
                                     />
+                                    {this.state.errors.newInitiative && (
+                                        <MDBAlert color='danger'>
+                                            <MDBIcon icon='warning' />
+                                            &nbsp;&nbsp;&nbsp;{this.state.errors.newInitiative}
+                                        </MDBAlert>
+                                    )}
                                 </div>
                             </MDBCol>
                         </MDBContainer>
@@ -100,7 +126,7 @@ class InitiativeRoll extends Component {
                 )}
                 <div title="Initiative Roll" className="initiative-roll-display" onClick={this.openModal}>
                     <FaDiceD20 color="darkred" size="2rem" />
-                    <div style = {{paddingTop: '0.3rem'}}>{initiative}</div>
+                    <div style={{ paddingTop: '0.3rem' }}>{initiative}</div>
                 </div>
             </React.Fragment>
         )

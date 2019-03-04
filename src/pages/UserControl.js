@@ -6,10 +6,6 @@ import UserForm from '../components/user/UserForm'
 import '../css/Cards.css'
 
 class UserControl extends React.Component {
-   state = {
-
-   }
-
    componentWillMount() {
       if (!this.props.User.authenticated) {
          const token = localStorage.getItem('DNDTOKEN')

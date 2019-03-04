@@ -16,7 +16,6 @@ const socket = io(socketHost)
 export const webSocketInit = store => {
     messageTypes.forEach(type => {
         socket.on(type, payload => {
-            console.log('receiving: ', type, payload)
             if(store.getState().User.authenticated && (!payload.appId || payload.appId !== appId)) {
                 store.dispatch({ type, ...payload })
             }
