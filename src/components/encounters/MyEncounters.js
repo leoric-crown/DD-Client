@@ -24,7 +24,7 @@ class MyEncounters extends Component {
   }
 
   render() {
-    const { encounter } = this.props
+    const { encounter, canEdit } = this.props
     return (
       <MDBContainer className="">
         <MDBCard className="card-container">
@@ -33,10 +33,12 @@ class MyEncounters extends Component {
               <strong className="card-title">
                 {encounter.name}
               </strong>
-              <div className='card-actions'>
-                <MDBIcon className="card-actions-item" onClick={() => this.props.onEdit(encounter)} icon="pencil" size="lg" />
-                <MDBIcon className="card-actions-item" onClick={this.handleDelete} icon="trash" size="lg" />
-              </div>
+              {canEdit &&
+                <div className='card-actions'>
+                  <MDBIcon className="card-actions-item" onClick={() => this.props.onEdit(encounter)} icon="pencil" size="lg" />
+                  <MDBIcon className="card-actions-item" onClick={this.handleDelete} icon="trash" size="lg" />
+                </div>
+              }
             </div>
             <div className="text-center mb-3">
               <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/3f8958b2-0d97-487e-86b8-07281543baf7_scaled.jpg`} />
@@ -45,7 +47,7 @@ class MyEncounters extends Component {
               <h5><MDBIcon icon="users" size="lg" className="pr-3" /><strong className="card-item-fields-label">&nbsp;Name:</strong> {encounter.name}</h5>
               <h5><MDBIcon icon="ravelry" size="lg" className="pr-3" /><strong className="card-item-fields-label">Status:</strong> {encounter.status}</h5>
             </div>
-            {encounter.status !== 'Active' ? (
+            {canEdit && (encounter.status !== 'Active' ? (
               <div className="text-center">
                 <MDBBtn
                   type="button"
@@ -63,6 +65,7 @@ class MyEncounters extends Component {
                   <FaStar className="card-star" />
                 </div>
               )
+            )
 
             }
           </MDBCardBody>

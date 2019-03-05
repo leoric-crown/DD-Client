@@ -11,7 +11,7 @@ class MyCharacters extends Component {
    handleDelete = () => {
       /* TODO: If the Character is a Player Character and is in any Encounter, warn the user.
                Don't allow non-DM users to delete Characters which are in any Encounter.
-               Give DM option to delete anyway and also delete that Character's records from Initiatives
+               Give DM option to delete anyway after bulk deleting that Character's records from Initiatives
       */
       this.props.dispatch(deleteCharacter(localStorage.getItem('DNDTOKEN'), this.props.character._id))
    }

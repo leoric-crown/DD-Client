@@ -35,6 +35,7 @@ class CharacterControl extends Component {
     }
 
     render() {
+        const { user } = this.props
         const { character } = this.state
         return (
             <React.Fragment>
@@ -47,6 +48,7 @@ class CharacterControl extends Component {
                 )}
                 <CharacterControlDisplay
                     character={character}
+                    user={user}
                     onClick={this.openModal}
                 />
             </React.Fragment>

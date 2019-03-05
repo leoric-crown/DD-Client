@@ -51,7 +51,6 @@ class CharacterHpModifier extends Component {
     }
 
     previewChanges = (type, sum = true) => {
-        console.log('previewChanges')
         let { hpNew, addHitpoints, addMaxhitpoints } = this.state
         let { hitpoints, maxhitpoints } = hpNew
 
@@ -101,7 +100,6 @@ class CharacterHpModifier extends Component {
                 }
             })
             .catch(errors => {
-                console.log('errors', errors)
                 const formattedErrors = {}
                 errors.forEach(error => (formattedErrors[error.field] = error.message))
                 this.setState({
@@ -137,8 +135,7 @@ class CharacterHpModifier extends Component {
 
 
     render() {
-        console.log(this.state)
-        const { characterStats, hitpoints, maxhitpoints } = this.props
+        const { characterStats, hitpoints, maxhitpoints, user } = this.props
         const { hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (
             <MyMDBModal
@@ -161,6 +158,8 @@ class CharacterHpModifier extends Component {
                             <h2>{characterStats.name}</h2>
                             <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                             <CharacterHpBar
+                                characterStats={characterStats}
+                                user={user}
                                 hitpoints={hitpoints}
                                 maxhitpoints={maxhitpoints}
                             />
@@ -168,6 +167,8 @@ class CharacterHpModifier extends Component {
                                 <div>
                                     <h3>New HP</h3>
                                     <CharacterHpBar
+                                        characterStats={characterStats}
+                                        user={user}
                                         hitpoints={hpNew.hitpoints}
                                         maxhitpoints={hpNew.maxhitpoints}
                                     />

@@ -68,9 +68,11 @@ class InitiativeRoll extends Component {
     }
 
     render() {
-        const { characterStats } = this.props
+        const { character, user } = this.props
         const { updating, newInitiative } = this.state
         const { initiative } = this.props.initiative
+        const canEdit = user && (user.isDM || character.user === user._id)
+        const canView = user && (user.isDM || character.player )
         return (
             <React.Fragment>
                 {updating && (
@@ -91,8 +93,8 @@ class InitiativeRoll extends Component {
                         <MDBContainer className="d-flex justify-content-center">
                             <MDBCol md="8">
                                 <div className="text-center">
-                                    <h2>{characterStats.name}</h2>
-                                    <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
+                                    <h2>{character.name}</h2>
+                                    <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
                                     <div title="Initiative Roll" onClick={this.openModal}>
                                         <FaDiceD20 color="darkred" />
                                         <div>{initiative}</div>
@@ -124,9 +126,9 @@ class InitiativeRoll extends Component {
                         </MDBContainer>
                     </MyMDBModal>
                 )}
-                <div title="Initiative Roll" className="initiative-roll-display" onClick={this.openModal}>
+                <div title="Initiative Roll" className="initiative-roll-display" onClick={canEdit ? this.openModal : () => {}}>
                     <FaDiceD20 color="darkred" size="2rem" />
-                    <div style={{ paddingTop: '0.3rem' }}>{initiative}</div>
+                    { canView && <div style={{ paddingTop: '0.3rem' }}>{initiative}</div>}
                 </div>
             </React.Fragment>
         )

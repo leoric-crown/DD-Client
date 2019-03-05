@@ -2,10 +2,10 @@ import io from 'socket.io-client'
 import config from '../../config.json'
 import { appId } from '../../utils/id'
 import { characterWsActions } from './characters'
-import { encounterWsActions} from './encounters'
-import { initiativeWsActions} from './initiatives'
-const socketHost = config.WS
+import { encounterWsActions } from './encounters'
+import { initiativeWsActions } from './initiatives'
 
+const socketHost = config.WS
 const messageTypes = [
     ...characterWsActions,
     ...encounterWsActions,
@@ -22,6 +22,7 @@ export const webSocketInit = store => {
         })
     })
 }
+
 export const emit = (type, payload) => {
     socket.emit(type, payload)
 }
