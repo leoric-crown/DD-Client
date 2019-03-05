@@ -58,13 +58,15 @@ class InitiativeTracker extends Component {
                                                 Active Encounter
                                             </strong>
                                         </MDBBtn>
-                                        <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
-                                            <MDBIcon icon="plus" size="lg" />
-                                            &nbsp;
+                                        {this.props.User.isDM &&
+                                            <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
+                                                <MDBIcon icon="plus" size="lg" />
+                                                &nbsp;
                                             <strong className='secondary-nav-button'>
-                                                All Encounters
+                                                    All Encounters
                                             </strong>
-                                        </MDBBtn>
+                                            </MDBBtn>
+                                        }
                                     </MDBCol>
                                 </MDBRow>
                                 <MDBIcon color="black" icon="hat-wizard" />

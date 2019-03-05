@@ -16,10 +16,13 @@ const getProgressBarStyle = (percentage) => {
 }
 
 const CharacterHpBar = props => {
+    const { characterStats, user } = props
+    const canEdit = user && (user.isDM || characterStats.user === user._id)
+    const canView = user && (user.isDM || characterStats.player)
     return (
-        <div className='hp-bar' onClick={props.onClick}>
+        <div className='hp-bar' onClick={ canEdit ? props.onClick : () => {}}>
             <div className='hp-bar-text'>
-                <FaHeartbeat className='hp-bar-hitpoints-icon' /> {`${props.hitpoints} / ${props.maxhitpoints}`}
+                <FaHeartbeat className='hp-bar-hitpoints-icon' /> {canView && `${props.hitpoints} / ${props.maxhitpoints}`}
             </div>
             <div className="hp-bar-background">
                 <div className="hp-bar-background-color">

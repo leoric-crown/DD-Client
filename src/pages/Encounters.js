@@ -46,27 +46,29 @@ class Encounters extends React.Component {
         {this.props.User.authenticated &&
           encounterList && (
             <React.Fragment>
-              <div className="secondary-nav">
-                <MDBRow>
-                  <MDBCol md='12'>
-                    <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
-                      <MDBIcon icon="magic" size="lg" />
-                      &nbsp;
+              {this.props.User.isDM &&
+                <div className="secondary-nav">
+                  <MDBRow>
+                    <MDBCol md='12'>
+                      <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
+                        <MDBIcon icon="magic" size="lg" />
+                        &nbsp;
                       <strong className='secondary-nav-button'>
-                        My Encounters
+                          My Encounters
                       </strong>
-                    </MDBBtn>
-                    <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
-                      <MDBIcon icon="plus" size="lg" />
-                      &nbsp;
+                      </MDBBtn>
+                      <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
+                        <MDBIcon icon="plus" size="lg" />
+                        &nbsp;
                       <strong className='secondary-nav-button'>
-                        Create Encounter
+                          Create Encounter
                       </strong>
-                    </MDBBtn>
-                  </MDBCol>
-                </MDBRow>
-                <MDBIcon color="black" icon="hat-wizard" />
-              </div>
+                      </MDBBtn>
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBIcon color="black" icon="hat-wizard" />
+                </div>
+              }
               <MDBContainer className="page-with-secondary-nav">
                 <div className="page-heading">
                   <h1 className="page-title">
@@ -94,6 +96,7 @@ class Encounters extends React.Component {
                                     encounter={encounter}
                                     length={encounterList.length}
                                     activeEncounter={this.props.Encounters.active}
+                                    canEdit={this.props.User.isDM}
                                     onEdit={encounter => this.setState({ editing: encounter })}
                                   />
                                 }

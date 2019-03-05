@@ -2,9 +2,10 @@ import React from 'react'
 import { FaShieldAlt, FaUserShield } from 'react-icons/fa'
 
 const CharacterControlDisplay = (props) => {
-
-    const { character } = props
+    const { character, user } = props
     const { armorclass, level } = character
+    const canEdit = user && (user.isDM || character.user === user._id)
+    const canView = user && (user.isDM || character.player)
     return (
         <React.Fragment>
             {
@@ -20,14 +21,14 @@ const CharacterControlDisplay = (props) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="character-control-display" onClick={props.onClick}>
+                    <div className="character-control-display" onClick={canEdit ? props.onClick : () => {}}>
                         <div title="Armor Class" className="character-control-stat-icon">
                             <FaShieldAlt color="darkred" />
-                            <div>{armorclass}</div>
+                            {canView && <div>{armorclass}</div>}
                         </div>
-                        <div title="Level" className="character-control-stat-icon" onClick={props.onClick}>
+                        <div title="Level" className="character-control-stat-icon" onClick={canEdit ? props.onClick : () => {}}>
                             <FaUserShield color="darkred" />
-                            <div>{level}</div>
+                            {canView && <div>{level}</div>}
                         </div>
                     </div>
                     )

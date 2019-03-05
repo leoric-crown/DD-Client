@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBBtn, MDBInput, MDBCol } from 'mdbreact'
+import { MDBContainer, MDBBtn, MDBInput, MDBCol, MDBAlert, MDBIcon } from 'mdbreact'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 import CharacterHpBar from './CharacterHpBar'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
+import { validateAll } from 'indicative'
 
 class CharacterHpModifier extends Component {
     constructor(props) {
@@ -16,18 +17,14 @@ class CharacterHpModifier extends Component {
                 hitpoints,
                 maxhitpoints
             },
-            editMaxHP: false
+            editMaxHP: false,
+            errors: {}
         }
     }
 
     handleChange = (type, value) => {
         const newState = {}
         switch (type) {
-            case 'addHitpoints':
-            case 'addMaxhitpoints':
-                value = parseInt(value)
-                if (isNaN(value)) value = 0
-                break
             case 'editMaxHP':
                 newState.hpNew = {
                     hitpoints: this.state.hpNew.hitpoints,
@@ -57,38 +54,59 @@ class CharacterHpModifier extends Component {
         let { hpNew, addHitpoints, addMaxhitpoints } = this.state
         let { hitpoints, maxhitpoints } = hpNew
 
-        if (addHitpoints + addMaxhitpoints > 0) {
-            switch (type) {
-                case 'hitpoints':
-                    hitpoints = hitpoints + (sum ? addHitpoints : -addHitpoints)
-                    if (hitpoints > maxhitpoints) hitpoints = maxhitpoints
-                    addHitpoints = 0
-                    break
-                case 'maxhitpoints':
-                    maxhitpoints = maxhitpoints + (sum ? addMaxhitpoints : -addMaxhitpoints)
-                    addMaxhitpoints = 0
-                    break
-                default:
-                    break
-            }
+        const rules = {
+            addHitpoints: 'number',
+            addMaxhitpoints: 'number'
+        }
+        const messages = {
+            number: 'Please input a number value'
+        }
+        validateAll({ addHitpoints, addMaxhitpoints }, rules, messages)
+            .then(() => {
+                this.setState({
+                    errors: {}
+                })
 
-            if (hitpoints < 0) {
-                hitpoints = 0
-            }
-            if (maxhitpoints < 0) {
-                maxhitpoints = this.state.maxhitpoints
-            }
+                if (addHitpoints + addMaxhitpoints > 0) {
+                    switch (type) {
+                        case 'hitpoints':
+                            hitpoints = hitpoints + (sum ? addHitpoints : -addHitpoints)
+                            if (hitpoints > maxhitpoints) hitpoints = maxhitpoints
+                            addHitpoints = 0
+                            break
+                        case 'maxhitpoints':
+                            maxhitpoints = maxhitpoints + (sum ? addMaxhitpoints : -addMaxhitpoints)
+                            addMaxhitpoints = 0
+                            break
+                        default:
+                            break
+                    }
 
-            this.setState({
-                addHitpoints,
-                addMaxhitpoints,
-                hpNew: {
-                    hitpoints,
-                    maxhitpoints
+                    if (hitpoints < 0) {
+                        hitpoints = 0
+                    }
+                    if (maxhitpoints < 0) {
+                        maxhitpoints = this.state.maxhitpoints
+                    }
+
+                    this.setState({
+                        addHitpoints,
+                        addMaxhitpoints,
+                        hpNew: {
+                            hitpoints,
+                            maxhitpoints
+                        }
+                    })
                 }
             })
-        }
-
+            .catch(errors => {
+                const formattedErrors = {}
+                errors.forEach(error => (formattedErrors[error.field] = error.message))
+                this.setState({
+                    errors: formattedErrors
+                })
+                return
+            })
     }
 
     handleSubmit = () => {
@@ -117,7 +135,7 @@ class CharacterHpModifier extends Component {
 
 
     render() {
-        const { characterStats, hitpoints, maxhitpoints } = this.props
+        const { characterStats, hitpoints, maxhitpoints, user } = this.props
         const { hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (
             <MyMDBModal
@@ -140,6 +158,8 @@ class CharacterHpModifier extends Component {
                             <h2>{characterStats.name}</h2>
                             <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${characterStats.picUrl}`} />
                             <CharacterHpBar
+                                characterStats={characterStats}
+                                user={user}
                                 hitpoints={hitpoints}
                                 maxhitpoints={maxhitpoints}
                             />
@@ -147,6 +167,8 @@ class CharacterHpModifier extends Component {
                                 <div>
                                     <h3>New HP</h3>
                                     <CharacterHpBar
+                                        characterStats={characterStats}
+                                        user={user}
                                         hitpoints={hpNew.hitpoints}
                                         maxhitpoints={hpNew.maxhitpoints}
                                     />
@@ -163,17 +185,31 @@ class CharacterHpModifier extends Component {
                                 />
                                 <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('hitpoints')} />
                             </div>
+                            {this.state.errors.addHitpoints && (
+                                <MDBAlert color='danger'>
+                                    <MDBIcon icon='warning' />
+                                    &nbsp;&nbsp;&nbsp;{this.state.errors.addHitpoints}
+                                </MDBAlert>
+                            )}
                             {this.state.editMaxHP && (
-                                <div className="d-flex" style={{ alignItems: 'center' }}>
-                                    <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
-                                    <MDBInput
-                                        className="text-center"
-                                        label="Max Hitpoints"
-                                        containerClass="mb-0"
-                                        onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
-                                        value={addMaxhitpoints.toString()}
-                                    />
-                                    <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
+                                <div>
+                                    <div className="d-flex" style={{ alignItems: 'center' }}>
+                                        <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
+                                        <MDBInput
+                                            className="text-center"
+                                            label="Max Hitpoints"
+                                            containerClass="mb-0"
+                                            onChange={(e) => this.handleChange("addMaxhitpoints", e.target.value)}
+                                            value={addMaxhitpoints.toString()}
+                                        />
+                                        <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('maxhitpoints')} />
+                                    </div>
+                                    {this.state.errors.addMaxhitpoints && (
+                                        <MDBAlert color='danger'>
+                                            <MDBIcon icon='warning' />
+                                            &nbsp;&nbsp;&nbsp;{this.state.errors.addMaxhitpoints}
+                                        </MDBAlert>
+                                    )}
                                 </div>
                             )}
                             <MDBInput
@@ -181,7 +217,7 @@ class CharacterHpModifier extends Component {
                                 type="checkbox"
                                 id="checkbox"
                                 onChange={(e) => this.handleChange('editMaxHP', e.target.checked)}
-                                value={this.state.editMaxHP ? "true" : "false"}
+                                checked={this.state.editMaxHP}
                             />
                             <MDBBtn onClick={this.reset} className="btn-block btn-black z-depth-1a">Reset</MDBBtn>
                         </div>

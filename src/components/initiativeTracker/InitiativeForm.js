@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBAlert, MDBIcon } from 'mdbreact';
 import { postInitiative } from '../../redux/actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
 import CharacterSelect from '../characters/CharacterSelect'
+import { validateAll } from 'indicative'
 
 const sortByName = (a, b) => {
    if (a.name < b.name) return -1
@@ -29,14 +30,14 @@ class InitiativeForm extends Component {
       const characterOptions = this.filterCharacters(encounter)
       const character = characterOptions.length > 0 ? characterOptions[0] : false
       this.state = {
-         updating: false,
          encounter,
          character,
          characterOptions,
          initiative: '',
          multiple: false,
          prefix: '',
-         quantity: 1
+         quantity: 1,
+         errors: {}
       }
    }
 
@@ -88,7 +89,7 @@ class InitiativeForm extends Component {
       return characterList.sort(sortByName)
    }
 
-   handleCreate() {
+   handleSubmit() {
       const { initiative, encounter, character, quantity, prefix, characterOptions } = this.state
       const payload = {
          initiative,
@@ -98,15 +99,40 @@ class InitiativeForm extends Component {
          prefix
       }
 
-      this.props.dispatch(postInitiative(localStorage.getItem('DNDTOKEN'), payload))
-      if (character.player) {
-         const addedCharacter = characterOptions.find(c => c._id === character)
-         const index = characterOptions.indexOf(addedCharacter)
-         this.setState({
-            character: getSelectedCharacter(characterOptions, character),
-            characterOptions: [...characterOptions].splice(index, 1)
-         })
+      const rules = {
+         initiative: 'required|number',
+         quantity: 'number'
       }
+
+      const messages = {
+         'initiative.required': 'Initiative Roll is required',
+         'initiative.number': 'Initiative Roll must be a number',
+         'quantity.number': 'Quantity Field must be a number'
+      }
+
+      validateAll(payload, rules, messages)
+         .then(() => {
+            this.setState({
+               errors: {}
+            })
+            this.props.dispatch(postInitiative(localStorage.getItem('DNDTOKEN'), payload))
+            if (character.player) {
+               const addedCharacter = characterOptions.find(c => c._id === character)
+               const index = characterOptions.indexOf(addedCharacter)
+               this.setState({
+                  character: getSelectedCharacter(characterOptions, character),
+                  characterOptions: [...characterOptions].splice(index, 1)
+               })
+            }
+         })
+         .catch(errors => {
+            const formattedErrors = {}
+            errors.forEach(error => (formattedErrors[error.field] = error.message))
+            this.setState({
+               errors: formattedErrors
+            })
+            return
+         })
    }
 
    handleKeyDown = (event) => {
@@ -140,10 +166,6 @@ class InitiativeForm extends Component {
             newState.quantity = 1
             newState.prefix = ''
             break
-         case 'quantity':
-            value = parseInt(value)
-            if (isNaN(value)) value = 1
-            break
          default:
             break
       }
@@ -153,17 +175,9 @@ class InitiativeForm extends Component {
       })
    }
 
-   validateInput() {
-      //TODO
-   }
-
-   handleSubmit() {
-      this.handleCreate()
-   }
-
    render() {
       return (
-         <MDBContainer style={this.state.style}>
+         <MDBContainer>
             <MDBRow className="d-flex justify-content-center">
                <MDBCol md="8">
                   <MDBIcon icon="khanda" />
@@ -174,6 +188,12 @@ class InitiativeForm extends Component {
                      onKeyDown={(e) => this.handleKeyDown(e)}
                      value={this.state.initiative}
                   />
+                  {this.state.errors.initiative && (
+                     <MDBAlert color='danger'>
+                        <MDBIcon icon='warning' />
+                        &nbsp;&nbsp;&nbsp;{this.state.errors.initiative}
+                     </MDBAlert>
+                  )}
                   {
                      this.props.Encounters.list && (
                         <EncounterSelect
@@ -203,7 +223,7 @@ class InitiativeForm extends Component {
                            type="checkbox"
                            id="checkbox"
                            onChange={(e) => this.handleChange('multiple', e.target.checked)}
-                           value={this.state.multiple ? "true" : "false"}
+                           checked={this.state.multiple}
                         />
                      ) : <div><br /></div>
                   }
@@ -218,6 +238,12 @@ class InitiativeForm extends Component {
                               onKeyDown={(e) => this.handleKeyDown(e)}
                               value={this.state.quantity.toString()}
                            />
+                           {this.state.errors.quantity && (
+                              <MDBAlert color='danger'>
+                                 <MDBIcon icon='warning' />
+                                 &nbsp;&nbsp;&nbsp;{this.state.errors.quantity}
+                              </MDBAlert>
+                           )}
                            <MDBInput
                               label="Prefix"
                               containerClass="mb-0"

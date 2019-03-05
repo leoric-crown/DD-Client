@@ -44,7 +44,7 @@ class InitiativeRow extends Component {
     }
 
     render() {
-        const { initiative, character } = this.props
+        const { initiative, character, user } = this.props
         const characterStats = initiative.characterStamp.player ? character : initiative.characterStamp
         const { name } = characterStats
         const style = {
@@ -63,7 +63,8 @@ class InitiativeRow extends Component {
                     >
                         <div title="Initiative Roll" className="initiative-row-roll">
                             <InitiativeRoll
-                                {...{ characterStats }}
+                                character={characterStats}
+                                user={user}
                                 initiative={initiative}
                                 onSubmit={this.handleReRollInitiative}
                             />
@@ -76,20 +77,23 @@ class InitiativeRow extends Component {
                         </div>
                         <div className='initiative-row-character' title="Character HP">
                             <CharacterHitPoints
-                                {...{ characterStats }}
+                                characterStats={characterStats}
                                 onClick={this.openModal}
                                 onSubmit={this.handleCharacterUpdate}
+                                user={user}
                             />
                             <CharacterControl
                                 character={characterStats}
                                 onSubmit={this.handleCharacterUpdate}
+                                user={user}
                             />
                         </div>
-                        <div className='initiative-row-actions'>
-                            <span title="Delete/Remove" onClick={() => this.handleDelete(initiative)}>
-                                <FaRegTrashAlt style={{ cursor: 'pointer' }} />
-                            </span>
-                        </div>
+                        {user.isDM &&
+                            <div className='initiative-row-actions'>
+                                <span title="Delete/Remove" onClick={() => this.handleDelete(initiative)}>
+                                    <FaRegTrashAlt style={{ cursor: 'pointer' }} />
+                                </span>
+                            </div>}
                     </div>
                 )}
             </div>

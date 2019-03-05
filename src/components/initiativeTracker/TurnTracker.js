@@ -161,30 +161,33 @@ class TurnTracker extends Component {
                                                         </div>
                                                     )
                                             }
-                                            <div className="d-flex justify-content-center">
-                                                <div className='d-flex justify-content-center'>
-                                                    <MDBBtn
-                                                        className="shrink-button"
-                                                        type="button"
-                                                        color="black"
-                                                        onClick={this.toggleModal}
-                                                    >
-                                                        Add Characters
+                                            {this.props.User.isDM ?
+                                                <div className="d-flex justify-content-center">
+                                                    <div className='d-flex justify-content-center'>
+                                                        <MDBBtn
+                                                            className="shrink-button"
+                                                            type="button"
+                                                            color="black"
+                                                            onClick={this.toggleModal}
+                                                        >
+                                                            Add Characters
                                                 </MDBBtn>
-                                                    {
-                                                        initiatives.length > 1 && (
-                                                            <MDBBtn
-                                                                className="shrink-button"
-                                                                type="button"
-                                                                color={this.state.activeTurn ? 'unique' : 'black'}
-                                                                onClick={() => this.nextTurn()}
-                                                            >
-                                                                {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
-                                                            </MDBBtn>
-                                                        )
-                                                    }
-                                                </div>
-                                            </div>
+                                                        {
+                                                            initiatives.length > 1 && (
+                                                                <MDBBtn
+                                                                    className="shrink-button"
+                                                                    type="button"
+                                                                    color={this.state.activeTurn ? 'unique' : 'black'}
+                                                                    onClick={() => this.nextTurn()}
+                                                                >
+                                                                    {!this.state.activeTurn ? 'Start Encounter' : 'Next Turn'}
+                                                                </MDBBtn>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </div> :
+                                                <br/>
+                                            }
                                         </div>
                                     </div>
                                     <div className="turn-tracker-content">
@@ -205,6 +208,7 @@ class TurnTracker extends Component {
                                                             encounter={this.state.encounter}
                                                             dispatch={this.props.dispatch}
                                                             totalRows={initiatives.length}
+                                                            user={this.props.User}
                                                         />
                                                     </div>
                                                 )

@@ -10,15 +10,15 @@ class Characters extends React.Component {
    constructor(props) {
       super(props)
       this.state = {
-      activeButtonMyCharacters: true,
-      editing: false,
-      lastClicked: 'Characters',
-      message: '',
-      displayMessage: 'will receive here',
+         activeButtonMyCharacters: true,
+         editing: false,
+         lastClicked: 'Characters',
+         message: '',
+         displayMessage: 'will receive here',
       }
-      
+
    }
-   
+
 
    toggleButtonNavigation = (lastClicked) => {
       this.setState((state, props) => {
@@ -45,14 +45,14 @@ class Characters extends React.Component {
          }
       }
    }
-   
+
    render() {
       const characterList = this.props.Characters.list
       return (
          <div>
             {this.props.User.authenticated &&
                characterList && (
-                     <React.Fragment>
+                  <React.Fragment>
                      <div className="secondary-nav">
                         <MDBRow>
                            <MDBCol md='12'>
@@ -130,9 +130,12 @@ class Characters extends React.Component {
 }
 
 function mapStateToProps({ User, Characters }) {
+   const filteredCharacters = { ...Characters }
+   if (filteredCharacters.list && !User.isDM) filteredCharacters.list = filteredCharacters.list
+      .filter(character => character.user === User._id)
    return {
       User,
-      Characters
+      Characters: filteredCharacters
    }
 
 }

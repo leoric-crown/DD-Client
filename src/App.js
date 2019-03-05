@@ -6,6 +6,7 @@ import Nav from './components/nav'
 import Characters from './pages/Characters'
 import Encounters from './pages/Encounters'
 import InitiativeTracker from './pages/InitiativeTracker';
+import UserControl from './pages/UserControl'
 import { Route, Switch } from 'react-router-dom'
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -19,12 +20,12 @@ class App extends Component {
           <Nav />
         </Switch>
         <Switch>
-          <Route path='/' exact component={Login} />
-          <Route path='/signup' exact component={Signup} />
-          <Route exact path='/dashboard' component={Characters} />
-          <Route path='/characters' component={Characters} />
+          <Route exact path='/' component={Login} />
+          <Route exact path='/signup' component={Signup} />
+          <Route exact path='/characters' component={Characters} />
           <Route exact path='/encounters' component={Encounters} />
           <Route exact path='/initiativeTracker' component={InitiativeTracker} />
+          <Route exact path='/user' component={UserControl} />
         </Switch>
       </div>
     );

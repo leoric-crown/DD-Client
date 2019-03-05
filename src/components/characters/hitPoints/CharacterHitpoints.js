@@ -28,13 +28,14 @@ class CharacterHitPoints extends Component {
     }
 
     render() {
-        const { characterStats } = this.props
+        const { characterStats, user } = this.props
         const { hitpoints, maxhitpoints } = characterStats
         return (
             <React.Fragment>
                 {this.state.updating && (
                     <CharacterHpModifier
                         characterStats={characterStats}
+                        user={user}
                         hitpoints={hitpoints}
                         maxhitpoints={maxhitpoints}
                         onSubmit={this.handleSubmit}
@@ -42,6 +43,8 @@ class CharacterHitPoints extends Component {
                     />
                 )}
                 <CharacterHpBar
+                    characterStats={characterStats}
+                    user={user}
                     hitpoints={hitpoints}
                     maxhitpoints={maxhitpoints}
                     onClick={this.openModal}
