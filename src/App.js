@@ -7,6 +7,7 @@ import Characters from './pages/Characters'
 import Encounters from './pages/Encounters'
 import InitiativeTracker from './pages/InitiativeTracker';
 import UserControl from './pages/UserControl'
+import ResetPassword from './pages/auth/ResetPassword'
 import { Route, Switch } from 'react-router-dom'
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -26,6 +27,7 @@ class App extends Component {
           <Route exact path='/encounters' component={Encounters} />
           <Route exact path='/initiativeTracker' component={InitiativeTracker} />
           <Route exact path='/user' component={UserControl} />
+          <Route exact path='/resetpassword' component={ResetPassword} />
         </Switch>
       </div>
     );

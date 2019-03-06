@@ -1,10 +1,13 @@
-import { CLEAR_ERRORS, CHECK_AUTH_STATUS, CHECK_SIGNUP_STATUS } from "../actions/errors";
+import { CLEAR_ERRORS, CHECK_AUTH_STATUS, CHECK_SIGNUP_STATUS, CHECK_PASSWORD_RESTORE_STATUS } from "../actions/errors";
 
 const defaultState = {
   authErrorMessage: null,
   authSuccess: false,
   signUpSuccess: false,
-  signUpErrorMessage: null
+  signUpErrorMessage: null,
+  passwordRestoreSuccess: false,
+  passwordRestoreSuccessMessage:''
+
 };
 
 export default function Errors(state = defaultState, action) {
@@ -21,6 +24,12 @@ export default function Errors(state = defaultState, action) {
         ...state,
         signUpSuccess:action.signUpSuccess,
         signUpErrorMessage: action.message
+      }
+    case CHECK_PASSWORD_RESTORE_STATUS:
+      return {
+        ...state,
+        passwordRestoreSuccessMessage: action.message,
+        passwordRestoreSuccess: action.status
       }
     default:
       return state;
