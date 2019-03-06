@@ -29,6 +29,7 @@ class CharacterForm extends Component {
          maxhitpoints,
          player
       } = updating
+      const { User } = this.props
       this.state = {
          updating,
          name: updating ? name : '',
@@ -38,7 +39,7 @@ class CharacterForm extends Component {
          maxhitpoints: updating ? maxhitpoints : '',
          url: '',
          characterPic: null,
-         player: updating ? player : false,
+         player: User.isDM ? updating ? player : false : true,
          errors: {}
       }
    }
@@ -175,6 +176,7 @@ class CharacterForm extends Component {
          player
       } = this.state
       const { toggleButtonNavigation } = this.props
+      const { User } = this.props
       return (
          <MDBContainer>
             <MDBRow className='d-flex justify-content-center'>
@@ -202,10 +204,10 @@ class CharacterForm extends Component {
                            group
                            containerClass='mb-0'
                            required={true}
-                           onChange={e => 
+                           onChange={e =>
                               this.handleChange('name', e.target.value)
                            }
-                           onKeyDown={e => 
+                           onKeyDown={e =>
                               this.handleKeyDown(e)
                            }
                            value={name}
@@ -224,7 +226,7 @@ class CharacterForm extends Component {
                         />
                         <CharacterAcSelect
                            value={armorclass}
-                           onChange={value => 
+                           onChange={value =>
                               this.handleChange('armorclass', value)
                            }
                         />
@@ -254,22 +256,24 @@ class CharacterForm extends Component {
                               &nbsp;&nbsp;&nbsp;{this.state.errors.maxhitpoints}
                            </MDBAlert>
                         )}
-                        <MDBInput
-                           label='Player Character'
-                           type='checkbox'
-                           id='checkbox'
-                           onChange={e => 
-                              this.handleChange('player', e.target.checked)
-                           }
-                           checked={player}
-                        />
+                        {User.isDM && (
+                           <MDBInput
+                              label='Player Character'
+                              type='checkbox'
+                              id='checkbox'
+                              onChange={e =>
+                                 this.handleChange('player', e.target.checked)
+                              }
+                              checked={player}
+                           />
+                        )}
                         {!this.state.updating && (
                            <div>
                               <MDBInput
                                  label='Photo URL'
                                  className='text-center'
                                  containerClass='mb-0'
-                                 onChange={e => 
+                                 onChange={e =>
                                     this.handleChange('url', e.target.value)
                                  }
                                  onKeyDown={e => this.handleKeyDown(e)}
@@ -291,7 +295,7 @@ class CharacterForm extends Component {
                               rounded
                               color='black'
                               className='btn-block z-depth-1a'
-                              onClick={() => 
+                              onClick={() =>
                                  this.handleSubmit(toggleButtonNavigation)
                               }
                            >

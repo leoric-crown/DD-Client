@@ -128,7 +128,6 @@ class InitiativeForm extends Component {
             }
          })
          .catch(errors => {
-            console.log(errors)
             const formattedErrors = {}
             errors.forEach(error => (formattedErrors[error.field] = error.message))
             this.setState({
