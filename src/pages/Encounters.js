@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 import EncounterForm from '../components/encounters/EncounterForm'
 import MyEncounters from '../components/encounters/MyEncounters'
@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
 import '../css/Cards.css'
 
-class Encounters extends React.Component {
+class Encounters extends Component {
   state = {
     activeButtonMyEncounters: true,
     editing: false,
