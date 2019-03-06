@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import { validateAll } from "indicative"
-import { handlePasswordRestore } from "../../redux/actions/shared"
-import { logoutUser } from "../../redux/actions/authedUser"
+import React, { Component } from 'react'
+import { validateAll } from 'indicative'
+import { handlePasswordRestore } from '../../redux/actions/shared'
+import { logoutUser } from '../../redux/actions/authedUser'
 import {
   MDBContainer,
   MDBRow,
@@ -12,16 +12,16 @@ import {
   MDBBtn,
   MDBAlert,
   MDBIcon
-} from "mdbreact"
-import { connect } from "react-redux"
-import qs from "query-string"
-import "../../App.css"
+} from 'mdbreact'
+import { connect } from 'react-redux'
+import qs from 'query-string'
+import '../../App.css'
 
 class ResetPassword extends Component {
   state = {
-    password: "",
-    password_confirmation: "",
-    token: "",
+    password: '',
+    password_confirmation: '',
+    token: '',
     showSubmitButton: true,
     errors: {}
   }
@@ -32,7 +32,7 @@ class ResetPassword extends Component {
     }).token
     if (!token) {
       this.props.history.push({
-        pathname: "/"
+        pathname: '/'
       })
     } else {
       this.setState({
@@ -43,7 +43,7 @@ class ResetPassword extends Component {
 
   handleKeyDown = event => {
     switch (event.key) {
-      case "Enter":
+      case 'Enter':
         this.handleSubmit()
         break
       default:
@@ -70,13 +70,13 @@ class ResetPassword extends Component {
     const data = this.state
 
     const rules = {
-      password: "required|string|min:3|confirmed"
+      password: 'required|string|min:3|confirmed'
     }
 
     const messages = {
-      required: "Please fill in the {{ field }} field",
-      "password.confirmed": "Password do not match",
-      "password.min": "Password has to be at least 3 characters long"
+      required: 'Please fill in the {{ field }} field',
+      'password.confirmed': 'Password do not match',
+      'password.min': 'Password has to be at least 3 characters long'
     }
 
     validateAll(data, rules, messages)
@@ -89,16 +89,16 @@ class ResetPassword extends Component {
             if (!this.props.Errors.passwordRestoreSuccess) {
               this.props.dispatch(
                 logoutUser(
-                  "Token expired. Please follow the steps to restore password again"
+                  'Token expired. Please follow the steps to restore password again'
                 )
               )
               this.props.history.push({
-                pathname: "/"
+                pathname: '/'
               })
             } else {
               setTimeout(() => {
                 this.props.history.push({
-                  pathname: "/"
+                  pathname: '/'
                 })
               }, 4000)
             }
@@ -118,71 +118,71 @@ class ResetPassword extends Component {
 
   render() {
     return (
-      <MDBContainer className="login-signup">
-        <MDBRow className="d-flex justify-content-center">
-          <MDBCol md="6">
+      <MDBContainer className='login-signup'>
+        <MDBRow className='d-flex justify-content-center'>
+          <MDBCol md='6'>
             <MDBCard>
-              <MDBCardBody className="mx-4 d-row">
-                <div className="">
-                  <h3 className="deep-red-text mb-5">
+              <MDBCardBody className='mx-4 d-row'>
+                <div className=''>
+                  <h3 className='deep-red-text mb-5'>
                     <MDBIcon
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                       onClick={() =>
                         this.props.history.push({
-                          pathname: "/"
+                          pathname: '/'
                         })
                       }
-                      icon="arrow-left"
+                      icon='arrow-left'
                     />
                     <strong>&nbsp;Restore Your Password</strong>
                   </h3>
                 </div>
                 {this.props.Errors.passwordRestoreSuccess && (
-                  <MDBAlert color="success">
-                    <MDBIcon icon="check" />
+                  <MDBAlert color='success'>
+                    <MDBIcon icon='check' />
                     &nbsp;&nbsp;&nbsp;
                     {this.props.Errors.passwordRestoreSuccessMessage}
                   </MDBAlert>
                 )}
                 <MDBInput
-                  label="Password"
-                  type="password"
-                  icon="lock"
-                  containerClass="mb-0"
+                  label='Password'
+                  type='password'
+                  icon='lock'
+                  containerClass='mb-0'
                   required={true}
-                  getValue={e => this.handleInputChange("password", e)}
+                  getValue={e => this.handleInputChange('password', e)}
                 />
                 {this.state.errors.firstName && (
-                  <MDBAlert color="danger">
-                    <MDBIcon icon="warning" />
+                  <MDBAlert color='danger'>
+                    <MDBIcon icon='warning' />
                     &nbsp;&nbsp;&nbsp;{this.state.errors.firstName}
                   </MDBAlert>
                 )}
                 <MDBInput
-                  label="Password Confirmation"
-                  type="password"
-                  icon="check"
-                  containerClass="mb-0"
+                  label='Password Confirmation'
+                  type='password'
+                  icon='check'
+                  containerClass='mb-0'
                   required={false}
                   getValue={e =>
-                    this.handleInputChange("password_confirmation", e)
+                    this.handleInputChange('password_confirmation', e)
                   }
                 />
                 {this.state.errors.password && (
-                  <MDBAlert color="danger">
-                    <MDBIcon icon="warning" />
+                  <MDBAlert color='danger'>
+                    <MDBIcon icon='warning' />
                     &nbsp;&nbsp;&nbsp;{this.state.errors.password}
                   </MDBAlert>
                 )}
                 <br />
                 <br />
                 { this.state.showSubmitButton && (
-                  <div className="text-center mb-3">
+                  <div className='text-center mb-3'>
                   <MDBBtn
-                    type="button"
-                    color="red"
+                    type='button'
+                    color='red'
                     rounded
-                    className="btn-block z-depth-1a"
+                    className='btn-block z-depth-1a'
                     onClick={() => this.handleSubmit()}
                   >
                     Restore

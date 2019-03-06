@@ -1,9 +1,9 @@
-import * as API from "../../utils/api"
-import { receiveCharacters } from "./characters"
-import { receiveEncounters } from "./encounters"
-import { receiveInitiatives } from "./initiatives"
-import { setAuthedUser } from "./authedUser"
-import { setAuthStatus, setSignUpStatus, setPasswordRestoreStatus } from "./errors"
+import * as API from '../../utils/api'
+import { receiveCharacters } from './characters'
+import { receiveEncounters } from './encounters'
+import { receiveInitiatives } from './initiatives'
+import { setAuthedUser } from './authedUser'
+import { setAuthStatus, setSignUpStatus, setPasswordRestoreStatus } from './errors'
 
 export function handleSignUp(payload, defaultUserPic) {
   return dispatch => {
@@ -12,7 +12,7 @@ export function handleSignUp(payload, defaultUserPic) {
         // We set errors to empty object to clear previous errors
         if (res.status.code === 200) {
           const { jwt, status, ...authedUser } = res
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthedUser(authedUser))
           dispatch(setSignUpStatus(null, true))
           dispatch(handleInitialData(authedUser, res.jwt))
@@ -21,7 +21,7 @@ export function handleSignUp(payload, defaultUserPic) {
         }
       })
       .catch(e => {
-        alert("Whoops something went wrong... \n\nPlease try again later")
+        alert('Whoops something went wrong... \n\nPlease try again later')
       })
   }
 }
@@ -32,7 +32,7 @@ export function handleFBLogin(accessToken) {
       .then(res => {
         if (res.status.code === 200) {
           const { __v, jwt, status, id, ...authedUser } = res
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
           dispatch(setAuthedUser(authedUser))
           dispatch(handleInitialData(res, res.jwt))
@@ -41,7 +41,7 @@ export function handleFBLogin(accessToken) {
         }
       })
       .catch(err => {
-        alert("Oops something went wrong...\nPlease try again later")
+        alert('Oops something went wrong...\nPlease try again later')
       })
   }
 }
@@ -52,7 +52,7 @@ export function handleLogin({ email, password }) {
       .then(res => {
         if (res.status.code === 200) {
           const { jwt, status, ...authedUser } = res
-          localStorage.setItem("DNDTOKEN", res.jwt)
+          localStorage.setItem('DNDTOKEN', res.jwt)
           dispatch(setAuthStatus(null, true))
           dispatch(setAuthedUser(authedUser))
           dispatch(handleInitialData(res, res.jwt))
@@ -62,7 +62,7 @@ export function handleLogin({ email, password }) {
         }
       })
       .catch(() =>
-        alert("Oops something went wrong...\nPlease try again later")
+        alert('Oops something went wrong...\nPlease try again later')
       )
   }
 }
@@ -88,7 +88,7 @@ export function handlePasswordRestore(password, token) {
       if (res.status) {
         dispatch(setPasswordRestoreStatus('Password changed! Please login using you new password', true))
       } else {
-        console.log("Error occured")
+        console.log('Error occured')
         dispatch(setPasswordRestoreStatus('Token expired. Please restore you password again', false))
       }
     })
