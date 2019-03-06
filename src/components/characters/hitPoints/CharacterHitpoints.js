@@ -17,6 +17,24 @@ class CharacterHitPoints extends Component {
     }
 
     componentDidUpdate() {
+        const { characterStats } = this.props
+        const { hitpoints, maxhitpoints } = this.state
+        if ((characterStats.hitpoints !== hitpoints || characterStats.maxhitpoints !== maxhitpoints) && !this.state.transition) {
+            const delta = {
+                hitpoints: characterStats.hitpoints - hitpoints,
+                maxhitpoints: characterStats.maxhitpoints - maxhitpoints
+            }
+            this.setState({
+                transition: {
+                    hitpoints: characterStats.hitpoints,
+                    maxhitpoints: characterStats.maxhitpoints,
+                    delta: {
+                        hitpoints: delta.hitpoints !== 0 ? Math.round((characterStats.hitpoints - hitpoints) / 20) + (delta.hitpoints > 0 ? 1 : -1) : 0,
+                        maxhitpoints: delta.maxhitpoints !== 0 ? 2 * Math.round((characterStats.hitpoints - maxhitpoints) / 20) + (delta.maxhitpoints > 0 ? 1 : -1) : 0
+                    }
+                }
+            })
+        }
         if (this.state.transition) {
             this.handleTransition()
         }
@@ -51,7 +69,7 @@ class CharacterHitPoints extends Component {
                 this.setState({
                     ...newHp
                 })
-            }, 20)
+            }, Math.floor(1 / Math.max(target.hitpoints, target.maxhitpoints))+25)
         }
     }
 
@@ -84,7 +102,7 @@ class CharacterHitPoints extends Component {
                     maxhitpoints,
                     delta: {
                         hitpoints: updateHp ? Math.round((hitpoints - this.state.hitpoints) / 20) + (delta.hitpoints > 0 ? 1 : -1) : 0,
-                        maxhitpoints: updateMaxHp ? Math.round((hitpoints - this.state.maxhitpoints) / 20) + (delta.maxhitpoints > 0 ? 1 : -1) : 0
+                        maxhitpoints: updateMaxHp ? 2 * Math.round((hitpoints - this.state.maxhitpoints) / 20) + (delta.maxhitpoints > 0 ? 1 : -1) : 0
                     }
                 }
             })

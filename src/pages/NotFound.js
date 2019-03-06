@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
 
