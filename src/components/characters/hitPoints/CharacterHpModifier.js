@@ -55,18 +55,20 @@ class CharacterHpModifier extends Component {
         let { hitpoints, maxhitpoints } = hpNew
 
         const rules = {
-            addHitpoints: 'number',
-            addMaxhitpoints: 'number'
+            addHitpoints: 'number|integer',
+            addMaxhitpoints: 'number|integer'
         }
         const messages = {
-            number: 'Please input a number value'
+            number: 'Please input a number value',
+            integer: 'Please input an integer number'
         }
         validateAll({ addHitpoints, addMaxhitpoints }, rules, messages)
             .then(() => {
                 this.setState({
                     errors: {}
                 })
-
+                addHitpoints = parseInt(addHitpoints)
+                addMaxhitpoints = parseInt(addMaxhitpoints)
                 if (addHitpoints + addMaxhitpoints > 0) {
                     switch (type) {
                         case 'hitpoints':
@@ -135,6 +137,7 @@ class CharacterHpModifier extends Component {
 
 
     render() {
+        console.log(this.state)
         const { characterStats, hitpoints, maxhitpoints, user } = this.props
         const { hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (
