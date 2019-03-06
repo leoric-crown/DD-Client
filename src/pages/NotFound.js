@@ -24,10 +24,7 @@ class NotFound extends Component {
             <h1>404</h1>
             <h1>
                Page <code>{this.props.location.pathname}</code> not found!
-                </h1>
-            <MDBBtn onClick={() => this.props.history.goBack()} color="black">
-               Go Back
-                </MDBBtn>
+            </h1>
          </div>
 
       )

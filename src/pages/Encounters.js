@@ -94,9 +94,10 @@ class Encounters extends Component {
                                   ) :
                                   <MyEncounters
                                     encounter={encounter}
+                                    encounters={this.props.Encounters}
                                     length={encounterList.length}
                                     activeEncounter={this.props.Encounters.active}
-                                    canEdit={this.props.User.isDM}
+                                    user={this.props.User}
                                     onEdit={encounter => this.setState({ editing: encounter })}
                                   />
                                 }

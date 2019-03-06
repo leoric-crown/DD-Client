@@ -112,9 +112,7 @@ class TurnTracker extends Component {
 
     render() {
         const InitiativeFormAttributes = {
-            Initiatives: this.props.Initiatives,
-            Encounters: this.props.Encounters,
-            Characters: this.props.Characters,
+            characters: this.props.Characters.list,
             setEncounter: this.state.encounter,
             dispatch: this.props.dispatch
         }
