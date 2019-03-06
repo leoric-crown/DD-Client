@@ -73,7 +73,6 @@ class CharacterHpModifier extends Component {
                     switch (type) {
                         case 'hitpoints':
                             hitpoints = hitpoints + (sum ? addHitpoints : -addHitpoints)
-                            if (hitpoints > maxhitpoints) hitpoints = maxhitpoints
                             addHitpoints = 0
                             break
                         case 'maxhitpoints':
@@ -83,6 +82,7 @@ class CharacterHpModifier extends Component {
                         default:
                             break
                     }
+                    if (hitpoints > maxhitpoints) hitpoints = maxhitpoints
 
                     if (hitpoints < 0) {
                         hitpoints = 0
@@ -137,7 +137,6 @@ class CharacterHpModifier extends Component {
 
 
     render() {
-        console.log(this.state)
         const { characterStats, hitpoints, maxhitpoints, user } = this.props
         const { hpNew, addHitpoints, addMaxhitpoints } = this.state
         return (
