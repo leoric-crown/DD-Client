@@ -22,7 +22,7 @@ class InitiativeRow extends Component {
     handleCharacterUpdate = (fieldsToUpdate) => {
         if (fieldsToUpdate) {
             const { character, initiative } = this.props
-            if (character.player) {
+            if ( character && character.player) {
                 this.props.dispatch(
                     patchCharacter(localStorage.getItem('DNDTOKEN'), fieldsToUpdate, character.request.url)
                 )
