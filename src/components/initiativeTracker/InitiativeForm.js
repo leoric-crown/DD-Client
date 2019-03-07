@@ -118,7 +118,7 @@ class InitiativeForm extends Component {
             })
             this.props.dispatch(postInitiative(localStorage.getItem('DNDTOKEN'), payload))
             if (this.props.onSubmit) this.props.onSubmit()
-            if (character.player) {
+            if (character && character.player) {
                const addedCharacter = characterOptions.find(c => c._id === character)
                const index = characterOptions.indexOf(addedCharacter)
                this.setState({
@@ -211,14 +211,14 @@ class InitiativeForm extends Component {
                   {
                      this.state.encounter ?
                         <CharacterSelect
-                           characters={this.state.characterOptions}
+                           characters={this.state.characterOptions.length > 0 ? this.state.characterOptions : []}
                            onChange={(value) => this.handleChange('character', value)}
                            value={this.state.character}
                         /> :
                         <div>Please select Encounter first!</div>
                   }
                   {
-                     !this.state.character.player ? (
+                     this.state.character && !this.state.character.player ? (
                         <MDBInput
                            label="Bulk"
                            className="mycheckbox"

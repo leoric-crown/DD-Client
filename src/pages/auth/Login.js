@@ -159,7 +159,7 @@ class Login extends React.Component {
                       {this.props.Errors.authErrorMessage && (
                         <MDBAlert color='danger'>
                           <MDBIcon icon='warning' />
-                          &nbsp;&nbsp;&nbsp;Incorrect email or password
+                          {`  ${this.props.Errors.authErrorMessage}`}
                       </MDBAlert>
                       )}
                       <MDBInput

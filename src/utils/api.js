@@ -13,14 +13,13 @@ const request = (method, body, token = false) => {
     headers: !token
       ? headers
       : {
-          ...headers,
-          Authorization: `Bearer ${token}`,
-          appId
-        }
+        ...headers,
+        Authorization: `Bearer ${token}`,
+        appId
+      }
   }
 
   if (body) request.body = body
-
   return request
 }
 
@@ -71,11 +70,6 @@ const getCharacters = token => {
   }).then(res => res.json())
 }
 
-// const getUserCharacters = (token) => {
-//   return fetch(`${api}/characters/`, request('GET', false, token))
-//     .then(res => res.json())
-// }
-
 export const postEncounter = (token, payload) => {
   return fetch(
     `${api}/encounters`,
@@ -112,6 +106,13 @@ export const deleteInitiative = (token, id) => {
   return fetch(
     `${api}/initiatives/${id}`,
     request('DELETE', false, token)
+  ).then(res => res.json())
+}
+
+export const bulkDeleteInitiatives = (token, payload) => {
+  return fetch(
+    `${api}/initiatives/bulk`,
+    request('DELETE', JSON.stringify(payload), token)
   ).then(res => res.json())
 }
 
@@ -155,7 +156,13 @@ export const verifyToken = token =>
     }
     return res.json()
   })
-  
+
+export const verifyEmail = token =>
+  fetch(`${api}/users/verifyEmail`, request('POST', false, token)).then(res => {
+    return res.json()
+  })
+
+
 export const restorePassword = (password, token) => {
   return fetch(
     `${api}/users/resetPassword`,
@@ -167,7 +174,7 @@ export const restorePassword = (password, token) => {
 
 export const forgotPassword = (email, callback) => {
   return fetch(
-    `${api}/users/forgotpassword`,
+    `${api}/users/forgotPassword`,
     request('POST', JSON.stringify({ email, callback }))
   )
     .then(res => res.json())

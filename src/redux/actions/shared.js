@@ -8,7 +8,8 @@ import {
   setSignUpStatus,
   setPasswordRestoreStatus,
   setForgotPasswordSuccess,
-  setForgotPasswordFailure
+  setForgotPasswordFailure,
+  setVerifyEmailStatus
 } from './errors'
 
 export function handleSignUp(payload, defaultUserPic) {
@@ -17,11 +18,12 @@ export function handleSignUp(payload, defaultUserPic) {
       .then(res => {
         // We set errors to empty object to clear previous errors
         if (res.status.code === 200) {
-          const { jwt, status, ...authedUser } = res
-          localStorage.setItem('DNDTOKEN', res.jwt)
-          dispatch(setAuthedUser(authedUser))
-          dispatch(setSignUpStatus(null, true))
-          dispatch(handleInitialData(authedUser, res.jwt))
+          // const { jwt, status, ...authedUser } = res
+          // localStorage.setItem('DNDTOKEN', res.jwt)
+          // dispatch(setAuthedUser(authedUser))
+          // dispatch(setSignUpStatus(null, true))
+          // dispatch(handleInitialData(authedUser, res.jwt))
+          dispatch(setSignUpStatus(res.status.message, true))
         } else {
           dispatch(setSignUpStatus(res.status.message, false))
         }
@@ -91,18 +93,17 @@ export function handleInitialData(user, jwt) {
 export function handlePasswordRestore(password, token) {
   return dispatch => {
     return API.restorePassword(password, token).then(res => {
-      if (res.status) {
+      if (res.status.code === 200) {
         dispatch(
           setPasswordRestoreStatus(
-            'Password changed! Please login using you new password',
+            'Password changed! You may now login using you new password',
             true
           )
         )
       } else {
-        console.log('Error occured')
         dispatch(
           setPasswordRestoreStatus(
-            'Token expired. Please restore you password again',
+            'Token expired. Please use Forgot Password again',
             false
           )
         )
@@ -117,9 +118,16 @@ export function handleForgotMyPassword(email, callback) {
       if (res.status['code'] === 200) {
         dispatch(setForgotPasswordSuccess(res.status['message']))
       } else {
-        console.log('Failure')
-        dispatch(setForgotPasswordFailure('This email does not exist'))
+        dispatch(setForgotPasswordFailure(res.status['message']))
       }
+    })
+  }
+}
+
+export function handleVerifyEmail(token, callback) {
+  return dispatch => {
+    return API.verifyEmail(token).then(res => {
+      dispatch(setVerifyEmailStatus(res.status.code, res.status.message))
     })
   }
 }

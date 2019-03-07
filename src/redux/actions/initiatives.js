@@ -7,12 +7,15 @@ export const DELETE_INITIATIVE = 'DELETE_INITIATIVE'
 export const REMOVE_INITIATIVE = 'REMOVE_INITIATIVE'
 export const SET_NEXT_TURN = 'SET_NEXT_TURN'
 export const UPDATE_INITIATIVE_STAMP = 'UPDATE_INITIATIVE_STAMP'
+export const BULK_REMOVE_INITIATIVES = 'BULK_REMOVE_INITIATIVES'
+
 export const initiativeWsActions = [
     CREATE_INITIATIVE,
     UPDATE_INITIATIVE,
     REMOVE_INITIATIVE,
     SET_NEXT_TURN,
-    UPDATE_INITIATIVE_STAMP
+    UPDATE_INITIATIVE_STAMP,
+    BULK_REMOVE_INITIATIVES
 ]
 
 export function postInitiative(token, payload) {
@@ -28,7 +31,7 @@ export function patchInitiative(token, payload, url) {
     return (dispatch) => {
         return API.patchByUrl(token, payload, url)
             .then(response => {
-                if(response.status.code === 200) {
+                if (response.status.code === 200) {
                     dispatch(updateInitiative(payload, response._id))
                 }
             })
@@ -58,10 +61,29 @@ export function deleteInitiative(token, id) {
     }
 }
 
+export function bulkDeleteInitiatives(token, payload, callback) {
+    return (dispatch) => {
+        return API.bulkDeleteInitiatives(token, payload)
+            .then(response => {
+                if (response.status.code === 200) {
+                    dispatch(bulkRemoveInitiatives(payload))
+                }
+                if (callback) callback()
+            })
+    }
+}
+
 export function removeInitiative(id) {
     return {
         type: REMOVE_INITIATIVE,
         id
+    }
+}
+
+export function bulkRemoveInitiatives(payload) {
+    return {
+        type: BULK_REMOVE_INITIATIVES,
+        list: payload.list
     }
 }
 export function updateInitiative(payload, id) {

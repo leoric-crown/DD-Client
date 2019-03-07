@@ -45,7 +45,7 @@ class ForgotPassword extends Component {
       errors: {}
     })
 
-    // While the ajax call finsheds we don't want the user spamming the submit button
+    // While the http request finishes we don't want the user spamming the submit button
     this.setState({
       showSubmitButton: false
     })
@@ -74,7 +74,6 @@ class ForgotPassword extends Component {
           })
       })
       .catch(errors => {
-        console.log(errors)
         this.setState({
           showSubmitButton: true
         })
@@ -138,19 +137,18 @@ class ForgotPassword extends Component {
                 )}
                 <br />
                 <br />
-                {this.state.showSubmitButton && (
                   <div className='text-center mb-3'>
                     <MDBBtn
                       type='button'
+                      disabled = {!this.state.showSubmitButton}
                       color='red'
                       rounded
                       className='btn-block z-depth-1a'
-                      onClick={() => this.handleSubmit()}
+                      onClick={this.handleSubmit}
                     >
                       Submit
                     </MDBBtn>
                   </div>
-                )}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

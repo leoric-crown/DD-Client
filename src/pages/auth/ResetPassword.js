@@ -15,7 +15,6 @@ import {
 } from 'mdbreact'
 import { connect } from 'react-redux'
 import qs from 'query-string'
-import '../../App.css'
 
 class ResetPassword extends Component {
   state = {
@@ -96,11 +95,11 @@ class ResetPassword extends Component {
                 pathname: '/'
               })
             } else {
-              setTimeout(() => {
-                this.props.history.push({
-                  pathname: '/'
-                })
-              }, 4000)
+              // setTimeout(() => {
+              //   this.props.history.push({
+              //     pathname: '/'
+              //   })
+              // }, 4000)
             }
           })
       })

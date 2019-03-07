@@ -27,7 +27,7 @@ class TurnTracker extends Component {
         const characters = this.props.Characters.list
             .filter(character => {
                 const ids = initiatives.map(i => {
-                    return i.character._id
+                    return i.character ? i.character._id : false
                 })
                 return ids.includes(character._id)
             })
@@ -71,7 +71,7 @@ class TurnTracker extends Component {
             const characters = this.props.Characters.list
                 .filter(character => {
                     const ids = initiatives.map(i => {
-                        return i.character._id
+                        return i.character ? i.character._id : false
                     })
                     return ids.includes(character._id)
                 })
