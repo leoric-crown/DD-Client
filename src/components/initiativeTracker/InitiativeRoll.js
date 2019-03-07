@@ -100,7 +100,7 @@ class InitiativeRoll extends Component {
                                         <div>{initiative}</div>
                                     </div>
                                     {newInitiative !== initiative && (
-                                        <div>
+                                        <div style={{cursor: 'pointer'}}>
                                             <h3>New Roll</h3>
                                             <div title="New Initiative Roll">
                                                 <FaDiceD20 color="darkred" />
@@ -126,7 +126,7 @@ class InitiativeRoll extends Component {
                         </MDBContainer>
                     </MyMDBModal>
                 )}
-                <div title="Initiative Roll" className="initiative-roll-display" onClick={canEdit ? this.openModal : () => {}}>
+                <div style={{cursor: 'pointer'}} title="Initiative Roll" className="initiative-roll-display" onClick={canEdit ? this.openModal : () => {}}>
                     <FaDiceD20 color="darkred" size="2rem" />
                     { canView && <div style={{ paddingTop: '0.3rem' }}>{initiative}</div>}
                 </div>

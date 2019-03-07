@@ -22,11 +22,11 @@ const CharacterControlDisplay = (props) => {
                     </div>
                 ) : (
                     <div className="character-control-display" onClick={canEdit ? props.onClick : () => {}}>
-                        <div title="Armor Class" className="character-control-stat-icon">
+                        <div style={{cursor: 'pointer'}} title="Armor Class" className="character-control-stat-icon">
                             <FaShieldAlt color="darkred" />
                             {canView && <div>{armorclass}</div>}
                         </div>
-                        <div title="Level" className="character-control-stat-icon" onClick={canEdit ? props.onClick : () => {}}>
+                        <div style={{cursor: 'pointer'}} title="Level" className="character-control-stat-icon" onClick={canEdit ? props.onClick : () => {}}>
                             <FaUserShield color="darkred" />
                             {canView && <div>{level}</div>}
                         </div>

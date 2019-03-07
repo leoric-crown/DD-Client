@@ -21,7 +21,7 @@ const CharacterHpBar = props => {
     const canEdit = user && (user.isDM || characterStats.user === user._id)
     const canView = user && (user.isDM || characterStats.player)
     return (
-        <div className='hp-bar' onClick={ canEdit ? props.onClick : () => {}}>
+        <div style={{cursor: 'pointer'}} className='hp-bar' onClick={ canEdit ? props.onClick : () => {}}>
             <div className='hp-bar-text'>
                 <FaHeartbeat className='hp-bar-hitpoints-icon' /> {canView && `${props.hitpoints} / ${props.maxhitpoints}`}
             </div>
