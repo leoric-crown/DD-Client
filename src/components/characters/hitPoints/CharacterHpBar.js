@@ -4,14 +4,15 @@ import gradient from 'gradient-color'
 
 const getProgressBarStyle = (percentage) => {
     if (percentage > 100) percentage = 100
+    const numSteps = 10
     const colors = gradient([
         '#930002',
         '#E0C600',
         '#009607'
-    ], 10)
+    ], numSteps)
     return {
         width: `${percentage}%`,
-        backgroundColor: colors[Math.floor(((percentage - 0.001) / 10) % 10)]
+        backgroundColor: colors[Math.floor(((percentage - 0.001) / numSteps) % numSteps)]
     }
 }
 

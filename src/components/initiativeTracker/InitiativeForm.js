@@ -4,6 +4,7 @@ import { postInitiative } from '../../redux/actions/initiatives'
 import EncounterSelect from '../encounters/EncounterSelect'
 import CharacterSelect from '../characters/CharacterSelect'
 import { validateAll } from 'indicative'
+import { connect } from 'react-redux'
 
 const sortByName = (a, b) => {
    if (a.name < b.name) return -1
@@ -24,8 +25,8 @@ class InitiativeForm extends Component {
       let encounter = false
       if (this.props.setEncounter) {
          encounter = this.props.setEncounter
-      } else if (this.props.Encounters && this.props.Encounters.list && this.props.Encounters.list.length > 0) {
-         encounter = this.props.Encounters.list.sort(sortByName)[0]
+      } else if (this.props.encounters && this.props.encounters && this.props.encounters.length > 0) {
+         encounter = this.props.encounters.sort(sortByName)[0]
       }
       const characterOptions = this.filterCharacters(encounter)
       const character = characterOptions.length > 0 ? characterOptions[0] : false
@@ -48,7 +49,7 @@ class InitiativeForm extends Component {
                encounter: this.props.setEncounter
             })
          }
-         if (this.props.Initiatives.list.length !== prevProps.Initiatives.list.length) {
+         if (this.props.initiatives.length !== prevProps.initiatives.length) {
             const characterOptions = this.filterCharacters(this.state.encounter)
             const found = characterOptions.find(c => c._id === prevState.character._id)
             let newCharacter = prevState.character
@@ -62,7 +63,7 @@ class InitiativeForm extends Component {
             })
          }
       } else {
-         if (this.state.encounter && prevProps.Initiatives.list.length !== this.props.Initiatives.list.length) {
+         if (this.state.encounter && prevProps.initiatives.length !== this.props.initiatives.length) {
             this.setState({
                characterOptions: this.filterCharacters(this.state.encounter)
             })
@@ -72,9 +73,9 @@ class InitiativeForm extends Component {
 
    filterCharacters(encounter) {
       if (!encounter) return []
-      const { Characters, Initiatives } = this.props
-      let characterList = Characters.list
-      const initiativeList = Initiatives.list
+      const { characters, initiatives } = this.props
+      let characterList = characters
+      const initiativeList = initiatives
       if (encounter) {
          let encounterPlayerCharacterIds = initiativeList.filter(initiative => {
             return ((initiative.encounter === encounter._id) && (initiative.characterStamp.player))
@@ -116,6 +117,7 @@ class InitiativeForm extends Component {
                errors: {}
             })
             this.props.dispatch(postInitiative(localStorage.getItem('DNDTOKEN'), payload))
+            if (this.props.onSubmit) this.props.onSubmit()
             if (character.player) {
                const addedCharacter = characterOptions.find(c => c._id === character)
                const index = characterOptions.indexOf(addedCharacter)
@@ -195,9 +197,9 @@ class InitiativeForm extends Component {
                      </MDBAlert>
                   )}
                   {
-                     this.props.Encounters.list && (
+                     this.props.encounters && (
                         <EncounterSelect
-                           encounters={this.props.Encounters.list.sort(sortByName)}
+                           encounters={this.props.encounters.sort(sortByName)}
                            onChange={value => this.handleChange('encounter', value)}
                            value={this.state.encounter}
                            isDisabled={this.props.setEncounter ? true : false}
@@ -274,4 +276,11 @@ class InitiativeForm extends Component {
    }
 }
 
-export default InitiativeForm
+function mapStateToProps({ Initiatives, Encounters, Characters }) {
+   return {
+      initiatives: Initiatives.list,
+      encounters: Encounters.list
+   }
+}
+
+export default connect(mapStateToProps)(InitiativeForm)
