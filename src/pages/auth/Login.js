@@ -195,7 +195,7 @@ class Login extends React.Component {
                       )}
                       <p className='font-small blue-text d-flex justify-content-end pb-3'>
                         Forgot
-                      <a href='#!' className='blue-text ml-1'>
+                      <a href='/forgotpassword' className='blue-text ml-1'>
                           Password?
                       </a>
                       </p>

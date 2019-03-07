@@ -8,6 +8,8 @@ import Encounters from './pages/Encounters'
 import InitiativeTracker from './pages/InitiativeTracker'
 import NotFound from './pages/NotFound'
 import UserControl from './pages/UserControl'
+import ResetPassword from './pages/auth/ResetPassword'
+import ForgotPassword from './pages/auth/ForgotPassword'
 import { Route, Switch } from 'react-router-dom'
 import "font-awesome/css/font-awesome.min.css"
 import "bootstrap-css-only/css/bootstrap.min.css"
@@ -27,6 +29,8 @@ class App extends Component {
           <Route exact path='/encounters' component={Encounters} />
           <Route exact path='/initiativeTracker' component={InitiativeTracker} />
           <Route exact path='/user' component={UserControl} />
+          <Route exact path='/resetpassword' component={ResetPassword} />
+          <Route exact path='/forgotpassword' component={ForgotPassword} />
           <Route component={NotFound} code={404}/>
         </Switch>
       </div>

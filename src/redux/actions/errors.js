@@ -1,6 +1,9 @@
 export const CHECK_AUTH_STATUS = 'CHECK_AUTH_STATUS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 export const CHECK_SIGNUP_STATUS = 'CHECK_SIGNUP_STATUS'
+export const CHECK_PASSWORD_RESTORE_STATUS = 'CHECK_PASSWORD_RESTORE_STATUS'
+export const SET_PASSWORD_FORGET_SUCCESS = 'SET_PASSWORD_FORGET_SUCCESS'
+export const SET_PASSWORD_FORGET_FAILURE = 'SET_PASSWORD_FORGET_FAILURE'
 
 export function setAuthStatus (message, authSuccess) {
     return {
@@ -22,6 +25,29 @@ export function setSignUpStatus (message, signUpSuccess) {
         message,
         signUpSuccess
 
+    }
+}
+
+export function setPasswordRestoreStatus (message, status) {
+    return {
+        type: CHECK_PASSWORD_RESTORE_STATUS,
+        message,
+        status
+    }
+}
+
+export function setForgotPasswordSuccess (message) {
+    return {
+        type: SET_PASSWORD_FORGET_SUCCESS,
+        message
+    }
+}
+
+export function setForgotPasswordFailure (message) {
+    console.log(message)
+    return {
+        type: SET_PASSWORD_FORGET_FAILURE,
+        message
     }
 }
 
