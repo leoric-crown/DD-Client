@@ -20,12 +20,14 @@ const verifyToken = (token) => {
 }
 
 export function checkToken(token, pathname = false) {
+  console.log("check token")
   verifyToken(token)
     .then((user) => {
       if (user) {
+        console.log(pathname)
         this.props.dispatch(setAuthedUser(user))
         this.props.dispatch(handleInitialData(user, token))
-        if (pathname) this.props.history.push({
+        this.props.history.push({
           pathname: pathname ? pathname : '/characters'
         })
       } else {
