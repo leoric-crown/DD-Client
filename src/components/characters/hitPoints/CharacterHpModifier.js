@@ -46,7 +46,10 @@ class CharacterHpModifier extends Component {
         this.setState({
             addHitpoints: 0,
             addMaxhitpoints: 0,
-            hpNew: this.state.hpCurrent
+            hpNew: {
+                hitpoints: this.props.hitpoints,
+                maxhitpoints: this.props.maxhitpoints
+            }
         })
     }
 
