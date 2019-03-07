@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { validateAll } from 'indicative'
-import { handlePasswordRestore } from '../../redux/actions/shared'
-import { logoutUser } from '../../redux/actions/authedUser'
+import { handleForgotMyPassword } from '../../redux/actions/shared'
+import { connect } from 'react-redux'
+import { clearErrors } from '../../redux/actions/errors'
 import {
   MDBContainer,
   MDBRow,
@@ -13,32 +14,12 @@ import {
   MDBAlert,
   MDBIcon
 } from 'mdbreact'
-import { connect } from 'react-redux'
-import qs from 'query-string'
-import '../../App.css'
 
-class ResetPassword extends Component {
+class ForgotPassword extends Component {
   state = {
-    password: '',
-    password_confirmation: '',
-    token: '',
-    showSubmitButton: true,
-    errors: {}
-  }
-
-  componentDidMount() {
-    const token = qs.parse(this.props.location.search, {
-      ignoreQueryPrefix: true
-    }).token
-    if (!token) {
-      this.props.history.push({
-        pathname: '/'
-      })
-    } else {
-      this.setState({
-        token
-      })
-    }
+    email: '',
+    errors: {},
+    showSubmitButton: true
   }
 
   handleKeyDown = event => {
@@ -59,6 +40,7 @@ class ResetPassword extends Component {
 
   handleSubmit = () => {
     // Clear previous errors
+    this.props.dispatch(clearErrors())
     this.setState({
       errors: {}
     })
@@ -70,41 +52,29 @@ class ResetPassword extends Component {
     const data = this.state
 
     const rules = {
-      password: 'required|string|min:3|confirmed'
+      email: 'required|email'
     }
 
     const messages = {
       required: 'Please fill in the {{ field }} field',
-      'password.confirmed': 'Password do not match',
-      'password.min': 'Password has to be at least 3 characters long'
+      'email.email': 'Please type a valid email'
     }
 
     validateAll(data, rules, messages)
       .then(() => {
         this.props
           .dispatch(
-            handlePasswordRestore(this.state.password, this.state.token)
+            handleForgotMyPassword(this.state.email, window.location.origin)
           )
           .then(() => {
-            if (!this.props.Errors.passwordRestoreSuccess) {
-              this.props.dispatch(
-                logoutUser(
-                  'Token expired. Please follow the steps to restore password again'
-                )
-              )
-              this.props.history.push({
-                pathname: '/'
+            if (!this.props.Errors.forgotPasswordSuccessMessage)
+              this.setState({
+                showSubmitButton: true
               })
-            } else {
-              setTimeout(() => {
-                this.props.history.push({
-                  pathname: '/'
-                })
-              }, 4000)
-            }
           })
       })
       .catch(errors => {
+        console.log(errors)
         this.setState({
           showSubmitButton: true
         })
@@ -134,44 +104,36 @@ class ResetPassword extends Component {
                       }
                       icon='arrow-left'
                     />
-                    <strong>&nbsp;Restore Your Password</strong>
+                    <strong>&nbsp;Forgot my password</strong>
                   </h3>
+                  Please enter your email
                 </div>
-                {this.props.Errors.passwordRestoreSuccess && (
+                {this.props.Errors.forgotPasswordSuccessMessage && (
                   <MDBAlert color='success'>
                     <MDBIcon icon='check' />
                     &nbsp;&nbsp;&nbsp;
-                    {this.props.Errors.passwordRestoreSuccessMessage}
+                    {this.props.Errors.forgotPasswordSuccessMessage}
+                  </MDBAlert>
+                )}
+                {this.props.Errors.forgotPasswordFailMessage && (
+                  <MDBAlert color='danger'>
+                    <MDBIcon icon='warning' />
+                    &nbsp;&nbsp;&nbsp;
+                    {this.props.Errors.forgotPasswordFailMessage}
                   </MDBAlert>
                 )}
                 <MDBInput
-                  label='Password'
-                  type='password'
-                  icon='lock'
+                  label='Email'
+                  type='email'
+                  icon='envelope'
                   containerClass='mb-0'
                   required={true}
-                  getValue={e => this.handleInputChange('password', e)}
+                  getValue={e => this.handleInputChange('email', e)}
                 />
-                {this.state.errors.firstName && (
+                {this.state.errors.email && (
                   <MDBAlert color='danger'>
                     <MDBIcon icon='warning' />
-                    &nbsp;&nbsp;&nbsp;{this.state.errors.firstName}
-                  </MDBAlert>
-                )}
-                <MDBInput
-                  label='Password Confirmation'
-                  type='password'
-                  icon='check'
-                  containerClass='mb-0'
-                  required={false}
-                  getValue={e =>
-                    this.handleInputChange('password_confirmation', e)
-                  }
-                />
-                {this.state.errors.password && (
-                  <MDBAlert color='danger'>
-                    <MDBIcon icon='warning' />
-                    &nbsp;&nbsp;&nbsp;{this.state.errors.password}
+                    &nbsp;&nbsp;&nbsp;{this.state.errors.email}
                   </MDBAlert>
                 )}
                 <br />
@@ -185,7 +147,7 @@ class ResetPassword extends Component {
                       className='btn-block z-depth-1a'
                       onClick={() => this.handleSubmit()}
                     >
-                      Restore
+                      Submit
                     </MDBBtn>
                   </div>
                 )}
@@ -198,10 +160,10 @@ class ResetPassword extends Component {
   }
 }
 
-function mapStateToProps({ User, Errors }) {
+function mapStateToProps({ Errors }) {
   return {
     Errors
   }
 }
 
-export default connect(mapStateToProps)(ResetPassword)
+export default connect(mapStateToProps)(ForgotPassword)

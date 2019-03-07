@@ -3,7 +3,13 @@ import { receiveCharacters } from './characters'
 import { receiveEncounters } from './encounters'
 import { receiveInitiatives } from './initiatives'
 import { setAuthedUser } from './authedUser'
-import { setAuthStatus, setSignUpStatus, setPasswordRestoreStatus } from './errors'
+import {
+  setAuthStatus,
+  setSignUpStatus,
+  setPasswordRestoreStatus,
+  setForgotPasswordSuccess,
+  setForgotPasswordFailure
+} from './errors'
 
 export function handleSignUp(payload, defaultUserPic) {
   return dispatch => {
@@ -86,12 +92,34 @@ export function handlePasswordRestore(password, token) {
   return dispatch => {
     return API.restorePassword(password, token).then(res => {
       if (res.status) {
-        dispatch(setPasswordRestoreStatus('Password changed! Please login using you new password', true))
+        dispatch(
+          setPasswordRestoreStatus(
+            'Password changed! Please login using you new password',
+            true
+          )
+        )
       } else {
         console.log('Error occured')
-        dispatch(setPasswordRestoreStatus('Token expired. Please restore you password again', false))
+        dispatch(
+          setPasswordRestoreStatus(
+            'Token expired. Please restore you password again',
+            false
+          )
+        )
       }
     })
   }
 }
 
+export function handleForgotMyPassword(email, callback) {
+  return dispatch => {
+    return API.forgotPassword(email, callback).then(res => {
+      if (res.status['code'] === 200) {
+        dispatch(setForgotPasswordSuccess(res.status['message']))
+      } else {
+        console.log('Failure')
+        dispatch(setForgotPasswordFailure('This email does not exist'))
+      }
+    })
+  }
+}

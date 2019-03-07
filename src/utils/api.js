@@ -164,3 +164,12 @@ export const restorePassword = (password, token) => {
     .then(res => res.json())
     .catch(err => err)
 }
+
+export const forgotPassword = (email, callback) => {
+  return fetch(
+    `${api}/users/forgotpassword`,
+    request('POST', JSON.stringify({ email, callback }))
+  )
+    .then(res => res.json())
+    .catch(err => err)
+}
