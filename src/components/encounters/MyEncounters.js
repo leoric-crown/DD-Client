@@ -4,7 +4,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { connect } from 'react-redux'
-import { deleteEncounter, changeActiveEncounter } from '../../redux/actions/encounters'
+import { deleteEncounter, changeActiveEncounter, clearActiveEncounter } from '../../redux/actions/encounters'
 import { FaStar } from 'react-icons/fa'
 import MyMDBModal from '../modal/MDBModal';
 import InitiativeForm from '../initiativeTracker/InitiativeForm'
@@ -30,6 +30,7 @@ class MyEncounters extends Component {
           list: encounterInitiatives.map(i => i._id)
         },
         () => {
+          if (this.props.encounter.status === 'Active') this.props.dispatch(clearActiveEncounter())
           this.props.dispatch(deleteEncounter(
             localStorage.getItem('DNDTOKEN'),
             this.props.encounter._id
@@ -37,6 +38,7 @@ class MyEncounters extends Component {
         }
       ))
     }
+    if(this.props.encounter.status === 'Active') this.props.dispatch(clearActiveEncounter())
     this.props.dispatch(
       deleteEncounter(localStorage.getItem('DNDTOKEN'),
         this.props.encounter._id
