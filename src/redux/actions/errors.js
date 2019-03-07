@@ -45,17 +45,17 @@ export function setForgotPasswordSuccess (message) {
 }
 
 export function setForgotPasswordFailure (message) {
-    console.log(message)
     return {
         type: SET_PASSWORD_FORGET_FAILURE,
         message
     }
 }
 
-export function setVerifyEmailStatus (success, message) {
+export function setVerifyEmailStatus (code, message) {
     return {
         type: SET_VERIFY_EMAIL_STATUS,
-        success,
+        success: code === 200 ? true : false,
+        code,
         message
     }
 }

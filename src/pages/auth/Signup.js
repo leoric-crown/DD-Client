@@ -26,7 +26,8 @@ class Signup extends React.Component {
     password: '',
     serverError: false,
     serverErrorMessage: '',
-    errors: {}
+    errors: {},
+    signUpSuccess: false
   }
 
   handleKeyDown = event => {
@@ -70,9 +71,14 @@ class Signup extends React.Component {
         this.props.dispatch(handleSignUp(payload, defaultUserPic))
           .then(() => {
             if (this.props.Errors.signUpSuccess) {
-              this.props.history.push({
-                pathname: '/characters'
+              this.setState({
+                signUpSuccess: true
               })
+              setTimeout(() => {
+                this.props.history.push({
+                  pathname: '/'
+                })
+              }, 3000)
             }
           })
       })
@@ -110,6 +116,17 @@ class Signup extends React.Component {
                   <MDBAlert color='danger'>
                     <MDBIcon icon='warning' />
                     &nbsp;&nbsp;&nbsp;{this.props.Errors.signUpErrorMessage}
+                  </MDBAlert>
+                )}
+                {this.state.signUpSuccess && (
+                  <MDBAlert color='success'>
+                    <span className="d-flex justify-content-center">
+                      <MDBIcon icon='check' />
+                      <div className='text-center'>
+                        Sign-up success! Please check your e-mail to verify your identity.
+                        You will be redirected soon
+                      </div>
+                    </span>
                   </MDBAlert>
                 )}
                 <MDBInput
@@ -150,8 +167,8 @@ class Signup extends React.Component {
                   getValue={e => this.handleInputChange('email', e)}
                 />
                 {this.state.errors.email && (
-                  <MDBAlert color='danger'>
-                    <MDBIcon icon='warning' />
+                  <MDBAlert color='success'>
+                    <MDBIcon icon='check' />
                     &nbsp;&nbsp;&nbsp;{this.state.errors.email}
                   </MDBAlert>
                 )}

@@ -48,7 +48,7 @@ class VerifyEmail extends Component {
 
    render() {
       const { verifyEmailStatus } = this.state
-      console.log(this.state)
+      console.log(verifyEmailStatus)
       return (
          <MDBContainer className='login-signup'>
             <MDBRow className='d-flex justify-content-center'>
@@ -62,7 +62,7 @@ class VerifyEmail extends Component {
                         }
                         {verifyEmailStatus && 
                            <MDBAlert color={verifyEmailStatus.success ? 'success' : 'danger'}>
-                              <MDBIcon icon={verifyEmailStatus.success ? 'check' : 'warning'} />
+                              <MDBIcon icon={verifyEmailStatus.success ? 'check' : 'warning'}/>
                               &nbsp;&nbsp;&nbsp;
                            {verifyEmailStatus.message}
                            <br/>
