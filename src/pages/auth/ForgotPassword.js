@@ -45,7 +45,7 @@ class ForgotPassword extends Component {
       errors: {}
     })
 
-    // While the ajax call finsheds we don't want the user spamming the submit button
+    // While the ajax call finishes we don't want the user spamming the submit button
     this.setState({
       showSubmitButton: false
     })

@@ -8,7 +8,8 @@ import {
   setSignUpStatus,
   setPasswordRestoreStatus,
   setForgotPasswordSuccess,
-  setForgotPasswordFailure
+  setForgotPasswordFailure,
+  setVerifyEmailStatus
 } from './errors'
 
 export function handleSignUp(payload, defaultUserPic) {
@@ -120,6 +121,14 @@ export function handleForgotMyPassword(email, callback) {
         console.log('Failure')
         dispatch(setForgotPasswordFailure('This email does not exist'))
       }
+    })
+  }
+}
+
+export function handleVerifyEmail(token, callback) {
+  return dispatch => {
+    return API.verifyEmail(token).then(res => {
+      dispatch(setVerifyEmailStatus(res.status.code === 200, res.status.message))
     })
   }
 }

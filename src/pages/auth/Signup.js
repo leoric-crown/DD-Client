@@ -11,7 +11,7 @@ import {
   MDBIcon
 } from 'mdbreact'
 import { connect } from 'react-redux'
-import {  handleSignUp } from '../../redux/actions/shared'
+import { handleSignUp } from '../../redux/actions/shared'
 import { validateAll } from 'indicative'
 import { clearErrors } from '../../redux/actions/errors';
 
@@ -66,6 +66,7 @@ class Signup extends React.Component {
     validateAll(data, rules, messages)
       .then(() => {
         const { errors, serverError, serverErrorMessage, ...payload } = this.state
+        payload.callback = window.location.origin
         this.props.dispatch(handleSignUp(payload, defaultUserPic))
           .then(() => {
             if (this.props.Errors.signUpSuccess) {

@@ -13,10 +13,10 @@ const request = (method, body, token = false) => {
     headers: !token
       ? headers
       : {
-          ...headers,
-          Authorization: `Bearer ${token}`,
-          appId
-        }
+        ...headers,
+        Authorization: `Bearer ${token}`,
+        appId
+      }
   }
 
   if (body) request.body = body
@@ -155,7 +155,13 @@ export const verifyToken = token =>
     }
     return res.json()
   })
-  
+
+export const verifyEmail = token =>
+  fetch(`${api}/users/verifyEmail`, request('POST', false, token)).then(res => {
+    return res.json()
+  })
+
+
 export const restorePassword = (password, token) => {
   return fetch(
     `${api}/users/resetPassword`,
@@ -167,7 +173,7 @@ export const restorePassword = (password, token) => {
 
 export const forgotPassword = (email, callback) => {
   return fetch(
-    `${api}/users/forgotpassword`,
+    `${api}/users/forgotPassword`,
     request('POST', JSON.stringify({ email, callback }))
   )
     .then(res => res.json())

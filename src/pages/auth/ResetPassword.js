@@ -15,7 +15,6 @@ import {
 } from 'mdbreact'
 import { connect } from 'react-redux'
 import qs from 'query-string'
-import '../../App.css'
 
 class ResetPassword extends Component {
   state = {
