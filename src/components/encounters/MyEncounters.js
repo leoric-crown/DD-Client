@@ -9,6 +9,7 @@ import { FaStar } from 'react-icons/fa'
 import MyMDBModal from '../modal/MDBModal';
 import InitiativeForm from '../initiativeTracker/InitiativeForm'
 import { withRouter } from 'react-router-dom'
+import { bulkDeleteInitiatives } from '../../redux/actions/initiatives'
 
 class MyEncounters extends Component {
   constructor(props) {
@@ -19,10 +20,27 @@ class MyEncounters extends Component {
   }
 
   handleDelete = () => {
-    /* TODO: (DM ONLY) Warn the DM if there are any Initiatives in that Encounter
-              if DM chooses to delete anyway, get rid of all Initiative documents related to Encounter
-    */
-    this.props.dispatch(deleteEncounter(localStorage.getItem('DNDTOKEN'), this.props.encounter._id))
+    const encounterInitiatives = this.props.Initiatives.list.filter(i => {
+      return i.encounter === this.props.encounter._id
+    })
+    if (encounterInitiatives.length > 0) {
+      alert('deleting all encounter initiatives before deleting encounter')
+      this.props.dispatch(bulkDeleteInitiatives(
+        localStorage.getItem('DNDTOKEN'), {
+          list: encounterInitiatives.map(i => i._id)
+        },
+        () => {
+          this.props.dispatch(deleteEncounter(
+            localStorage.getItem('DNDTOKEN'),
+            this.props.encounter._id
+          ))
+        }
+      ))
+    }
+    this.props.dispatch(
+      deleteEncounter(localStorage.getItem('DNDTOKEN'),
+        this.props.encounter._id
+      ))
   }
 
   handleSetActive = () => {
@@ -52,7 +70,7 @@ class MyEncounters extends Component {
       setEncounter: encounter,
       dispatch: this.props.dispatch,
       onSubmit: this.handleJoinEncounter
-  }
+    }
     return (
       <React.Fragment>
         {this.state.joinEncounter && (
@@ -67,7 +85,7 @@ class MyEncounters extends Component {
               header: `Join Encounter: ${encounter.name}`,
               confirm: 'Join'
             }}>
-              <InitiativeForm {...InitiativeFormAttributes} />
+            <InitiativeForm {...InitiativeFormAttributes} />
           </MyMDBModal>
         )}
         <MDBContainer className="">
@@ -129,9 +147,10 @@ class MyEncounters extends Component {
   }
 }
 
-function mapStateToProps({ Characters }) {
+function mapStateToProps({ Characters, Initiatives }) {
   return {
-    Characters
+    Characters,
+    Initiatives
   }
 }
 

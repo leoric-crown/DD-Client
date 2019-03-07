@@ -5,7 +5,8 @@ import {
   CHECK_PASSWORD_RESTORE_STATUS,
   SET_PASSWORD_FORGET_SUCCESS,
   SET_PASSWORD_FORGET_FAILURE,
-  SET_VERIFY_EMAIL_STATUS
+  SET_VERIFY_EMAIL_STATUS,
+  SET_DELETE_WARNING
 } from '../actions/errors'
 
 const defaultState = {
@@ -55,6 +56,14 @@ export default function Errors(state = defaultState, action) {
       return {
         ...state,
         verifyEmail: {
+          success: action.success,
+          message: action.message
+        }
+      }
+    case SET_DELETE_WARNING:
+      return {
+        ...state,
+        deleteWarning: {
           success: action.success,
           message: action.message
         }

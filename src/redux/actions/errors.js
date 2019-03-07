@@ -5,6 +5,7 @@ export const CHECK_PASSWORD_RESTORE_STATUS = 'CHECK_PASSWORD_RESTORE_STATUS'
 export const SET_PASSWORD_FORGET_SUCCESS = 'SET_PASSWORD_FORGET_SUCCESS'
 export const SET_PASSWORD_FORGET_FAILURE = 'SET_PASSWORD_FORGET_FAILURE'
 export const SET_VERIFY_EMAIL_STATUS = 'SET_VERIFY_EMAIL_STATUS'
+export const SET_DELETE_WARNING = 'SET_DELETE_WARNING'
 
 export function setAuthStatus (message, authSuccess) {
     return {
@@ -54,6 +55,15 @@ export function setForgotPasswordFailure (message) {
 export function setVerifyEmailStatus (code, message) {
     return {
         type: SET_VERIFY_EMAIL_STATUS,
+        success: code === 200 ? true : false,
+        code,
+        message
+    }
+}
+
+export function setDeleteWarning (code, message) {
+    return {
+        type: SET_DELETE_WARNING,
         success: code === 200 ? true : false,
         code,
         message

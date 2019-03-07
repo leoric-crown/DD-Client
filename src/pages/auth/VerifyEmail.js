@@ -48,7 +48,6 @@ class VerifyEmail extends Component {
 
    render() {
       const { verifyEmailStatus } = this.state
-      console.log(verifyEmailStatus)
       return (
          <MDBContainer className='login-signup'>
             <MDBRow className='d-flex justify-content-center'>

@@ -6,14 +6,36 @@ import "mdbreact/dist/css/mdb.css";
 import config from '../../config.json';
 import { connect } from 'react-redux'
 import { deleteCharacter } from '../../redux/actions/characters'
+import { bulkDeleteInitiatives } from '../../redux/actions/initiatives'
 
 class MyCharacters extends Component {
    handleDelete = () => {
-      /* TODO: If the Character is a Player Character and is in any Encounter, warn the user.
-               Don't allow non-DM users to delete Characters which are in any Encounter.
-               Give DM option to delete anyway after bulk deleting that Character's records from Initiatives
-      */
-      this.props.dispatch(deleteCharacter(localStorage.getItem('DNDTOKEN'), this.props.character._id))
+      if (this.props.character.player) {
+         const characterInitiatives = this.props.Initiatives.list.filter(i => {
+            return i.characterStamp._id === this.props.character._id
+         })
+         if (characterInitiatives.length > 0) {
+            alert('deleting character initiatives...')
+            this.props.dispatch(bulkDeleteInitiatives(
+               localStorage.getItem('DNDTOKEN'), {
+                  list: characterInitiatives.map(i => i._id)
+               },
+               () => {
+                  this.props.dispatch(deleteCharacter(
+                     localStorage.getItem('DNDTOKEN'),
+                     this.props.character._id)
+                  )
+               }
+            ))
+         }
+      } else {
+         this.props.dispatch(deleteCharacter(
+            localStorage.getItem('DNDTOKEN'),
+            this.props.character._id)
+         )
+      }
+
+
    }
 
    render() {
@@ -108,4 +130,10 @@ class MyCharacters extends Component {
    }
 }
 
-export default connect()(MyCharacters)
+function mapStateToProps({ Initiatives }) {
+   return {
+      Initiatives
+   }
+}
+
+export default connect(mapStateToProps)(MyCharacters)

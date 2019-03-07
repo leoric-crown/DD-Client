@@ -14,7 +14,7 @@ class Characters extends React.Component {
          editing: false,
          lastClicked: 'Characters',
          message: '',
-         displayMessage: 'will receive here',
+         displayMessage: false,
       }
 
    }
@@ -79,6 +79,9 @@ class Characters extends React.Component {
                               <strong>{this.state.activeButtonMyCharacters ? 'Characters' : 'Create Character'}</strong>
                            </h1>
                         </div>
+                        {this.props.Errors.deleteWarning && (
+                           <h2>{this.props.Errors.deleteWarning.message}</h2>
+                        )}
                         {this.state.activeButtonMyCharacters
                            ?
                            <div>
@@ -129,13 +132,14 @@ class Characters extends React.Component {
    }
 }
 
-function mapStateToProps({ User, Characters }) {
+function mapStateToProps({ User, Characters, Errors}) {
    const filteredCharacters = { ...Characters }
    if (filteredCharacters.list && !User.isDM) filteredCharacters.list = filteredCharacters.list
       .filter(character => character.user === User._id)
    return {
       User,
-      Characters: filteredCharacters
+      Characters: filteredCharacters,
+      Errors
    }
 
 }

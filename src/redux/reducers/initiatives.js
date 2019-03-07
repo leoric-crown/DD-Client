@@ -4,7 +4,8 @@ import {
     REMOVE_INITIATIVE,
     UPDATE_INITIATIVE_STAMP,
     UPDATE_INITIATIVE,
-    SET_NEXT_TURN
+    SET_NEXT_TURN,
+    BULK_REMOVE_INITIATIVES
 } from '../actions/initiatives'
 
 const defaultState = {
@@ -13,6 +14,7 @@ const defaultState = {
 }
 
 export default function Initiatives(state = defaultState, action) {
+    let list
     switch (action.type) {
         case RECEIVE_INITIATIVES:
             return {
@@ -30,6 +32,13 @@ export default function Initiatives(state = defaultState, action) {
                 ...state,
                 list: state.list.filter(initiative => {
                     return initiative._id !== action.id
+                })
+            }
+        case BULK_REMOVE_INITIATIVES:
+            return {
+                ...state,
+                list: state.list.filter(initiative => {
+                    return !action.list.includes(initiative._id)
                 })
             }
         case UPDATE_INITIATIVE_STAMP:
@@ -60,7 +69,7 @@ export default function Initiatives(state = defaultState, action) {
             }
         case SET_NEXT_TURN:
             if (action.prevActive && action.prevActive === action.newActive._id) return { ...state }
-            const list = [...state.list]
+            list = [...state.list]
             if (action.deleted) {
                 list.splice(list.map(i => i._id).indexOf(action.deleted), 1)
             }
