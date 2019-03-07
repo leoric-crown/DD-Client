@@ -75,7 +75,7 @@ class CharacterControlForm extends Component {
                     backdrop={false}
                     labels={{
                         header: 'Update Character Stats',
-                        confirm: 'Save Changes'
+                        confirm: 'Apply'
                     }}
                 >
                     <MDBContainer className="d-flex justify-content-center">

@@ -151,7 +151,7 @@ class CharacterHpModifier extends Component {
                 backdrop={false}
                 labels={{
                     header: 'Hitpoint Modifier',
-                    confirm: 'Save Changes'
+                    confirm: 'Apply'
                 }}
             >
                 <MDBContainer className="d-flex justify-content-center">
@@ -176,7 +176,7 @@ class CharacterHpModifier extends Component {
                                     />
                                 </div>
                             )}
-                            <div className="d-flex" style={{ alignItems: 'center' }}>
+                            <div className="d-flex" style={{ alignItems: 'center', cursor:'pointer' }}>
                                 <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('hitpoints', false)} />
                                 <MDBInput
                                     className="text-center"
@@ -185,7 +185,7 @@ class CharacterHpModifier extends Component {
                                     onChange={(e) => this.handleChange("addHitpoints", e.target.value)}
                                     value={addHitpoints.toString()}
                                 />
-                                <FaPlus className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('hitpoints')} />
+                                <FaPlus style={{cursor:'pointer'}} className="hp-modifier-icons" color="green" onClick={() => this.previewChanges('hitpoints')} />
                             </div>
                             {this.state.errors.addHitpoints && (
                                 <MDBAlert color='danger'>
@@ -196,7 +196,7 @@ class CharacterHpModifier extends Component {
                             {this.state.editMaxHP && (
                                 <div>
                                     <div className="d-flex" style={{ alignItems: 'center' }}>
-                                        <FaMinus className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
+                                        <FaMinus style={{cursor:'pointer'}} className="hp-modifier-icons" color="red" onClick={() => this.previewChanges('maxhitpoints', false)} />
                                         <MDBInput
                                             className="text-center"
                                             label="Max Hitpoints"

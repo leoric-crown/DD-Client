@@ -87,7 +87,7 @@ class InitiativeRoll extends Component {
                         backdrop={false}
                         labels={{
                             header: 'Re-roll Initiative',
-                            confirm: 'Save Changes'
+                            confirm: 'Apply'
                         }}
                     >
                         <MDBContainer className="d-flex justify-content-center">
