@@ -3,13 +3,15 @@ import { MDBContainer, MDBBtn, MDBCol } from 'mdbreact'
 import { FaArrowRight } from 'react-icons/fa'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
-import CharacterControlDisplay from './CharacterControlDisplay.js';
-import CharacterLevelSelect from '../form/CharacterLevelSelect.js';
-import CharacterAcSelect from '../form/CharacterAcSelect.js';
+import CharacterControlDisplay from './CharacterControlDisplay'
+import CharacterLevelSelect from '../form/CharacterLevelSelect'
+import CharacterAcSelect from '../form/CharacterAcSelect'
+import ConditionSelect from '../../conditions/ConditionSelect'
 
 class CharacterControlForm extends Component {
     constructor(props) {
         super(props)
+        const newCharacter = { ...this.props.character }
         this.state = {
             newCharacter: { ...this.props.character },
             delta: false
@@ -60,8 +62,9 @@ class CharacterControlForm extends Component {
     render() {
         const { character } = this.props
         const { newCharacter } = this.state
-        const { armorclass, level } = newCharacter
+        const { armorclass, level, conditions } = newCharacter
         const { delta } = this.state
+        console.log('charactercontrolform', conditions)
         return (
             <React.Fragment>
                 <MyMDBModal
@@ -109,6 +112,11 @@ class CharacterControlForm extends Component {
                                     <CharacterLevelSelect
                                         value={level}
                                         onChange={value => this.handleChange('level', value)}
+                                    />
+                                    <ConditionSelect
+                                        style={{width: '100%'}}
+                                        value={conditions}
+                                        onChange={value => this.handleChange('conditions', value)}
                                     />
                                     <br/>
                                 </div>

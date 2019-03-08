@@ -34,7 +34,7 @@ const selectOptions = (() => {
 const characterAcSelect = (props) => {
     return (
         <div >
-            {<span className="d-flex justify-content-space-evenly">
+            <span className="d-flex justify-content-space-evenly">
                 <FaShieldAlt size="2rem" color="darkred" style={{ paddingRight: '0.5rem' }}/>
                 <div style={{ width: '100%' }}>
                     <Select
@@ -47,7 +47,6 @@ const characterAcSelect = (props) => {
                     />
                 </div>
             </span>
-            }
         </div>
     )
 }
