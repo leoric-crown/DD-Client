@@ -131,5 +131,11 @@ export function handleVerifyEmail(token, callback) {
     return API.verifyEmail(token).then(res => {
       dispatch(setVerifyEmailStatus(res.status.code, res.status.message))
     })
+      .catch(() => dispatch(
+        setVerifyEmailStatus(
+          401,
+          'Invalid request: Please request reset password again')
+        )
+      )
   }
 }

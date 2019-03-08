@@ -161,17 +161,20 @@ export const getInitialData = (user, token) => {
 }
 
 export const verifyToken = token =>
-  fetch(`${api}/users/verifyToken`, request('POST', false, token)).then(res => {
-    if (res.status === 401) {
-      throw new Error('Token Invalid')
-    }
-    return res.json()
-  })
+  fetch(`${api}/users/verifyToken`, request('POST', false, token))
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error('Token Invalid')
+      }
+      return res.json()
+    })
 
 export const verifyEmail = token =>
-  fetch(`${api}/users/verifyEmail`, request('POST', false, token)).then(res => {
-    return res.json()
-  })
+  fetch(`${api}/users/verifyEmail`, request('POST', false, token))
+    .then(res => {
+      return res.json()
+    })
+    .catch(err => err)
 
 
 export const restorePassword = (password, token) => {

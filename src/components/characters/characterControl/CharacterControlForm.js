@@ -11,7 +11,6 @@ import ConditionSelect from '../../conditions/ConditionSelect'
 class CharacterControlForm extends Component {
     constructor(props) {
         super(props)
-        const newCharacter = { ...this.props.character }
         this.state = {
             newCharacter: { ...this.props.character },
             delta: false
@@ -20,10 +19,15 @@ class CharacterControlForm extends Component {
 
     handleChange = (type, value) => {
         const { newCharacter } = this.state
+        let forceDelta = false
         switch (type) {
             case 'armorclass':
                 value = parseInt(value)
                 if (isNaN(value)) value = this.props.character.armorclass
+                break
+            case 'conditions':
+                value = value.map(c => c._id)
+                forceDelta = true
                 break
             default:
                 break
@@ -32,8 +36,8 @@ class CharacterControlForm extends Component {
         newCharacter[type] = value
 
         this.setState({
-            newCharacter,
-            delta: newCharacter[type] !== this.props.character[type]
+            newCharacter: {...newCharacter},
+            delta: forceDelta || newCharacter[type] !== this.props.character[type]
         })
     }
 
@@ -64,7 +68,6 @@ class CharacterControlForm extends Component {
         const { newCharacter } = this.state
         const { armorclass, level, conditions } = newCharacter
         const { delta } = this.state
-        console.log('charactercontrolform', conditions)
         return (
             <React.Fragment>
                 <MyMDBModal
@@ -82,7 +85,7 @@ class CharacterControlForm extends Component {
                     }}
                 >
                     <MDBContainer className="d-flex justify-content-center">
-                        <MDBCol md="8">
+                        <MDBCol md="12">
                             <h2 className="text-center">{character.name}</h2>
                             <div className="text-center">
                                 <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
