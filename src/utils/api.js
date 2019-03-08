@@ -70,6 +70,11 @@ const getCharacters = token => {
   }).then(res => res.json())
 }
 
+const getConditions = token => {
+  return fetch(`${api}/conditions`, request('GET', false, token)).then(
+    res => res.json()
+  )
+}
 export const postEncounter = (token, payload) => {
   return fetch(
     `${api}/encounters`,
@@ -140,27 +145,36 @@ export const getInitialData = (user, token) => {
   return Promise.all([
     getCharacters(token),
     getEncounters(token),
-    getInitiatives(token)
-  ]).then(([charactersResponse, encountersResponse, initiativesResponse]) => {
-    const { characters } = charactersResponse
-    const { encounters } = encountersResponse
-    const { initiatives } = initiativesResponse
-    return { characters, encounters, initiatives }
-  })
+    getInitiatives(token),
+    getConditions(token)
+  ]).then(
+    ([charactersResponse,
+      encountersResponse,
+      initiativesResponse,
+      conditionsResponse]) => {
+      const { characters } = charactersResponse
+      const { encounters } = encountersResponse
+      const { initiatives } = initiativesResponse
+      const { conditions } = conditionsResponse
+      return { characters, encounters, initiatives, conditions }
+    })
 }
 
 export const verifyToken = token =>
-  fetch(`${api}/users/verifyToken`, request('POST', false, token)).then(res => {
-    if (res.status === 401) {
-      throw new Error('Token Invalid')
-    }
-    return res.json()
-  })
+  fetch(`${api}/users/verifyToken`, request('POST', false, token))
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error('Token Invalid')
+      }
+      return res.json()
+    })
 
 export const verifyEmail = token =>
-  fetch(`${api}/users/verifyEmail`, request('POST', false, token)).then(res => {
-    return res.json()
-  })
+  fetch(`${api}/users/verifyEmail`, request('POST', false, token))
+    .then(res => {
+      return res.json()
+    })
+    .catch(err => err)
 
 
 export const restorePassword = (password, token) => {

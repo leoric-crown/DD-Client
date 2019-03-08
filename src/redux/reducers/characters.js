@@ -1,4 +1,9 @@
-import { RECEIVE_CHARACTERS, CREATE_CHARACTER, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../actions/characters'
+import {
+  RECEIVE_CHARACTERS,
+  CREATE_CHARACTER,
+  UPDATE_CHARACTER,
+  REMOVE_CHARACTER
+} from '../actions/characters'
 
 const defaultState = {
   list: null,
@@ -13,10 +18,10 @@ export default function Characters(state = defaultState, action) {
         list: action.characters
       }
     case CREATE_CHARACTER:
-    return {
-      ...state,
-      list: [...state.list, action.character]
-    }
+      return {
+        ...state,
+        list: [...state.list, action.character]
+      }
     case UPDATE_CHARACTER:
       const list = [...state.list]
       return {
@@ -40,11 +45,11 @@ export default function Characters(state = defaultState, action) {
         })
       }
     case 'test_websocket':
-      return { 
+      return {
         ...state
       }
     default:
-      return { ...state}
+      return { ...state }
   }
 
 }

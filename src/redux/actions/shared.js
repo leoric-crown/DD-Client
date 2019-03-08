@@ -2,6 +2,7 @@ import * as API from '../../utils/api'
 import { receiveCharacters } from './characters'
 import { receiveEncounters } from './encounters'
 import { receiveInitiatives } from './initiatives'
+import { receiveConditions } from './conditions'
 import { setAuthedUser } from './authedUser'
 import {
   setAuthStatus,
@@ -86,6 +87,7 @@ export function handleInitialData(user, jwt) {
       dispatch(receiveCharacters(data.characters, authedUserData))
       dispatch(receiveEncounters(data.encounters, authedUserData))
       dispatch(receiveInitiatives(data.initiatives, authedUserData))
+      dispatch(receiveConditions(data.conditions, authedUserData))
     })
   }
 }
@@ -129,5 +131,11 @@ export function handleVerifyEmail(token, callback) {
     return API.verifyEmail(token).then(res => {
       dispatch(setVerifyEmailStatus(res.status.code, res.status.message))
     })
+      .catch(() => dispatch(
+        setVerifyEmailStatus(
+          401,
+          'Invalid request: Please request reset password again')
+        )
+      )
   }
 }

@@ -4,11 +4,13 @@ import Characters from './characters'
 import Encounters from './encounters'
 import Initiatives from './initiatives'
 import Errors from './errors'
+import Conditions from './conditions'
 
 export default combineReducers({
   User,
   Characters,
   Encounters,
   Initiatives,
-  Errors
+  Errors,
+  Conditions
 })

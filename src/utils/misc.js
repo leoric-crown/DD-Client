@@ -25,7 +25,7 @@ export function checkToken(token, pathname = false) {
       if (user) {
         this.props.dispatch(setAuthedUser(user))
         this.props.dispatch(handleInitialData(user, token))
-        if (pathname) this.props.history.push({
+        this.props.history.push({
           pathname: pathname ? pathname : '/characters'
         })
       } else {

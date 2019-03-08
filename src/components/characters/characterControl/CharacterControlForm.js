@@ -3,9 +3,10 @@ import { MDBContainer, MDBBtn, MDBCol } from 'mdbreact'
 import { FaArrowRight } from 'react-icons/fa'
 import config from '../../../config.json'
 import MyMDBModal from '../../modal/MDBModal'
-import CharacterControlDisplay from './CharacterControlDisplay.js';
-import CharacterLevelSelect from '../form/CharacterLevelSelect.js';
-import CharacterAcSelect from '../form/CharacterAcSelect.js';
+import CharacterControlDisplay from './CharacterControlDisplay'
+import CharacterLevelSelect from '../form/CharacterLevelSelect'
+import CharacterAcSelect from '../form/CharacterAcSelect'
+import ConditionSelect from '../../conditions/ConditionSelect'
 
 class CharacterControlForm extends Component {
     constructor(props) {
@@ -18,10 +19,15 @@ class CharacterControlForm extends Component {
 
     handleChange = (type, value) => {
         const { newCharacter } = this.state
+        let forceDelta = false
         switch (type) {
             case 'armorclass':
                 value = parseInt(value)
                 if (isNaN(value)) value = this.props.character.armorclass
+                break
+            case 'conditions':
+                value = value.map(c => c._id)
+                forceDelta = true
                 break
             default:
                 break
@@ -30,8 +36,8 @@ class CharacterControlForm extends Component {
         newCharacter[type] = value
 
         this.setState({
-            newCharacter,
-            delta: newCharacter[type] !== this.props.character[type]
+            newCharacter: {...newCharacter},
+            delta: forceDelta || newCharacter[type] !== this.props.character[type]
         })
     }
 
@@ -60,7 +66,7 @@ class CharacterControlForm extends Component {
     render() {
         const { character } = this.props
         const { newCharacter } = this.state
-        const { armorclass, level } = newCharacter
+        const { armorclass, level, conditions } = newCharacter
         const { delta } = this.state
         return (
             <React.Fragment>
@@ -79,7 +85,7 @@ class CharacterControlForm extends Component {
                     }}
                 >
                     <MDBContainer className="d-flex justify-content-center">
-                        <MDBCol md="8">
+                        <MDBCol md="12">
                             <h2 className="text-center">{character.name}</h2>
                             <div className="text-center">
                                 <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${character.picUrl}`} />
@@ -109,6 +115,11 @@ class CharacterControlForm extends Component {
                                     <CharacterLevelSelect
                                         value={level}
                                         onChange={value => this.handleChange('level', value)}
+                                    />
+                                    <ConditionSelect
+                                        style={{width: '100%'}}
+                                        value={conditions}
+                                        onChange={value => this.handleChange('conditions', value)}
                                     />
                                     <br/>
                                 </div>
