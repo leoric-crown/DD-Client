@@ -1,9 +1,11 @@
 import React from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact'
 import CharacterForm from '../components/characters/form/CharacterForm'
 import MyCharacters from '../components/characters/MyCharacters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { GiBrutalHelm } from 'react-icons/gi'
+import { MdGroupAdd } from "react-icons/md";
 import '../css/Cards.css'
 
 class Characters extends React.Component {
@@ -57,14 +59,19 @@ class Characters extends React.Component {
                         <MDBRow>
                            <MDBCol md='12'>
                               <MDBBtn onClick={() => this.toggleButtonNavigation("Characters")} color="black">
-                                 <MDBIcon icon="magic" size="lg" />
+                              <GiBrutalHelm 
+                                 size='25px'
+                              />
                                  &nbsp;
                       <strong className='secondary-nav-button'>
                                     My Characters
                       </strong>
                               </MDBBtn>
                               <MDBBtn onClick={() => this.toggleButtonNavigation("Create_Character")} color="black">
-                                 <MDBIcon icon="plus" size="lg" />
+                              <MdGroupAdd 
+                                 className='second-nav-icons'
+                                 size='25px'
+                              />
                                  &nbsp;
                       <strong className='secondary-nav-button'>
                                     Create Characters

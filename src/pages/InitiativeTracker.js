@@ -3,6 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBIcon } from 'mdbreact'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
 import TurnTracker from '../components/initiativeTracker/TurnTracker'
+import { GiShieldBash, GiSwordman } from "react-icons/gi";
 
 const ACTIVE_ENCOUNTER = 'Active Encounter'
 const ALL_ENCOUNTERS = 'All Encounters'
@@ -52,7 +53,7 @@ class InitiativeTracker extends Component {
                                 <MDBRow>
                                     <MDBCol md='12' >
                                         <MDBBtn onClick={() => this.toggleButtonNavigation(ACTIVE_ENCOUNTER)} color="black">
-                                            <MDBIcon icon="magic" size="lg" />
+                                            <GiShieldBash size='25px'/>
                                             &nbsp;
                                             <strong className='secondary-nav-button'>
                                                 Active Encounter
@@ -60,7 +61,7 @@ class InitiativeTracker extends Component {
                                         </MDBBtn>
                                         {this.props.User.isDM &&
                                             <MDBBtn onClick={() => this.toggleButtonNavigation(ALL_ENCOUNTERS)} color="black">
-                                                <MDBIcon icon="plus" size="lg" />
+                                               <GiSwordman size='25px' />
                                                 &nbsp;
                                             <strong className='secondary-nav-button'>
                                                     All Encounters

@@ -56,6 +56,7 @@
   border-bottom: 3px solid darkred;
   margin-left:10%;
   margin-right:10%;
+  margin-top:9.375rem
 }
 
 .page-title {
@@ -104,6 +105,11 @@ html, body, .root, .App {
     font-size: 0.55rem;
   }
 
+  .secondary-nav  svg {
+    height:15px !important;
+    width:15px !important;
+  }
+
   .app-logo {
     width: 200px;
   }
@@ -113,3 +119,9 @@ html, body, .root, .App {
     margin-right: 0;
   }
 }
+
+
+div.container.page-with-secondary-nav div > button {
+  background-color: #8A0300 !important;
+}
+

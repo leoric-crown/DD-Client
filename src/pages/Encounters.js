@@ -4,6 +4,7 @@ import EncounterForm from '../components/encounters/EncounterForm'
 import MyEncounters from '../components/encounters/MyEncounters'
 import { connect } from 'react-redux'
 import { checkToken } from '../utils/misc'
+import { GiBattleGear, GiSwordBrandish } from "react-icons/gi";
 import '../css/Cards.css'
 
 class Encounters extends Component {
@@ -51,14 +52,18 @@ class Encounters extends Component {
                   <MDBRow>
                     <MDBCol md='12'>
                       <MDBBtn onClick={() => this.toggleButtonNavigation('Encounters')} color="black">
-                        <MDBIcon icon="magic" size="lg" />
+                        <GiBattleGear
+                          size='25px' 
+                        />
                         &nbsp;
                       <strong className='secondary-nav-button'>
                           My Encounters
                       </strong>
                       </MDBBtn>
                       <MDBBtn onClick={() => this.toggleButtonNavigation('Create_Encounter')} color="black">
-                        <MDBIcon icon="plus" size="lg" />
+                        <GiSwordBrandish
+                          size='25px'
+                        />
                         &nbsp;
                       <strong className='secondary-nav-button'>
                           Create Encounter

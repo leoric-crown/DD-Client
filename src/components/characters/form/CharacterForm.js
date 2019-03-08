@@ -16,6 +16,7 @@ import validator from 'validator'
 import { validateAll } from 'indicative'
 import CharacterLevelSelect from './CharacterLevelSelect'
 import CharacterAcSelect from './CharacterAcSelect';
+import { GiSpikedDragonHead } from "react-icons/gi";
 
 class CharacterForm extends Component {
    constructor(props) {
@@ -190,10 +191,9 @@ class CharacterForm extends Component {
                       {this.state.updating ? (
                                     `Edit '${this.state.updating.name}'`
                                  ) : (
-                                       <MDBIcon
-                                          className='black-text'
-                                          icon='magic'
-                                          size='4x'
+                                       <GiSpikedDragonHead
+                                       size='5em'
+                                       color='#8A0300'
                                        />
                                     )}
                               </strong>
@@ -293,8 +293,7 @@ class CharacterForm extends Component {
                            <MDBBtn
                               type='button'
                               rounded
-                              color='black'
-                              className='btn-block z-depth-1a'
+                              className='btn-block z-depth-1a form-btn'
                               onClick={() =>
                                  this.handleSubmit(toggleButtonNavigation)
                               }
