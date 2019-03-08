@@ -1,5 +1,3 @@
-import * as API from '../../utils/api'
-
 export const RECEIVE_CONDITIONS = 'RECEIVE_CONDITIONS'
 
 export function receiveConditions(conditions, user) {
