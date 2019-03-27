@@ -18,7 +18,6 @@ import "mdbreact/dist/css/mdb.css"
 
 class App extends Component {
   render() {
-    console.log('env', process.env)
     return (
       <div className="App">
         <Switch>
