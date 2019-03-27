@@ -146,11 +146,13 @@ class Login extends React.Component {
                 <MDBCol md='6'>
                   <MDBCard>
                     <MDBCardBody className='mx-4'>
-                      <img
-                        alt='DnD Turn Tracker Logo'
-                        style={{ width: '100%' }}
-                        src='https://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1'
-                      />
+                      <div className='d-flex justify-content-center'>
+                        <img
+                          alt='DnD Turn Tracker Logo'
+                          style={{ width: '75%', height: '75%' }}
+                          src='https://cdn.pixabay.com/photo/2017/08/31/04/01/d20-2699387_960_720.png'
+                        />
+                      </div>
                       <div className='text-center'>
                         <h3 className=''>
                           <strong>Turn Tracker</strong>
@@ -160,7 +162,7 @@ class Login extends React.Component {
                         <MDBAlert color='danger'>
                           <MDBIcon icon='warning' />
                           {`  ${this.props.Errors.authErrorMessage}`}
-                      </MDBAlert>
+                        </MDBAlert>
                       )}
                       <MDBInput
                         label='Your email'

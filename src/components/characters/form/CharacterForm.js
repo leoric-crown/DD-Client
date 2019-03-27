@@ -37,7 +37,7 @@ class CharacterForm extends Component {
          hitpoints: updating ? hitpoints : '',
          maxhitpoints: updating ? maxhitpoints : '',
          url: '',
-         characterPic: null,
+         file: null,
          player: User.isDM ? updating ? player : false : true,
          errors: {}
       }
@@ -92,14 +92,16 @@ class CharacterForm extends Component {
                player: this.state.player,
                maxhitpoints: this.state.maxhitpoints,
                user: this.props.User._id,
-               characterPic: this.state.characterPic
-                  ? this.state.characterPic
-                  : picUrl
+               characterPic: this.state.file ? this.state.file : picUrl
             }
 
             this.props.dispatch(
-               postCharacter(localStorage.getItem('DNDTOKEN'), payload)
+               postCharacter(
+                  localStorage.getItem('DNDTOKEN'),
+                  payload
+               )
             )
+            return true
          })
          .catch(errors => {
             console.log(errors)
@@ -147,18 +149,20 @@ class CharacterForm extends Component {
                updating.request.url
             )
          )
+         return true
       } else {
          this.handleCancel()
       }
    }
 
    handleSubmit = toggleCharacterNavigation => {
+      let success = false
       if (!this.state.updating) {
-         this.handleCreate(toggleCharacterNavigation)
+         success = this.handleCreate(toggleCharacterNavigation)
       } else {
-         this.handleUpdate()
+         success = this.handleUpdate()
       }
-      if (this.props.done) this.props.done()
+      if (this.props.done && success) this.props.done()
    }
 
    handleCancel = () => {
@@ -166,6 +170,7 @@ class CharacterForm extends Component {
    }
 
    render() {
+      console.log(this.state)
       const {
          name,
          level,
@@ -187,7 +192,7 @@ class CharacterForm extends Component {
                       {this.state.updating ? (
                               <div>
                                  {`Edit '${this.state.updating.name}'`}
-                                 <br/>
+                                 <br />
                                  <img className="card-pic rounded-circle z-depth-0 lg" alt='DnD Turn Tracker Logo' src={`${config.API}/${this.state.updating.picUrl}`} />
                               </div>
                            ) : (
@@ -270,23 +275,27 @@ class CharacterForm extends Component {
                   )}
                   {!this.state.updating && (
                      <div>
-                        <MDBInput
-                           label='Photo URL'
-                           className='text-center'
-                           containerClass='mb-0'
-                           onChange={e =>
-                              this.handleChange('url', e.target.value)
-                           }
-                           onKeyDown={e => this.handleKeyDown(e)}
-                        />
-                        <MDBInput
-                           type='file'
-                           containerClass='mb-0'
-                           onChange={e =>
-                              this.handleChange('file', e.target.files[0])
-                           }
-                           onKeyDown={e => this.handleKeyDown(e)}
-                        />
+                        {!this.state.file && (
+                           <MDBInput
+                              label='Photo URL'
+                              className='text-center'
+                              containerClass='mb-0'
+                              onChange={e =>
+                                 this.handleChange('url', e.target.value)
+                              }
+                              onKeyDown={e => this.handleKeyDown(e)}
+                           />
+                        )}
+                        {(!this.state.url || this.state.url === '') && (
+                           <MDBInput
+                              type='file'
+                              containerClass='mb-0'
+                              onChange={e =>
+                                 this.handleChange('file', e.target.files[0])
+                              }
+                              onKeyDown={e => this.handleKeyDown(e)}
+                           />
+                        )}
                      </div>
                   )}
                   <br />
