@@ -149,7 +149,7 @@ class Login extends React.Component {
                       <img
                         alt='DnD Turn Tracker Logo'
                         style={{ width: '100%' }}
-                        src='http://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1'
+                        src='https://www.enworld.org/forum/attachment.php?attachmentid=62061&d=1402069890&stc=1'
                       />
                       <div className='text-center'>
                         <h3 className=''>

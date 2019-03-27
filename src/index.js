@@ -16,10 +16,6 @@ const store = createStore(
   composeEnhancers(middleware)
 )
 
-console.log(process.env)
-
-//TEST FORK
-
 webSocketInit(store)
 
 ReactDOM.render(

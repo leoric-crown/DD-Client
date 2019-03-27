@@ -16,7 +16,7 @@ import { validateAll } from 'indicative'
 import { clearErrors } from '../../redux/actions/errors';
 
 const defaultUserPic =
-  'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'
+  'https://s3.amazonaws.com/37assets/svn/765-default-avatar.png'
 
 class Signup extends React.Component {
   state = {

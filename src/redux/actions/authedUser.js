@@ -4,7 +4,7 @@ export const SET_AUTHED_USER = 'SET_AUTHED_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 
-const defaultUserPic = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+const defaultUserPic = "https://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
 
 export function setAuthedUser(authedUser) {
   if (!authedUser.photoURL) authedUser.photoURL = defaultUserPic
