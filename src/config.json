@@ -1,5 +1,5 @@
 {
-    "FACEBOOK_APP_ID": "233345377593125",
-    "API": "https://dnd-turntracker-api.herokuapp.com",
-    "WS": "ws://dnd-turntracker-api.herokuapp.com"
-  }
+  "FACEBOOK_APP_ID": "233345377593125",
+  "API": "http://localhost:5000",
+  "WS": "ws://localhost:5000"
+}
