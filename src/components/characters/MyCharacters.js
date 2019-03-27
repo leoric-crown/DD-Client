@@ -3,7 +3,7 @@ import { MDBContainer, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
 import "font-awesome/css/font-awesome.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import config from '../../config.json';
+import config from '../../config';
 import { connect } from 'react-redux'
 import { deleteCharacter } from '../../redux/actions/characters'
 import { bulkDeleteInitiatives } from '../../redux/actions/initiatives'

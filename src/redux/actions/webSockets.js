@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import config from '../../config.json'
+import config from '../../config'
 import { appId } from '../../utils/id'
 import { characterWsActions } from './characters'
 import { encounterWsActions } from './encounters'

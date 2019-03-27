@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FaDiceD20 } from 'react-icons/fa'
 import { MDBContainer, MDBCol, MDBInput, MDBAlert, MDBIcon } from 'mdbreact'
-import config from '../../config.json'
+import config from '../../config'
 import MyMDBModal from '../modal/MDBModal';
 import { validateAll } from 'indicative'
 

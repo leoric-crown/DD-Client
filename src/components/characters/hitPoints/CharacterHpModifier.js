@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { MDBContainer, MDBBtn, MDBInput, MDBCol, MDBAlert, MDBIcon } from 'mdbreact'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 import CharacterHpBar from './CharacterHpBar'
-import config from '../../../config.json'
+import config from '../../../config'
 import MyMDBModal from '../../modal/MDBModal'
 import { validateAll } from 'indicative'
 

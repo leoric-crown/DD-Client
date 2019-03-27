@@ -14,7 +14,7 @@ import validator from 'validator'
 import { validateAll } from 'indicative'
 import CharacterLevelSelect from './CharacterLevelSelect'
 import CharacterAcSelect from './CharacterAcSelect';
-import config from '../../../config.json'
+import config from '../../../config'
 
 class CharacterForm extends Component {
    constructor(props) {

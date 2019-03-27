@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { MDBContainer, MDBBtn, MDBCol } from 'mdbreact'
 import { FaArrowRight } from 'react-icons/fa'
-import config from '../../../config.json'
+import config from '../../../config'
 import MyMDBModal from '../../modal/MDBModal'
 import CharacterControlDisplay from './CharacterControlDisplay'
 import CharacterLevelSelect from '../form/CharacterLevelSelect'

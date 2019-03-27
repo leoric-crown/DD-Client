@@ -12,7 +12,7 @@ import {
   MDBIcon
 } from 'mdbreact'
 import FacebookLogin from 'react-facebook-login'
-import config from '../../config.json'
+import config from '../../config'
 import { handleLogin, handleFBLogin } from '../../redux/actions/shared'
 import { connect } from 'react-redux'
 import { checkToken } from '../../utils/misc'

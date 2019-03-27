@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import CharacterHitPoints from '../characters/hitPoints/CharacterHitpoints';
 import CharacterControl from '../characters/characterControl/CharacterControl'
 import InitiativeRoll from './InitiativeRoll'
-import config from '../../config.json'
+import config from '../../config'
 import { patchCharacter } from '../../redux/actions/characters'
 import { deleteInitiative, patchInitiativeCharacter, getNextTurn, patchInitiative } from '../../redux/actions/initiatives'
 import { FaRegTrashAlt } from 'react-icons/fa'
