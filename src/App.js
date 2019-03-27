@@ -18,6 +18,7 @@ import "mdbreact/dist/css/mdb.css"
 
 class App extends Component {
   render() {
+    console.log('env', process.env)
     return (
       <div className="App">
         <Switch>
@@ -33,7 +34,7 @@ class App extends Component {
           <Route exact path='/resetPassword' component={ResetPassword} />
           <Route exact path='/forgotPassword' component={ForgotPassword} />
           <Route exact path='/verifyEmail' component={VerifyEmail} />
-          <Route component={NotFound} code={404}/>
+          <Route component={NotFound} code={404} />
         </Switch>
       </div>
     );
