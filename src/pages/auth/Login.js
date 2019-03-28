@@ -150,7 +150,7 @@ class Login extends React.Component {
                         <img
                           alt='DnD Turn Tracker Logo'
                           style={{ width: '75%', height: '75%' }}
-                          src='https://cdn.pixabay.com/photo/2017/08/31/04/01/d20-2699387_960_720.png'
+                          src='https://s3.us-east-2.amazonaws.com/dnd-turntracker-aws/d20.png'
                         />
                       </div>
                       <div className='text-center'>

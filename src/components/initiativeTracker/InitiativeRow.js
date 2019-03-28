@@ -72,7 +72,7 @@ class InitiativeRow extends Component {
                         <div className='initiative-row-column' title={name}>
                             <img alt="character pic"
                                 className="rounded-circle z-depth-0 initiative-row-pic"
-                                src={`${config.API}/${initiative.characterStamp['picUrl']}`} />
+                                src={initiative.characterStamp['picUrl']} />
                             <div className="initiative-row-name"> {name} </div>
                         </div>
                         <div className='initiative-row-character' title="Character HP">
