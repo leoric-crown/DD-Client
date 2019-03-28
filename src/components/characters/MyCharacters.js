@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
-import "font-awesome/css/font-awesome.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-import config from '../../config';
+import { MDBContainer, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact'
+import "font-awesome/css/font-awesome.min.css"
+import "bootstrap-css-only/css/bootstrap.min.css"
+import "mdbreact/dist/css/mdb.css"
 import { connect } from 'react-redux'
 import { deleteCharacter } from '../../redux/actions/characters'
 import { bulkDeleteInitiatives } from '../../redux/actions/initiatives'
 import CharacterForm from './form/CharacterForm'
-import MyMDBModal from '../modal/MDBModal.js';
+import MyMDBModal from '../modal/MDBModal.js'
 
 class MyCharacters extends Component {
    state = {
@@ -103,7 +102,7 @@ class MyCharacters extends Component {
                         <img
                            className="card-pic rounded-circle z-depth-0 lg"
                            alt='DnD Turn Tracker Logo'
-                           src={`${config.API}/${character.picUrl}`} />
+                           src={character.picUrl} />
                      </div>
                      <div className="card-item-fields">
                         <h5>
